@@ -1,0 +1,16 @@
+.home {
+    width: 100%;
+
+    .home-banner {
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // justify-content: center;
+        width: 100%;
+
+        .home-banner-image {
+            height: 100%;
+        }
+    }
+}

@@ -1,0 +1,12 @@
+.page {
+    background-color: #fff;
+    height: 95%;
+    border-radius: 8px;
+    display: flex;
+
+    .page-box {
+        margin: 20px;
+        width: 100%;
+        overflow-y: scroll;
+    }
+}

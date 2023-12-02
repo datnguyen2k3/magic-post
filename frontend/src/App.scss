@@ -1,0 +1,29 @@
+.App {
+  background-color: rgb(189, 188, 186);
+  height: 960px;
+
+  &::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, and Opera */
+  }
+
+  .app-box {
+    display: flex;
+    padding: 10px;
+    height: 100%;
+    gap: 20px;
+    background-color: rgb(235, 233, 230);
+
+    .app-page {
+      flex: 5;
+    }
+
+    .app-sidebar {
+      flex: 1;
+    }
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
