@@ -1,0 +1,14 @@
+.details {
+    .details-content {
+        display: flex;
+        gap: 80px;
+
+        .list-group {
+            flex: 1;
+
+            .list-group-item {
+                padding: 20px 40px;
+            }
+        }
+    }
+}
