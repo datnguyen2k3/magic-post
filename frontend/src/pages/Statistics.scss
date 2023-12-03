@@ -1,0 +1,51 @@
+.statistics {
+    .statistics-table {
+        margin-top: 40px;
+
+        tr {
+            cursor: pointer;
+
+            th,
+            td {
+                padding: 12px 0;
+                text-align: center;
+                background-color: #fff;
+            }
+
+            input {
+                padding: 10px 10px 10px 5px;
+                outline: none;
+                width: 90%;
+                justify-self: center;
+            }
+        }
+    }
+
+    .statistics-pagination {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
+        list-style: none;
+        margin-top: 40px;
+
+        li {
+            background-color: #f5f5f5;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+
+            a {
+                padding: 10px;
+                text-decoration: none;
+                color: black
+            }
+        }
+
+        .disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    }
+}
