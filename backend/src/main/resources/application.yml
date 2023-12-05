@@ -12,7 +12,7 @@ server:
 spring:
   datasource:
     host: localhost
-    port: 5433
+    port: 5432
     dbname: magic-post
     url: jdbc:postgresql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.dbname}
     username: postgres
@@ -42,11 +42,11 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
-    schemas: ["location"]
+    schemas: ["public"]
     locations: classpath:/db/migration
 
   docker:
     compose:
       enabled: true
-      file: src/main/docker/docker-compose.yml
+      file: docker-compose.yml
       lifecycle-management: start_and_stop
