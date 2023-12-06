@@ -28,12 +28,17 @@ const Sidebar = () => {
                         onChange={(e) => handleInputChange(e)}></input>
                     <Link to={'/'}>
                         <button className='sidebar-statistics sidebar-bottom'>
-                            Home
+                            Trang chủ
                         </button>
                     </Link>
                     <Link to={'/stat'}>
                         <button className='sidebar-statistics sidebar-bottom'>
-                            Statistics
+                            Thống kê
+                        </button>
+                    </Link>
+                    <Link to={'/create-form'}>
+                        <button className='sidebar-statistics sidebar-bottom'>
+                            Tạo đơn vận mới
                         </button>
                     </Link>
                 </div>
