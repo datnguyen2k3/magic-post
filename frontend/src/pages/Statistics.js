@@ -56,7 +56,7 @@ const Statistics = () => {
                 setAllShipments(data);
             })
             .catch(error => console.log('Có lỗi xảy ra: ', error));
-    })
+    }, [])
 
     let totalPages = Math.ceil(allShipments.length / itemsPerPage);
 
