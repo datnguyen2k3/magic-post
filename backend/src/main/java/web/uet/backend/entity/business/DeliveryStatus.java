@@ -28,7 +28,7 @@ public class DeliveryStatus {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "delivery_id")
-    private UUID deliveryId;
+    private Delivery delivery;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
