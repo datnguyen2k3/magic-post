@@ -1,4 +1,4 @@
-package web.uet.backend.repository;
+package web.uet.backend.repository.entity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,21 +1,13 @@
 package web.uet.backend.service.auth;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import web.uet.backend.dto.auth.AccountCreateRequest;
-import web.uet.backend.dto.auth.AccountGeneralResponse;
 import web.uet.backend.entity.auth.UserAuthentication;
 import web.uet.backend.entity.auth.Account;
-import web.uet.backend.entity.business.Shop;
-import web.uet.backend.mapper.auth.AccountCommandMapper;
-import web.uet.backend.mapper.auth.AccountGeneralMapper;
-import web.uet.backend.repository.AccountRepository;
-import web.uet.backend.repository.ShopRepository;
+import web.uet.backend.repository.entity.AccountRepository;
 
 import java.util.UUID;
 

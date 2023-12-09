@@ -2,7 +2,6 @@ package web.uet.backend.service.auth;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Context;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,8 +16,8 @@ import web.uet.backend.entity.auth.UserAuthentication;
 import web.uet.backend.entity.business.Shop;
 import web.uet.backend.mapper.auth.AccountCommandMapper;
 import web.uet.backend.mapper.auth.AccountGeneralMapper;
-import web.uet.backend.repository.AccountRepository;
-import web.uet.backend.repository.ShopRepository;
+import web.uet.backend.repository.entity.AccountRepository;
+import web.uet.backend.repository.entity.ShopRepository;
 
 @Service
 @RequiredArgsConstructor

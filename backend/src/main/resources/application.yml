@@ -37,8 +37,8 @@ spring:
           lob:
             non_contextual_creation: true
         default_schema: magic-post
-        ddl-auto: validate
-    generate-ddl: true
+
+    generate-ddl: false
   flyway:
     enabled: true
     baseline-on-migrate: true
@@ -50,6 +50,11 @@ spring:
       enabled: true
       file: docker-compose.yml
       lifecycle-management: start_and_stop
+
+  data:
+    elsaticsearch:
+      cluster-nodes: localhost:9200
+      cluster-name: elasticsearch
 
 
 token:

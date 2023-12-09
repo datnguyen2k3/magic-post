@@ -1,4 +1,4 @@
-package web.uet.backend.mapper.business;
+package web.uet.backend.mapper.business.response;
 
 import org.mapstruct.Mapper;
 import web.uet.backend.dto.business.ShopGeneralResponse;
