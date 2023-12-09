@@ -1,4 +1,4 @@
-package web.uet.backend.repository.location.document;
+package web.uet.backend.repository.location.elasticsearch;
 
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;

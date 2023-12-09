@@ -19,8 +19,8 @@ import web.uet.backend.exception.type.InvalidException;
 import web.uet.backend.exception.type.NotFoundException;
 import web.uet.backend.mapper.auth.AccountCommandMapper;
 import web.uet.backend.mapper.auth.AccountGeneralMapper;
-import web.uet.backend.repository.entity.AccountRepository;
-import web.uet.backend.repository.entity.ShopRepository;
+import web.uet.backend.repository.auth.entity.AccountRepository;
+import web.uet.backend.repository.business.jpa.ShopRepository;
 
 @Service
 @RequiredArgsConstructor

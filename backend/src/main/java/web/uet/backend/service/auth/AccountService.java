@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import web.uet.backend.entity.auth.UserAuthentication;
 import web.uet.backend.entity.auth.Account;
-import web.uet.backend.repository.entity.AccountRepository;
+import web.uet.backend.repository.auth.entity.AccountRepository;
 
 import java.util.UUID;
 

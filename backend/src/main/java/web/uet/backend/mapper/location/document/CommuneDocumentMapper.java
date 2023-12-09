@@ -1,4 +1,4 @@
-package web.uet.backend.mapper.business.document;
+package web.uet.backend.mapper.location.document;
 
 import org.mapstruct.Mapper;
 import web.uet.backend.document.location.CommuneDocument;

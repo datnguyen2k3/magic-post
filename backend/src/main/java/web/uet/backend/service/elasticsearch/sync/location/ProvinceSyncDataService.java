@@ -3,9 +3,9 @@ package web.uet.backend.service.elasticsearch.sync.location;
 import org.springframework.stereotype.Service;
 import web.uet.backend.document.location.ProvinceDocument;
 import web.uet.backend.entity.location.Province;
-import web.uet.backend.mapper.business.document.ProvinceDocumentMapper;
-import web.uet.backend.repository.location.document.ProvinceDocumentRepository;
-import web.uet.backend.repository.location.entity.ProvinceRepository;
+import web.uet.backend.mapper.location.document.ProvinceDocumentMapper;
+import web.uet.backend.repository.location.elasticsearch.ProvinceDocumentRepository;
+import web.uet.backend.repository.location.jpa.ProvinceRepository;
 import web.uet.backend.service.elasticsearch.sync.GenericSyncDataService;
 
 @Service

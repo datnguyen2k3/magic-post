@@ -1,4 +1,4 @@
-package web.uet.backend.repository.location.entity;
+package web.uet.backend.repository.location.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
