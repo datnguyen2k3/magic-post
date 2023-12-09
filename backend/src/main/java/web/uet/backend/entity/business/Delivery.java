@@ -65,7 +65,7 @@ public class Delivery {
     private Shop toShop;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "product")
+    @Column(name = "product", columnDefinition = "product_type")
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private ProductType productType;
 

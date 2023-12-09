@@ -31,7 +31,7 @@ public class DeliveryStatus {
     private Delivery delivery;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", columnDefinition = "delivery_status_type")
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private StatusType statusType;
 

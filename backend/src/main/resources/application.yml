@@ -7,7 +7,7 @@ management:
 server:
   port: 8090
   servlet:
-    context-path: /magic-post
+    context-path: /magic-post/api
 
 spring:
   datasource:
@@ -50,3 +50,8 @@ spring:
       enabled: true
       file: docker-compose.yml
       lifecycle-management: start_and_stop
+
+
+token:
+  signing:
+    key: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351

@@ -24,7 +24,7 @@ public class Shop {
     private Integer shopId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type")
+    @Column(name = "type", columnDefinition = "shop_type")
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private ShopType type;
 

@@ -1,13 +1,17 @@
-package web.uet.backend.entity.business;
+package web.uet.backend.entity.auth;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import web.uet.backend.common.enums.Role;
+import web.uet.backend.entity.business.Shop;
+
+import java.util.UUID;
 
 
 @Entity
@@ -19,8 +23,9 @@ import web.uet.backend.common.enums.Role;
 public class Account {
     @Id
     @Column(name = "account_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer accountId;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    private UUID accountId;
 
     @Column(name = "username")
     private String username;
@@ -31,21 +36,22 @@ public class Account {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "email")
-    private String email;
-
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "address")
     private String address;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @Column(name = "role", columnDefinition = "user_role")
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private Role role;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "work_at")
-    private Shop work_at_shop;
+    private Shop workAt;
+
 }
