@@ -15,7 +15,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 public class ProvinceDocument {
 
   @Id
-  private Integer communeId;
+  private Integer provinceId;
 
   @Field(type = FieldType.Text)
   private String name;

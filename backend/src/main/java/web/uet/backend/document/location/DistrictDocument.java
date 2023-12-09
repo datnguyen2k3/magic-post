@@ -15,7 +15,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 public class DistrictDocument {
 
   @Id
-  private Integer communeId;
+  private Integer districtId;
 
   @Field(type = FieldType.Text)
   private String name;

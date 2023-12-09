@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import web.uet.backend.dto.location.response.ProvinceGeneralResponseList;
 import web.uet.backend.service.location.ProvinceService;
@@ -20,6 +21,13 @@ public class ProvinceController {
   @GetMapping("")
   public ResponseEntity<ProvinceGeneralResponseList> getAllProvinces() {
     return ResponseEntity.ok(provinceService.getAll());
+  }
+
+  @GetMapping("/auto-search")
+  public ResponseEntity<ProvinceGeneralResponseList> getProvincesByAutoSearch(
+      @RequestParam(required = true) String keyword
+  ) {
+    return ResponseEntity.ok(provinceService.getAutoByKeyword(keyword));
   }
 
 }
