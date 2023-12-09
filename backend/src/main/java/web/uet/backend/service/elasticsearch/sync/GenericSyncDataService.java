@@ -24,7 +24,7 @@ public abstract class GenericSyncDataService<
   @PostConstruct
   protected void syncData() {
     List<E> entities = er.findAll();
-    List<D> documents = entities.stream().map(m::toDto).toList();
+    List<D> documents = m.toDto(entities);
     dr.deleteAll();
     dr.saveAll(documents);
   }
