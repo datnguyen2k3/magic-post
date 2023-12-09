@@ -1,4 +1,4 @@
-package web.uet.backend.controller;
+package web.uet.backend.controller.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

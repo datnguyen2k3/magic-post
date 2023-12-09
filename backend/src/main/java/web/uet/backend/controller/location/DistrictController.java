@@ -1,4 +1,4 @@
-package web.uet.backend.controller;
+package web.uet.backend.controller.location;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
