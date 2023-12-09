@@ -24,6 +24,6 @@ public class Commune {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "province_id")
+    @JoinColumn(name = "district_id")
     private District district;
 }
