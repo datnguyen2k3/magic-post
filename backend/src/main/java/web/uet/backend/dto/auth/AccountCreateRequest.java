@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import web.uet.backend.common.enums.Role;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -20,6 +21,6 @@ public class AccountCreateRequest {
   private String email;
   private String phone;
   private String address;
-  private String role;
+  private Role role;
   private Integer workAt;
 }

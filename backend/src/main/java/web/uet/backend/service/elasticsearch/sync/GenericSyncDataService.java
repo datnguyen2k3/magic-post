@@ -1,10 +1,9 @@
-package web.uet.backend.service.elasticsearch;
+package web.uet.backend.service.elasticsearch.sync;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.PostRemove;
 import jakarta.persistence.PostUpdate;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import web.uet.backend.mapper.GenericMapper;
@@ -18,9 +17,9 @@ public abstract class GenericSyncDataService<
     ER extends JpaRepository<E, T>,
     M extends GenericMapper<D, E>> {
 
-  protected final DR dr;
-  protected final ER er;
-  protected final M m;
+  protected DR dr;
+  protected ER er;
+  protected M m;
 
   @PostConstruct
   protected void syncData() {
