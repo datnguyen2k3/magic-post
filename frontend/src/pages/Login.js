@@ -36,21 +36,19 @@ const Login = () => {
         } else if (!password) {
             toast.error('Không được để trống mật khẩu')
         } else {
-            await loginWithApi(`${backendUrl}/login`, 'myUsername', 'myPassword')
+            await loginWithApi(`${backendUrl}/login`, username, password)
                 .then(data => {
                     console.log(data);
-                    if (!data) {
-                        toast.error('Có lỗi xảy ra. Vui lòng đăng nhập lại!')
-                    } else if (!data[0].success) {
-                        toast.error('Username hoặc mật khẩu đã sai. Vui lòng đăng nhập lại!')
+                    if (!data || !data.success) {
+                        toast.error(data.error)
                     } else {
                         toast.success('Đăng nhập thành công')
-                        const username = data[0].username;
-                        const name = data[0].name;
+                        // const username = username; // edit later
+                        // const name = name; // edit later
                         const account = {
                             username,
-                            name
-                        }
+                            name: '/'
+                        } // fake account information
                         dispatch(login(account))
                         navigate('/')
                     }
@@ -87,18 +85,25 @@ const Login = () => {
     async function loginWithApi(url, username, password) {
         const data = {
             username,
-            password
+            password,
         };
 
         try {
-            const response = await axios.get(url, data, {
-                // headers: {
-                //     'Content-Type': 'application/json'
-                // },
+            const response = await axios.post(url, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
             });
-            return response.data;
+            return {
+                success: true,
+                user: response.data
+            };
         } catch (error) {
             console.error(error);
+            return {
+                success: false,
+                error: error.message
+            };
         }
     }
 
