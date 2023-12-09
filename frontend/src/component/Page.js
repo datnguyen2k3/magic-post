@@ -6,14 +6,9 @@ import Details from '../pages/Details';
 import CreateForm from '../pages/CreateForm';
 import { Toaster } from 'react-hot-toast'
 import Login from '../pages/Login';
-import { useSelector } from 'react-redux';
-import { selectLoggedIn } from '../app/authSlice';
-
-const ProtectedRoute = ({ children }) => {
-    const isLoggedIn = useSelector(selectLoggedIn);
-
-    return isLoggedIn ? children : <div>Bạn cần đăng nhập để tiếp tục</div>;
-}
+import Logged from './auth-component/Logged';
+import NotLogged from './auth-component/NotLogged';
+import Register from '../pages/Register';
 
 const Page = () => {
     return <>
@@ -21,10 +16,11 @@ const Page = () => {
             <div className='page-box'>
                 <Routes>
                     <Route path='/' element={<Home />}></Route>
-                    <Route path='/stat' element={<ProtectedRoute><Statistics /></ProtectedRoute>}></Route>
-                    <Route path='/detail' element={<ProtectedRoute><Details /></ProtectedRoute>}></Route>
-                    <Route path='/create-form' element={<ProtectedRoute><CreateForm /></ProtectedRoute>}></Route>
-                    <Route path='/login' element={<Login />}></Route>
+                    <Route path='/stat' element={<Logged><Statistics /></Logged>}></Route>
+                    <Route path='/detail' element={<Logged><Details /></Logged>}></Route>
+                    <Route path='/create-form' element={<Logged><CreateForm /></Logged>}></Route>
+                    <Route path='/login' element={<NotLogged><Login /></NotLogged>}></Route>
+                    <Route path='/register' element={<NotLogged><Register /></NotLogged>}></Route>
                 </Routes>
                 <Toaster toastOptions={{
                     style: {

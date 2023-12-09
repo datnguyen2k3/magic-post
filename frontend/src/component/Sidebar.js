@@ -2,12 +2,14 @@ import { useState } from 'react';
 import Logo from '../assets/images/logo.png';
 import './Sidebar.scss'
 import { Link, useNavigate } from 'react-router-dom';
-import { selectLoggedIn } from '../app/authSlice';
-import { useSelector } from 'react-redux'
+import { selectLoggedIn, logout } from '../app/authSlice';
+import { useSelector, useDispatch } from 'react-redux'
+import toast from 'react-hot-toast';
 
 const Sidebar = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [code, setCode] = useState('')
 
@@ -22,6 +24,20 @@ const Sidebar = () => {
     }
 
     const isLoggedIn = useSelector(selectLoggedIn)
+
+    const goToLogin = () => {
+        navigate('/login');
+    }
+
+    const goToLogout = () => {
+        navigate('/');
+        dispatch(logout({}))
+        toast.success('Đăng xuất thành công')
+    }
+
+    const goToRegister = () => {
+        navigate('/register')
+    }
 
     return <>
         <div className='sidebar'>
@@ -52,9 +68,9 @@ const Sidebar = () => {
                     <div className='sidebar-account-box sidebar-top'>
                         {isLoggedIn ? <div>
                             <button className='sidebar-account'>Tài khoản</button>
-                            <button className='sidebar-account'>Đăng xuất</button></div> : <div>
-                            <button className='sidebar-account'>Đăng nhập</button>
-                            <button className='sidebar-account'>Đăng ký</button></div>}
+                            <button className='sidebar-account' onClick={() => goToLogout()}>Đăng xuất</button></div> : <div>
+                            <button className='sidebar-account' onClick={() => goToLogin()}>Đăng nhập</button>
+                            <button className='sidebar-account' onClick={() => goToRegister()}>Đăng ký</button></div>}
                     </div>
                 </div>
             </div>
