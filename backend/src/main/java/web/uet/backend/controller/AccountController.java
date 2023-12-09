@@ -21,11 +21,11 @@ public class AccountController {
 
   private final AuthenticationService authenticationService;
 
-  @PostMapping("/test")
+  @PostMapping("")
   public ResponseEntity<AccountGeneralResponse> createTest(
       @RequestBody AccountCreateRequest request
   ) {
-    AccountGeneralResponse response = authenticationService.createAccount(request, new Account());
+    AccountGeneralResponse response = authenticationService.createAccount(request);
     return ResponseEntity.created(null).body(response);
   }
 
