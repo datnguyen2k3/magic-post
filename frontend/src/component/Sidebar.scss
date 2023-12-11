@@ -94,6 +94,42 @@
                     gap: 10px;
                 }
             }
+
+            .sidebar-view-account {
+                position: relative;
+
+                .sidebar-account-dropdown {
+                    display: none;
+                    z-index: 1000;
+                    border-radius: 10px;
+                    position: absolute;
+                    left: 110%;
+                    bottom: -50%;
+                    width: 100%;
+                    background-color: white;
+                    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+                    .sidebar-account-dropdown-item {
+                        padding: 10px 0;
+                    }
+
+                    &::before {
+                        content: '';
+                        width: 30px;
+                        height: 60%;
+                        background-color: transparent;
+                        position: absolute;
+                        bottom: 0;
+                        right: 100%;
+                    }
+                }
+
+                &:hover {
+                    .sidebar-account-dropdown {
+                        display: block;
+                    }
+                }
+            }
         }
     }
 }

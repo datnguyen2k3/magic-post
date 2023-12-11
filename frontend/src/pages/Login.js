@@ -43,13 +43,9 @@ const Login = () => {
                         toast.error(data.error)
                     } else {
                         toast.success('Đăng nhập thành công')
-                        // const username = username; // edit later
-                        // const name = name; // edit later
-                        const account = {
-                            username,
-                            name: '/'
-                        } // fake account information
-                        dispatch(login(account))
+                        const account = data.user // fake account information
+                        console.log('check bf dispatch: ', account)
+                        dispatch(login({ account }))
                         navigate('/')
                     }
                 });
@@ -89,15 +85,20 @@ const Login = () => {
         };
 
         try {
-            const response = await axios.post(url, data, {
+            const response = await axios.get(`${url}?username=${username}&password=${password}`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
             });
-            return {
-                success: true,
-                user: response.data
-            };
+
+            if (response.data.length > 0) {
+                return {
+                    success: true,
+                    user: response.data[0] // Trả về tài khoản hợp lệ đầu tiên
+                };
+            } else {
+                throw new Error('Username hoặc mật khẩu chưa chính xác!');
+            }
         } catch (error) {
             console.error(error);
             return {
