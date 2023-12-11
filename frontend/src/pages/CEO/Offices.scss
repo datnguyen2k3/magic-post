@@ -1,0 +1,25 @@
+.offices {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    input {
+
+        &:disabled {
+            background-color: rgb(234, 231, 231);
+        }
+    }
+
+    .offices-table {
+        thead {
+            input {
+                width: 100%;
+            }
+
+            select {
+                padding: 2px 0;
+                border-radius: 4px;
+            }
+        }
+    }
+}
