@@ -73,6 +73,11 @@ const Sidebar = () => {
                                 Thống kê các văn phòng
                             </button>
                         </Link>
+                        <Link to={'/managers'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Thống kê các trưởng điểm
+                            </button>
+                        </Link>
                     </>}
                 </div>
                 <div className='sidebar-2'>
