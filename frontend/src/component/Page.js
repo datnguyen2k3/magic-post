@@ -12,6 +12,7 @@ import Register from '../pages/Register';
 import Offices from '../pages/CEO/Offices';
 import CEO from './auth-component/CEO';
 import Managers from '../pages/CEO/Managers';
+import CreateAccount from '../pages/CEO/CreateAccount';
 
 const Page = () => {
     return <>
@@ -28,6 +29,7 @@ const Page = () => {
                     {/* CEO */}
                     <Route path='/offices' element={<CEO><Offices /></CEO>}></Route>
                     <Route path='/managers' element={<CEO><Managers /></CEO>}></Route>
+                    <Route path='/create-account' element={<CEO><CreateAccount /></CEO>}></Route>
                 </Routes>
                 <Toaster toastOptions={{
                     style: {

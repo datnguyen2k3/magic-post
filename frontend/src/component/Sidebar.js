@@ -28,7 +28,6 @@ const Sidebar = () => {
     const isLoggedIn = (useSelector(selectRole) !== '')
     const isCEO = (useSelector(selectRole) === 'CEO')
     const account = useSelector(selectAccount)
-    console.log(account, 'check account')
 
     const goToLogin = () => {
         navigate('/login');
@@ -76,6 +75,11 @@ const Sidebar = () => {
                         <Link to={'/managers'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Thống kê các trưởng điểm
+                            </button>
+                        </Link>
+                        <Link to={'/create-account'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Tạo tài khoản cho trưởng điểm
                             </button>
                         </Link>
                     </>}
