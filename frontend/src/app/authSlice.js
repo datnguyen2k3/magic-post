@@ -9,7 +9,6 @@ export const authSlice = createSlice({
     reducers: {
         login: (state, action) => {
             const { account } = action.payload;
-            console.log(action.payload, 'check', account)
             state.account = account;
             state.role = account.role;
         },

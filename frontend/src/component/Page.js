@@ -18,6 +18,8 @@ import TradingManager from './auth-component/TradingManager'
 import ManagerDetail from '../pages/CEO/ManagerDetail';
 import TMEmps from '../pages/TradingManager/TMEmps';
 import TMEmpDetail from '../pages/TradingManager/TMEmpDetail';
+import Shipments from '../pages/CEO/Shipments';
+import ShipmentDetail from '../pages/CEO/ShipmentDetail'
 
 const Page = () => {
     return <>
@@ -36,6 +38,8 @@ const Page = () => {
                     <Route path='/managers' element={<CEO><Managers /></CEO>}></Route>
                     <Route path='/create-account' element={<CEO><CreateAccount /></CEO>}></Route>
                     <Route path='/manager-detail' element={<CEO><ManagerDetail /></CEO>}></Route>
+                    <Route path='/shipments' element={<CEO><Shipments /></CEO>}></Route>
+                    <Route path='/shipment-detail' element={<CEO><ShipmentDetail /></CEO>}></Route>
 
                     {/* Trading Manager */}
                     <Route path='/tm-create-account' element={<TradingManager><TMCreateAccount /></TradingManager>}></Route>

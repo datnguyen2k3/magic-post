@@ -44,7 +44,6 @@ const Login = () => {
                     } else {
                         toast.success('Đăng nhập thành công')
                         const account = data.user // fake account information
-                        console.log('check bf dispatch: ', account)
                         dispatch(login({ account }))
                         navigate('/')
                     }

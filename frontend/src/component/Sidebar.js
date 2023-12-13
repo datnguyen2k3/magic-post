@@ -83,6 +83,11 @@ const Sidebar = () => {
                                 Tạo tài khoản cho trưởng điểm
                             </button>
                         </Link>
+                        <Link to={'/shipments'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Thống kê đơn vận
+                            </button>
+                        </Link>
                     </>}
                     {isTradingManager && <>
                         <Link to={'/tm-create-account'}>
