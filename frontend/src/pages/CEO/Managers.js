@@ -2,8 +2,11 @@ import { Table } from 'react-bootstrap'
 import './Managers.scss'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Managers = () => {
+
+    const navigate = useNavigate();
 
     const [managers, setManagers] = useState([])
 
@@ -46,6 +49,10 @@ const Managers = () => {
         })
     }, [filteredData])
 
+    const handleViewManagerDetail = (idNumber) => {
+        navigate(`/manager-detail?idNumber=${idNumber}`)
+    }
+
     return <>
         <div className='managers'>
             <h2><b>List of Managers</b></h2>
@@ -75,15 +82,15 @@ const Managers = () => {
                             <option value="tập kết">Tập kết</option>
                             <option value="giao dịch">Giao dịch</option>
                         </select></th>
-                        <th><input disabled={!!filteredData.all} name="province" value={filteredData.username} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="province" value={filteredData.email} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="province" value={filteredData.idNumber} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="province" value={filteredData.phone} onChange={handleChange}></input></th>
+                        <th><input disabled={!!filteredData.all} name="username" value={filteredData.username} onChange={handleChange}></input></th>
+                        <th><input disabled={!!filteredData.all} name="email" value={filteredData.email} onChange={handleChange}></input></th>
+                        <th><input disabled={!!filteredData.all} name="idNumber" value={filteredData.idNumber} onChange={handleChange}></input></th>
+                        <th><input disabled={!!filteredData.all} name="phone" value={filteredData.phone} onChange={handleChange}></input></th>
                     </tr>
                 </thead>
                 <tbody>
                     {managers.length > 0 ? managers.map(manager => {
-                        return <tr>
+                        return <tr onClick={() => handleViewManagerDetail(manager.idNumber)}>
                             <td>{manager.name}</td>
                             <td>{manager.officeId}</td>
                             <td>{manager.province}</td>
