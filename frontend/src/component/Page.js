@@ -15,6 +15,7 @@ import Managers from '../pages/CEO/Managers';
 import CreateAccount from '../pages/CEO/CreateAccount';
 import TMCreateAccount from '../pages/TradingManager/TMCreateAccount';
 import TradingManager from './auth-component/TradingManager'
+import ManagerDetail from '../pages/CEO/ManagerDetail';
 
 const Page = () => {
     return <>
@@ -32,6 +33,7 @@ const Page = () => {
                     <Route path='/offices' element={<CEO><Offices /></CEO>}></Route>
                     <Route path='/managers' element={<CEO><Managers /></CEO>}></Route>
                     <Route path='/create-account' element={<CEO><CreateAccount /></CEO>}></Route>
+                    <Route path='/manager-detail' element={<CEO><ManagerDetail /></CEO>}></Route>
 
                     {/* Trading Manager */}
                     <Route path='/tm-create-account' element={<TradingManager><TMCreateAccount /></TradingManager>}></Route>

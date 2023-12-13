@@ -31,7 +31,7 @@ const Sidebar = () => {
     const account = useSelector(selectAccount)
 
     const goToLogin = () => {
-        navigate('/login');
+        navigate('/login');;
     }
 
     const goToLogout = () => {

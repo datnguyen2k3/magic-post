@@ -11,10 +11,10 @@ const NotLogged = ({ children }) => {
     useEffect(() => {
         if (!isLoggedIn) {
             setTimeout(() => {
-                navigate('/login')
+                navigate('/login');
             }, 2000)
         }
-    })
+    }, [])
 
     return !isLoggedIn ? children : <div>Bạn chưa đăng nhập, hệ thống sẽ điều hướng bạn về trang đăng nhập</div>;
 }

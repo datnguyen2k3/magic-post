@@ -77,7 +77,7 @@ const Register = () => {
                         toast.error(data.error)
                     } else {
                         toast.success('Đăng ký thành công')
-                        navigate('/login'); console.log('cmm1');
+                        navigate('/login');; console.log('cmm1');
                     }
                 });
         }

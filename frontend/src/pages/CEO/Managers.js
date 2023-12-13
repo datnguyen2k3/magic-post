@@ -2,8 +2,11 @@ import { Table } from 'react-bootstrap'
 import './Managers.scss'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Managers = () => {
+
+    const navigate = useNavigate();
 
     const [managers, setManagers] = useState([])
 
@@ -46,6 +49,10 @@ const Managers = () => {
         })
     }, [filteredData])
 
+    const handleViewManagerDetail = (idNumber) => {
+        navigate(`/manager-detail?idNumber=${idNumber}`)
+    }
+
     return <>
         <div className='managers'>
             <h2><b>List of Managers</b></h2>
@@ -83,7 +90,7 @@ const Managers = () => {
                 </thead>
                 <tbody>
                     {managers.length > 0 ? managers.map(manager => {
-                        return <tr>
+                        return <tr onClick={() => handleViewManagerDetail(manager.idNumber)}>
                             <td>{manager.name}</td>
                             <td>{manager.officeId}</td>
                             <td>{manager.province}</td>
