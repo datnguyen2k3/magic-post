@@ -27,6 +27,7 @@ const Sidebar = () => {
 
     const isLoggedIn = (useSelector(selectRole) !== '')
     const isCEO = (useSelector(selectRole) === 'CEO')
+    const isTradingManager = (useSelector(selectRole) === 'Trưởng điểm giao dịch')
     const account = useSelector(selectAccount)
 
     const goToLogin = () => {
@@ -83,6 +84,12 @@ const Sidebar = () => {
                             </button>
                         </Link>
                     </>}
+                    {isTradingManager &&
+                        <Link to={'/tm-create-account'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Tạo tài khoản nhân viên điểm giao dịch
+                            </button>
+                        </Link>}
                 </div>
                 <div className='sidebar-2'>
                     <button className='sidebar-setting sidebar-top'>Cài đặt</button>

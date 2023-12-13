@@ -9,7 +9,7 @@ const NotLogged = ({ children }) => {
     const isLoggedIn = (useSelector(selectRole) !== '');
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (!isLoggedIn) {
             setTimeout(() => {
                 navigate('/login')
             }, 2000)

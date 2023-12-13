@@ -13,6 +13,8 @@ import Offices from '../pages/CEO/Offices';
 import CEO from './auth-component/CEO';
 import Managers from '../pages/CEO/Managers';
 import CreateAccount from '../pages/CEO/CreateAccount';
+import TMCreateAccount from '../pages/TradingManager/TMCreateAccount';
+import TradingManager from './auth-component/TradingManager'
 
 const Page = () => {
     return <>
@@ -30,6 +32,9 @@ const Page = () => {
                     <Route path='/offices' element={<CEO><Offices /></CEO>}></Route>
                     <Route path='/managers' element={<CEO><Managers /></CEO>}></Route>
                     <Route path='/create-account' element={<CEO><CreateAccount /></CEO>}></Route>
+
+                    {/* Trading Manager */}
+                    <Route path='/tm-create-account' element={<TradingManager><TMCreateAccount /></TradingManager>}></Route>
                 </Routes>
                 <Toaster toastOptions={{
                     style: {
