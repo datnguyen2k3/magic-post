@@ -2,10 +2,13 @@ import './TMEmps.scss'
 import { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const TMEmps = () => {
 
     const [emps, setEmps] = useState();
+
+    const navigate = useNavigate();
 
     const [filteredData, setFilteredData] = useState({
         search: '',
@@ -34,7 +37,7 @@ const TMEmps = () => {
     }, [filteredData])
 
     const handleViewEmpDetail = (idNumber) => {
-        console.log('oke: ', idNumber)
+        navigate(`/tm-emp-detail?idNumber=${idNumber}`)
     }
 
     return <>

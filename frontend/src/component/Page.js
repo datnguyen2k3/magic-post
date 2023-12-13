@@ -17,6 +17,7 @@ import TMCreateAccount from '../pages/TradingManager/TMCreateAccount';
 import TradingManager from './auth-component/TradingManager'
 import ManagerDetail from '../pages/CEO/ManagerDetail';
 import TMEmps from '../pages/TradingManager/TMEmps';
+import TMEmpDetail from '../pages/TradingManager/TMEmpDetail';
 
 const Page = () => {
     return <>
@@ -39,6 +40,7 @@ const Page = () => {
                     {/* Trading Manager */}
                     <Route path='/tm-create-account' element={<TradingManager><TMCreateAccount /></TradingManager>}></Route>
                     <Route path='/tm-emps' element={<TradingManager><TMEmps /></TradingManager>}></Route>
+                    <Route path='/tm-emp-detail' element={<TradingManager><TMEmpDetail /></TradingManager>}></Route>
                 </Routes>
                 <Toaster toastOptions={{
                     style: {
