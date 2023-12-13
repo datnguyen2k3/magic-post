@@ -82,10 +82,10 @@ const Managers = () => {
                             <option value="tập kết">Tập kết</option>
                             <option value="giao dịch">Giao dịch</option>
                         </select></th>
-                        <th><input disabled={!!filteredData.all} name="province" value={filteredData.username} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="province" value={filteredData.email} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="province" value={filteredData.idNumber} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="province" value={filteredData.phone} onChange={handleChange}></input></th>
+                        <th><input disabled={!!filteredData.all} name="username" value={filteredData.username} onChange={handleChange}></input></th>
+                        <th><input disabled={!!filteredData.all} name="email" value={filteredData.email} onChange={handleChange}></input></th>
+                        <th><input disabled={!!filteredData.all} name="idNumber" value={filteredData.idNumber} onChange={handleChange}></input></th>
+                        <th><input disabled={!!filteredData.all} name="phone" value={filteredData.phone} onChange={handleChange}></input></th>
                     </tr>
                 </thead>
                 <tbody>

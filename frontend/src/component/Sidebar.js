@@ -75,7 +75,7 @@ const Sidebar = () => {
                         </Link>
                         <Link to={'/managers'}>
                             <button className='sidebar-statistics sidebar-bottom'>
-                                Thống kê các trưởng điểm
+                                Quản lý các trưởng điểm
                             </button>
                         </Link>
                         <Link to={'/create-account'}>
@@ -84,12 +84,18 @@ const Sidebar = () => {
                             </button>
                         </Link>
                     </>}
-                    {isTradingManager &&
+                    {isTradingManager && <>
                         <Link to={'/tm-create-account'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Tạo tài khoản nhân viên điểm giao dịch
                             </button>
-                        </Link>}
+                        </Link>
+                        <Link to={'/tm-emps'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý nhân viên điểm giao dịch
+                            </button>
+                        </Link>
+                    </>}
                 </div>
                 <div className='sidebar-2'>
                     <button className='sidebar-setting sidebar-top'>Cài đặt</button>
