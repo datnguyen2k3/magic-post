@@ -2,4 +2,10 @@
     display: flex;
     gap: 20px;
     flex-direction: column;
+
+    input {
+        &:disabled {
+            background-color: rgb(234, 231, 231);
+        }
+    }
 }

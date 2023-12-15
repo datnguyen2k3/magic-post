@@ -49,7 +49,7 @@ const Shipments = () => {
     return <>
         <div className='shipments'>
             <h2>Các đơn vận hiện tại:</h2>
-            <div><span>Search all here: </span><input disabled={!!(filteredData.name && filteredData.province && filteredData.type && filteredData.username && filteredData.email && filteredData.idNumber && filteredData.phone)} name="all" value={filteredData.all} onChange={handleChange} /></div>
+            <div><span>Search all here: </span><input disabled={!!(filteredData.name || filteredData.province || filteredData.type || filteredData.username || filteredData.email || filteredData.idNumber || filteredData.phone)} name="all" value={filteredData.all} onChange={handleChange} /></div>
             <Table striped bordered hover className='managers-table'>
                 <thead>
                     <tr>
@@ -72,7 +72,12 @@ const Shipments = () => {
                         <th><input disabled={!!filteredData.all} name="receiverLocation" value={filteredData.receiverLocation} onChange={handleChange}></input></th>
                         <th><input disabled={!!filteredData.all} name="receivingStoreId" value={filteredData.receivingStoreId} onChange={handleChange}></input></th>
                         <th><input disabled={!!filteredData.all} name="currentLocation" value={filteredData.currentLocation} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="status" value={filteredData.status} onChange={handleChange}></input></th>
+                        <th><select name="status" value={filteredData.status} onChange={handleChange}>
+                            <option value="">Trạng thái</option>
+                            <option value="đang đến">Đang đến</option>
+                            <option value="đang tồn">Đang tồn</option>
+                            <option value="đã đi">Đã đi</option>
+                        </select></th>
                     </tr>
                 </thead>
                 <tbody>

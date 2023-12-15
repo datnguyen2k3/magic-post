@@ -43,7 +43,7 @@ const TMEmps = () => {
     return <>
         <div className='tm-emps'>
             <h2><b>Thống kê các nhân viên điểm giao dịch</b></h2>
-            <div><span>Search all here: </span><input disabled={!!(filteredData.name && filteredData.username && filteredData.email && filteredData.idNumber && filteredData.phone)} name="all" value={filteredData.all} onChange={handleChange} /></div>
+            <div><span>Search all here: </span><input disabled={!!(filteredData.name || filteredData.username || filteredData.email || filteredData.idNumber || filteredData.phone)} name="all" value={filteredData.all} onChange={handleChange} /></div>
             <Table striped bordered hover className='tm-emps-table'>
                 <thead>
                     <tr>

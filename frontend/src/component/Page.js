@@ -20,6 +20,8 @@ import TMEmps from '../pages/TradingManager/TMEmps';
 import TMEmpDetail from '../pages/TradingManager/TMEmpDetail';
 import Shipments from '../pages/CEO/Shipments';
 import ShipmentDetail from '../pages/CEO/ShipmentDetail'
+import TMShipments from '../pages/TradingManager/TMShipments';
+import TMShipmentDetail from '../pages/TradingManager/TMShipmentDetail';
 
 const Page = () => {
     return <>
@@ -45,6 +47,8 @@ const Page = () => {
                     <Route path='/tm-create-account' element={<TradingManager><TMCreateAccount /></TradingManager>}></Route>
                     <Route path='/tm-emps' element={<TradingManager><TMEmps /></TradingManager>}></Route>
                     <Route path='/tm-emp-detail' element={<TradingManager><TMEmpDetail /></TradingManager>}></Route>
+                    <Route path='/tm-shipments' element={<TradingManager><TMShipments /></TradingManager>}></Route>
+                    <Route path='/tm-shipment-detail' element={<TradingManager><TMShipmentDetail /></TradingManager>}></Route>
                 </Routes>
                 <Toaster toastOptions={{
                     style: {

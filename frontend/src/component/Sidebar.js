@@ -100,6 +100,11 @@ const Sidebar = () => {
                                 Quản lý nhân viên điểm giao dịch
                             </button>
                         </Link>
+                        <Link to={'/tm-shipments'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý hàng ở điểm giao dịch
+                            </button>
+                        </Link>
                     </>}
                 </div>
                 <div className='sidebar-2'>
