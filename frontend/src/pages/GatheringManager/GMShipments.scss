@@ -1,0 +1,30 @@
+.gm-shipments {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    thead {
+        input {
+            width: 100%;
+        }
+
+        select {
+            padding: 2px 0;
+            border-radius: 4px;
+        }
+
+    }
+
+    input {
+        &:disabled {
+            background-color: rgb(234, 231, 231);
+        }
+    }
+
+    tr {
+        &:first-child {
+            width: 100%;
+            text-wrap: nowrap;
+        }
+    }
+}

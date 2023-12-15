@@ -28,6 +28,7 @@ const Sidebar = () => {
     const isLoggedIn = (useSelector(selectRole) !== '')
     const isCEO = (useSelector(selectRole) === 'CEO')
     const isTradingManager = (useSelector(selectRole) === 'Trưởng điểm giao dịch')
+    const isGatheringManager = (useSelector(selectRole) === 'Trưởng điểm tập kết')
     const account = useSelector(selectAccount)
 
     const goToLogin = () => {
@@ -103,6 +104,23 @@ const Sidebar = () => {
                         <Link to={'/tm-shipments'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý hàng ở điểm giao dịch
+                            </button>
+                        </Link>
+                    </>}
+                    {isGatheringManager && <>
+                        <Link to={'/gm-create-account'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Tạo tài khoản nhân viên điểm tập kết
+                            </button>
+                        </Link>
+                        <Link to={'/gm-emps'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý nhân viên điểm tập kết
+                            </button>
+                        </Link>
+                        <Link to={'/gm-shipments'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý hàng ở điểm tập kết
                             </button>
                         </Link>
                     </>}

@@ -1,10 +1,10 @@
-import './TMEmpDetail.scss'
+import './GMEmpDetail.scss'
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ListGroup } from 'react-bootstrap';
 
-const TMEmpDetail = () => {
+const GMEmpDetail = () => {
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search)
@@ -12,7 +12,7 @@ const TMEmpDetail = () => {
     const [empDetail, setEmpDetail] = useState();
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_URL}/tradingemps?${queryParams.toString()}`)
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/gatheringemps?${queryParams.toString()}`)
             .then(response => {
                 setEmpDetail(response.data[0]);
             })
@@ -20,7 +20,7 @@ const TMEmpDetail = () => {
     }, []);
 
     return <>
-        <div className='tm-emp-detail'>
+        <div className='gm-emp-detail'>
             {
                 empDetail ?
                     <>
@@ -36,4 +36,4 @@ const TMEmpDetail = () => {
     </>
 }
 
-export default TMEmpDetail
+export default GMEmpDetail

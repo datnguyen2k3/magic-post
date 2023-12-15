@@ -22,6 +22,12 @@ import Shipments from '../pages/CEO/Shipments';
 import ShipmentDetail from '../pages/CEO/ShipmentDetail'
 import TMShipments from '../pages/TradingManager/TMShipments';
 import TMShipmentDetail from '../pages/TradingManager/TMShipmentDetail';
+import GMCreateAccount from '../pages/GatheringManager/GMCreateAccount';
+import GatheringManager from '../component/auth-component/GatheringManager'
+import GMEmps from '../pages/GatheringManager/GMEmps';
+import GMEmpDetail from '../pages/GatheringManager/GMEmpDetail';
+import GMShipments from '../pages/GatheringManager/GMShipments';
+import GMShipmentDetail from '../pages/GatheringManager/GMShipmentDetail';
 
 const Page = () => {
     return <>
@@ -49,6 +55,13 @@ const Page = () => {
                     <Route path='/tm-emp-detail' element={<TradingManager><TMEmpDetail /></TradingManager>}></Route>
                     <Route path='/tm-shipments' element={<TradingManager><TMShipments /></TradingManager>}></Route>
                     <Route path='/tm-shipment-detail' element={<TradingManager><TMShipmentDetail /></TradingManager>}></Route>
+
+                    {/* Gathering Manager */}
+                    <Route path='/gm-create-account' element={<GatheringManager><GMCreateAccount /></GatheringManager>}></Route>
+                    <Route path='/gm-emps' element={<GatheringManager><GMEmps /></GatheringManager>}></Route>
+                    <Route path='/gm-emp-detail' element={<GatheringManager><GMEmpDetail /></GatheringManager>}></Route>
+                    <Route path='/gm-shipments' element={<GatheringManager><GMShipments /></GatheringManager>}></Route>
+                    <Route path='/gm-shipment-detail' element={<GatheringManager><GMShipmentDetail /></GatheringManager>}></Route>
                 </Routes>
                 <Toaster toastOptions={{
                     style: {
