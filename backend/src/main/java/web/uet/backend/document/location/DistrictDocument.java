@@ -1,5 +1,6 @@
 package web.uet.backend.document.location;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -20,7 +21,7 @@ public class DistrictDocument {
   @Field(type = FieldType.Text)
   private String name;
 
-  @Field(type = FieldType.Object)
+  @Field(type = FieldType.Nested)
   private ProvinceDocument province;
 
 }

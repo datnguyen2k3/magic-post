@@ -1,5 +1,6 @@
 package web.uet.backend.controller.location;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +15,7 @@ import web.uet.backend.service.location.ProvinceService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/states", produces = "application/json")
+@SecurityRequirement(name = "Bearer Authentication")
 public class StateController {
 
   private final ProvinceService provinceService;

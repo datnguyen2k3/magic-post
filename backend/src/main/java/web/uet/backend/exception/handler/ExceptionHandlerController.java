@@ -1,5 +1,6 @@
 package web.uet.backend.exception.handler;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,5 +25,13 @@ public class ExceptionHandlerController {
         .error(ex.getMessage())
         .build(),
         HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(ExpiredJwtException.class)
+  public ResponseEntity<ErrorResponse> handleExpiredJwtException(ExpiredJwtException ex) {
+    return new ResponseEntity<>(ErrorResponse.builder()
+        .error(ex.getMessage())
+        .build(),
+        HttpStatus.UNAUTHORIZED);
   }
 }

@@ -1,22 +1,24 @@
 package web.uet.backend.controller.location;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import web.uet.backend.dto.location.response.DistrictGeneralResponseList;
 import web.uet.backend.dto.location.response.ProvinceGeneralResponseList;
+import web.uet.backend.service.location.DistrictService;
 import web.uet.backend.service.location.ProvinceService;
 
 @Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/provinces", produces = "application/json")
+@SecurityRequirement(name = "Bearer Authentication")
 public class ProvinceController {
 
   private final ProvinceService provinceService;
+  private final DistrictService districtService;
 
   @GetMapping("")
   public ResponseEntity<ProvinceGeneralResponseList> getAllProvinces() {
@@ -30,4 +32,18 @@ public class ProvinceController {
     return ResponseEntity.ok(provinceService.getAutoByKeyword(keyword));
   }
 
+  @GetMapping("/{provinceId}/districts")
+  public ResponseEntity<DistrictGeneralResponseList> getByProvinceId(
+      @PathVariable Integer provinceId
+  ) {
+    return ResponseEntity.ok(districtService.getByProvinceId(provinceId));
+  }
+
+  @GetMapping("/{provinceId}/districts/auto-search")
+  public ResponseEntity<DistrictGeneralResponseList> getByKeywordAndProvinceId(
+      @RequestParam String keyword,
+      @PathVariable Integer provinceId
+  ) {
+    return ResponseEntity.ok(districtService.getByKeyword(keyword, provinceId));
+  }
 }

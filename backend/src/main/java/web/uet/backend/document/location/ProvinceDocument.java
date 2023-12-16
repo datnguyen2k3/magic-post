@@ -20,6 +20,6 @@ public class ProvinceDocument {
   @Field(type = FieldType.Text)
   private String name;
 
-  @Field(type = FieldType.Object)
+  @Field(type = FieldType.Nested)
   private StateDocument state;
 }

@@ -1,5 +1,6 @@
 package web.uet.backend.controller.auth;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,7 @@ import web.uet.backend.service.auth.AuthenticationService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/accounts", produces = "application/json")
+@SecurityRequirement(name = "Bearer Authentication")
 public class AccountController {
 
   private final AuthenticationService authenticationService;

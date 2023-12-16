@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface ProvinceDocumentRepository extends ElasticsearchRepository<ProvinceDocument, Integer> {
 
+  List<ProvinceDocument> findByStateNameContaining(String name);
+
   List<ProvinceDocument> findByNameContaining(String name);
 }
