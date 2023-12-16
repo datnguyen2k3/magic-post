@@ -14,7 +14,7 @@ const Logged = ({ children }) => {
                 navigate('/')
             }, 2000)
         }
-    })
+    }, [])
 
     return isLoggedIn ? children : <div>Bạn đã đăng nhập, hệ thống sẽ điều hướng bạn về trang chủ</div>;
 }

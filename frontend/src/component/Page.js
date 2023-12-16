@@ -11,6 +11,13 @@ import NotLogged from './auth-component/NotLogged';
 import Register from '../pages/Register';
 import Offices from '../pages/CEO/Offices';
 import CEO from './auth-component/CEO';
+import Managers from '../pages/CEO/Managers';
+import CreateAccount from '../pages/CEO/CreateAccount';
+import TMCreateAccount from '../pages/TradingManager/TMCreateAccount';
+import TradingManager from './auth-component/TradingManager'
+import ManagerDetail from '../pages/CEO/ManagerDetail';
+import TMEmps from '../pages/TradingManager/TMEmps';
+import TMEmpDetail from '../pages/TradingManager/TMEmpDetail';
 
 const Page = () => {
     return <>
@@ -23,7 +30,17 @@ const Page = () => {
                     <Route path='/create-form' element={<Logged><CreateForm /></Logged>}></Route>
                     <Route path='/login' element={<NotLogged><Login /></NotLogged>}></Route>
                     <Route path='/register' element={<NotLogged><Register /></NotLogged>}></Route>
+
+                    {/* CEO */}
                     <Route path='/offices' element={<CEO><Offices /></CEO>}></Route>
+                    <Route path='/managers' element={<CEO><Managers /></CEO>}></Route>
+                    <Route path='/create-account' element={<CEO><CreateAccount /></CEO>}></Route>
+                    <Route path='/manager-detail' element={<CEO><ManagerDetail /></CEO>}></Route>
+
+                    {/* Trading Manager */}
+                    <Route path='/tm-create-account' element={<TradingManager><TMCreateAccount /></TradingManager>}></Route>
+                    <Route path='/tm-emps' element={<TradingManager><TMEmps /></TradingManager>}></Route>
+                    <Route path='/tm-emp-detail' element={<TradingManager><TMEmpDetail /></TradingManager>}></Route>
                 </Routes>
                 <Toaster toastOptions={{
                     style: {

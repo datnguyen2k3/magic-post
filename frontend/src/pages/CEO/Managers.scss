@@ -1,0 +1,37 @@
+.managers {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+
+    input {
+
+        &:disabled {
+            background-color: rgb(234, 231, 231);
+        }
+    }
+
+    .managers-table {
+        width: 100%;
+        overflow-x: scroll;
+
+        thead {
+            input {
+                width: 100%;
+            }
+
+            select {
+                padding: 2px 0;
+                border-radius: 4px;
+            }
+
+        }
+
+        tr {
+            &:first-child {
+                width: 100%;
+                text-wrap: nowrap;
+            }
+        }
+    }
+}

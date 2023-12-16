@@ -27,11 +27,11 @@ const Sidebar = () => {
 
     const isLoggedIn = (useSelector(selectRole) !== '')
     const isCEO = (useSelector(selectRole) === 'CEO')
+    const isTradingManager = (useSelector(selectRole) === 'Trưởng điểm giao dịch')
     const account = useSelector(selectAccount)
-    console.log(account, 'check account')
 
     const goToLogin = () => {
-        navigate('/login');
+        navigate('/login');;
     }
 
     const goToLogout = () => {
@@ -71,6 +71,28 @@ const Sidebar = () => {
                         <Link to={'/offices'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Thống kê các văn phòng
+                            </button>
+                        </Link>
+                        <Link to={'/managers'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý các trưởng điểm
+                            </button>
+                        </Link>
+                        <Link to={'/create-account'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Tạo tài khoản cho trưởng điểm
+                            </button>
+                        </Link>
+                    </>}
+                    {isTradingManager && <>
+                        <Link to={'/tm-create-account'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Tạo tài khoản nhân viên điểm giao dịch
+                            </button>
+                        </Link>
+                        <Link to={'/tm-emps'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý nhân viên điểm giao dịch
                             </button>
                         </Link>
                     </>}
