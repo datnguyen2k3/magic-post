@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import web.uet.backend.exception.ErrorResponse;
+import web.uet.backend.exception.type.InvalidAuthorizationException;
 import web.uet.backend.exception.type.InvalidException;
 import web.uet.backend.exception.type.NotFoundException;
 
@@ -33,5 +34,13 @@ public class ExceptionHandlerController {
         .error(ex.getMessage())
         .build(),
         HttpStatus.UNAUTHORIZED);
+  }
+
+  @ExceptionHandler(InvalidAuthorizationException.class)
+  public ResponseEntity<ErrorResponse> handleInvalidAuthorizationException(InvalidAuthorizationException ex) {
+    return new ResponseEntity<>(ErrorResponse.builder()
+        .error(ex.getMessage())
+        .build(),
+        HttpStatus.FORBIDDEN);
   }
 }

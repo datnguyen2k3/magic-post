@@ -28,17 +28,4 @@ public abstract class GenericSyncDataService<
     dr.deleteAll();
     dr.saveAll(documents);
   }
-
-  @PostUpdate
-  protected void updateDocument(E e) {
-    D d = m.toDto(e);
-    dr.save(d);
-  }
-
-  @PostRemove
-  protected void deleteDocument(E e) {
-    D d = m.toDto(e);
-    dr.delete(d);
-  }
-
 }

@@ -37,6 +37,9 @@ public class AccountCreateRequest {
   @NotNull
   private Role role;
 
+  @NotBlank
+  private String cccd;
+
   @Min(1)
   private Integer workAt;
 }

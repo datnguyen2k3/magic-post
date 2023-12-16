@@ -10,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
+import org.springframework.context.event.ApplicationContextEvent;
 import web.uet.backend.common.enums.ProductType;
 import web.uet.backend.entity.location.Commune;
 

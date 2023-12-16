@@ -38,6 +38,10 @@ CREATE TABLE shop (
     shop_id SERIAL NOT NULL,
     type shop_type NOT NULL,
     commune_id INT NOT NULL,
+    employee_number INT NOT NULL DEFAULT 0,
+    coming_delivery_number INT NOT NULL DEFAULT 0,
+    current_delivery_number INT NOT NULL DEFAULT 0,
+    gone_delivery_number INT NOT NULL DEFAULT 0,
 
     CONSTRAINT shop_pk PRIMARY KEY (shop_id),
     CONSTRAINT shop_commune_fk FOREIGN KEY (commune_id) REFERENCES commune (commune_id)

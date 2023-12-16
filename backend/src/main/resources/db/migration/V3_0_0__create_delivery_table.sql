@@ -1,4 +1,14 @@
-CREATE TYPE delivery_status_type AS ENUM ('PICKED_UP', 'DELIVERING', 'DELIVERED');
+CREATE TYPE delivery_status_type AS ENUM (
+    'RECEIVED_FROM_CUSTOMER',
+    'SENT_TO_CUSTOMER_FAIL',
+    'SENT_TO_CUSTOMER_SUCCESS',
+    'SHIPPING_TO_CUSTOMER',
+
+    'RETURNED_TO_CUSTOMER',
+    'RECEIVED_FROM_SHOP',
+    'COMING_TO_SHOP',
+    'GONE_FROM_SHOP'
+    );
 CREATE TYPE product_type AS ENUM ('DOCUMENT', 'PRODUCT');
 
 
@@ -37,10 +47,12 @@ CREATE TABLE delivery_status (
     delivery_status_id SERIAL NOT NULL,
     delivery_id UUID NOT NULL,
     status delivery_status_type NOT NULL,
+    current_shop_id INT,
 
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT delivery_statuses_pk PRIMARY KEY (delivery_status_id),
-    CONSTRAINT delivery_statuses_delivery_fk FOREIGN KEY (delivery_id) REFERENCES delivery (delivery_id)
+    CONSTRAINT delivery_statuses_delivery_fk FOREIGN KEY (delivery_id) REFERENCES delivery (delivery_id),
+    CONSTRAINT delivery_statuses_shop_fk FOREIGN KEY (current_shop_id) REFERENCES shop (shop_id)
 );

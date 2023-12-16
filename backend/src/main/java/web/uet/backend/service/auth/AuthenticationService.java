@@ -81,8 +81,6 @@ public class AuthenticationService {
   }
 
   private boolean validateRole(Role create, Role request) {
-    System.out.println(create);
-    System.out.println(request);
 
     if (request == Role.CEO) {
       return create == Role.CEO || create == Role.WAREHOUSE_HEAD || create == Role.POST_HEAD;

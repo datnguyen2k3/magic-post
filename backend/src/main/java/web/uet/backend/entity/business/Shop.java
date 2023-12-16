@@ -31,4 +31,17 @@ public class Shop {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "commune_id")
     private Commune commune;
+
+    @Column(name = "employee_number")
+    private Integer employeeNumber;
+
+    @Column(name = "coming_delivery_number")
+    private Integer comingDeliveryNumber;
+
+    @Column(name = "current_delivery_number")
+    private Integer currentDeliveryNumber;
+
+    @Column(name = "gone_delivery_number")
+    private Integer goneDeliveryNumber;
+
 }

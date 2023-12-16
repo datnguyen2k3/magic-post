@@ -42,6 +42,9 @@ public class Account {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "cccd")
+    private String cccd;
+
     @Column(name = "address")
     private String address;
 

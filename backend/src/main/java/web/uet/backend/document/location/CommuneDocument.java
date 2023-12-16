@@ -10,7 +10,6 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
 @Document(indexName = "commune")
-@Setting(settingPath = "esconfig/commune-mapping.json")
 @Builder
 @Getter
 @Setter

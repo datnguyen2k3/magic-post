@@ -35,6 +35,10 @@ public class DeliveryStatus {
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private StatusType statusType;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "current_shop_id")
+    private Shop currentShop;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
