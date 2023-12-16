@@ -1,4 +1,4 @@
-package web.uet.backend.dto.business;
+package web.uet.backend.dto.business.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -8,8 +8,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import web.uet.backend.common.enums.ProductType;
 import web.uet.backend.dto.location.response.CommuneGeneralResponse;
-import web.uet.backend.entity.business.Shop;
-import web.uet.backend.entity.location.Commune;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder

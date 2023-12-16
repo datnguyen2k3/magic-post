@@ -1,4 +1,4 @@
-package web.uet.backend.dto.business;
+package web.uet.backend.dto.business.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;

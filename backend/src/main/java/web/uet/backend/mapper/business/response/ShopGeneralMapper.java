@@ -1,7 +1,7 @@
 package web.uet.backend.mapper.business.response;
 
 import org.mapstruct.Mapper;
-import web.uet.backend.dto.business.ShopGeneralResponse;
+import web.uet.backend.dto.business.response.ShopGeneralResponse;
 import web.uet.backend.entity.business.Shop;
 import web.uet.backend.mapper.GenericMapper;
 

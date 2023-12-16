@@ -10,8 +10,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
-import org.springframework.context.event.ApplicationContextEvent;
 import web.uet.backend.common.enums.ProductType;
+import web.uet.backend.common.enums.StatusType;
 import web.uet.backend.entity.location.Commune;
 
 import java.time.LocalDateTime;
@@ -69,6 +69,15 @@ public class Delivery {
     @Column(name = "product", columnDefinition = "product_type")
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private ProductType productType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "current_status", columnDefinition = "delivery_status")
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    private StatusType currentStatus;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "current_shop_id")
+    private Shop currentShop;
 
     @CreationTimestamp
     @Column(name = "created_at")

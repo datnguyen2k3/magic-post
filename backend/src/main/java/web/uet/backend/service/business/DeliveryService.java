@@ -8,9 +8,11 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import web.uet.backend.common.enums.Role;
 import web.uet.backend.common.enums.ShopType;
-import web.uet.backend.dto.business.DeliveryCreateRequest;
-import web.uet.backend.dto.business.DeliveryGeneralResponse;
+import web.uet.backend.common.enums.StatusType;
+import web.uet.backend.dto.business.request.DeliveryCreateRequest;
+import web.uet.backend.dto.business.response.DeliveryGeneralResponse;
 import web.uet.backend.entity.business.Delivery;
+import web.uet.backend.entity.business.DeliveryStatus;
 import web.uet.backend.entity.business.Shop;
 import web.uet.backend.entity.location.Commune;
 import web.uet.backend.event.DeliveryCreateEvent;
@@ -18,6 +20,7 @@ import web.uet.backend.exception.type.InvalidAuthorizationException;
 import web.uet.backend.exception.type.NotFoundException;
 import web.uet.backend.mapper.business.response.DeliveryGeneralMapper;
 import web.uet.backend.repository.business.jpa.DeliveryRepository;
+import web.uet.backend.repository.business.jpa.DeliveryStatusRepository;
 import web.uet.backend.repository.business.jpa.ShopRepository;
 import web.uet.backend.repository.location.jpa.CommuneRepository;
 import web.uet.backend.service.auth.AuthenticationService;
@@ -31,6 +34,7 @@ public class DeliveryService {
   private final CommuneRepository communeRepository;
   private final ShopRepository shopRepository;
   private final DeliveryRepository deliveryRepository;
+  private final DeliveryStatusRepository deliveryStatusRepository;
 
   private final DeliveryGeneralMapper deliveryGeneralMapper;
 
@@ -73,11 +77,19 @@ public class DeliveryService {
         .fromShop(fromShop)
         .toShop(toShop)
         .productType(deliveryCreateRequest.getProductType())
+        .currentStatus(StatusType.RECEIVED_FROM_CUSTOMER)
+        .currentShop(fromShop)
         .build();
 
     delivery = deliveryRepository.save(delivery);
-    applicationEventPublisher.publishEvent(new DeliveryCreateEvent(delivery));
 
+    DeliveryStatus deliveryStatus = DeliveryStatus.builder()
+        .delivery(delivery)
+        .currentShop(delivery.getFromShop())
+        .statusType(StatusType.RECEIVED_FROM_CUSTOMER)
+        .build();
+
+    deliveryStatus = deliveryStatusRepository.save(deliveryStatus);
     return deliveryGeneralMapper.toDto(delivery);
   }
 
