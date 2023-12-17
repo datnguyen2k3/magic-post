@@ -12,7 +12,10 @@ const NotLogged = ({ children }) => {
         if (!isLoggedIn) {
             setTimeout(() => {
                 navigate('/login');
+                console.log('notl')
             }, 2000)
+        } else {
+            navigate('/');
         }
     }, [])
 

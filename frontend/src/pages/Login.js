@@ -44,8 +44,8 @@ const Login = () => {
                     } else {
                         toast.success('Đăng nhập thành công')
                         const account = data.user // fake account information
-                        dispatch(login({ account }))
                         navigate('/')
+                        dispatch(login({ account }))
                     }
                 });
         }

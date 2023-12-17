@@ -43,7 +43,7 @@ const GMShipments = () => {
 
     return <>
         <div className='gm-shipments'><h2><b>Các đơn vận hiện tại:</b></h2>
-            <div><span>Search all here: </span><input disabled={!!(filteredData.transactionId || filteredData.previousStoreId || filteredData.nextStoreId || filteredData.sendingStoreId || filteredData.receivingStoreId)} name="all" value={filteredData.all} onChange={handleChange} /></div>
+            <div><span>Tìm kiếm theo tất cả các trường: </span><input disabled={!!(filteredData.transactionId || filteredData.previousStoreId || filteredData.nextStoreId || filteredData.sendingStoreId || filteredData.receivingStoreId)} name="all" value={filteredData.all} onChange={handleChange} /></div>
             <Table striped bordered hover className='gm-shipments-table'>
                 <thead>
                     <tr>

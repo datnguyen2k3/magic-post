@@ -43,7 +43,7 @@ const GMEmps = () => {
     return <>
         <div className='gm-emps'>
             <h2><b>Thống kê các nhân viên điểm tập kết</b></h2>
-            <div><span>Search all here: </span><input disabled={!!(filteredData.name || filteredData.username || filteredData.email || filteredData.idNumber || filteredData.phone)} name="all" value={filteredData.all} onChange={handleChange} /></div>
+            <div><span>Tìm kiếm theo tất cả các trường: </span><input disabled={!!(filteredData.name || filteredData.username || filteredData.email || filteredData.idNumber || filteredData.phone)} name="all" value={filteredData.all} onChange={handleChange} /></div>
             <Table striped bordered hover className='gm-emps-table'>
                 <thead>
                     <tr>

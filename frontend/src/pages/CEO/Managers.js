@@ -56,7 +56,7 @@ const Managers = () => {
     return <>
         <div className='managers'>
             <h2><b>List of Managers</b></h2>
-            <div><span>Search all here: </span><input disabled={!!(filteredData.name && filteredData.province && filteredData.type && filteredData.username && filteredData.email && filteredData.idNumber && filteredData.phone)} name="all" value={filteredData.all} onChange={handleChange} /></div>
+            <div><span>Tìm kiếm theo tất cả các trường: </span><input disabled={!!(filteredData.name && filteredData.province && filteredData.type && filteredData.username && filteredData.email && filteredData.idNumber && filteredData.phone)} name="all" value={filteredData.all} onChange={handleChange} /></div>
             <Table striped bordered hover className='managers-table'>
                 <thead>
                     <tr>

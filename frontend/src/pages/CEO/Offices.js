@@ -38,7 +38,7 @@ const Offices = () => {
     return <>
         <div className='offices'>
             <h2><b>List of Offices</b></h2>
-            <div><span>Search all here: </span><input disabled={!!filteredData.province} name="all" value={filteredData.all} onChange={handleChange} /></div>
+            <div><span>Tìm kiếm theo tất cả các trường: </span><input disabled={!!filteredData.province} name="all" value={filteredData.all} onChange={handleChange} /></div>
             <Table striped bordered hover className='offices-table'>
                 <thead>
                     <tr>

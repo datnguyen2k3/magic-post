@@ -29,10 +29,11 @@ const Sidebar = () => {
     const isCEO = (useSelector(selectRole) === 'CEO')
     const isTradingManager = (useSelector(selectRole) === 'Trưởng điểm giao dịch')
     const isGatheringManager = (useSelector(selectRole) === 'Trưởng điểm tập kết')
+    const isTradingEmp = (useSelector(selectRole) === 'Nhân viên điểm giao dịch')
     const account = useSelector(selectAccount)
 
     const goToLogin = () => {
-        navigate('/login');;
+        navigate('/login');
     }
 
     const goToLogout = () => {
@@ -57,7 +58,7 @@ const Sidebar = () => {
                             Trang chủ
                         </button>
                     </Link>
-                    {isLoggedIn && <>
+                    {/* {isLoggedIn && <>
                         <Link to={'/stat'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Thống kê
@@ -67,7 +68,7 @@ const Sidebar = () => {
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Tạo đơn vận mới
                             </button>
-                        </Link></>}
+                        </Link></>} */}
                     {isCEO && <>
                         <Link to={'/offices'}>
                             <button className='sidebar-statistics sidebar-bottom'>
@@ -121,6 +122,13 @@ const Sidebar = () => {
                         <Link to={'/gm-shipments'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý hàng ở điểm tập kết
+                            </button>
+                        </Link>
+                    </>}
+                    {isTradingEmp && <>
+                        <Link to={'/te-create-shipment'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Tạo đơn vận mới cho khách
                             </button>
                         </Link>
                     </>}
