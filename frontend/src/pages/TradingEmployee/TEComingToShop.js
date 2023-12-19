@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import './Shipments.scss'
-import axios from 'axios';
-import { Table } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import './TEComingToShop.scss'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { Table } from 'react-bootstrap'
 
-const Shipments = () => {
+const TEComingToShop = () => {
 
     const [shipments, setShipments] = useState()
 
@@ -43,12 +43,12 @@ const Shipments = () => {
     }, [filteredData])
 
     const handleViewShipmentDetail = (transactionId) => {
-        navigate(`/shipment-detail?transactionId=${transactionId}`)
+        navigate(`/te-coming-detail?transactionId=${transactionId}`)
     }
 
     return <>
-        <div className='te-shipments'>
-            <h2>Các đơn vận đang tới shop:</h2>
+        <div className='te-coming-to-shop'>
+            <h2>Các đơn vận đang tới shop: (click vào đơn để đến trang xác nhận)</h2>
             <div><span>Tìm kiếm theo tất cả các trường: </span><input disabled={!!(filteredData.name || filteredData.province || filteredData.type || filteredData.username || filteredData.email || filteredData.idNumber || filteredData.phone)} name="all" value={filteredData.all} onChange={handleChange} /></div>
             <Table striped bordered hover className='te-managers-table'>
                 <thead>
@@ -61,7 +61,6 @@ const Shipments = () => {
                         <th>Điểm nhận</th>
                         <th>VP nhận</th>
                         <th>Địa điểm hiện tại</th>
-                        <th>Trạng thái</th>
                     </tr>
                     <tr>
                         <th><input disabled={!!filteredData.all} name="transactionId" value={filteredData.transactionId} onChange={handleChange}></input></th>
@@ -72,12 +71,6 @@ const Shipments = () => {
                         <th><input disabled={!!filteredData.all} name="receiverLocation" value={filteredData.receiverLocation} onChange={handleChange}></input></th>
                         <th><input disabled={!!filteredData.all} name="receivingStoreId" value={filteredData.receivingStoreId} onChange={handleChange}></input></th>
                         <th><input disabled={!!filteredData.all} name="currentLocation" value={filteredData.currentLocation} onChange={handleChange}></input></th>
-                        <th><select name="status" value={filteredData.status} onChange={handleChange}>
-                            <option value="">Trạng thái</option>
-                            <option value="đang đến">Đang đến</option>
-                            <option value="đang tồn">Đang tồn</option>
-                            <option value="đã đi">Đã đi</option>
-                        </select></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,7 +84,6 @@ const Shipments = () => {
                             <td>{shipment.receiverLocation}</td>
                             <td>{shipment.receivingStoreId}</td>
                             <td>{shipment.currentLocation}</td>
-                            <td>{shipment.status}</td>
                         </tr>
                     }) : ''}
                 </tbody>
@@ -100,4 +92,4 @@ const Shipments = () => {
     </>
 }
 
-export default Shipments;
+export default TEComingToShop

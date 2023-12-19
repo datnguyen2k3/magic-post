@@ -131,6 +131,11 @@ const Sidebar = () => {
                                 Tạo đơn vận mới cho khách
                             </button>
                         </Link>
+                        <Link to={'/te-coming'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Thống kê đơn đang tới văn phòng
+                            </button>
+                        </Link>
                     </>}
                 </div>
                 <div className='sidebar-2'>

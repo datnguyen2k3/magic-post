@@ -462,7 +462,7 @@ const TECreateShipment = () => {
                             </div>
                             <div className='te-form-shipment-cost-box-sp'>
                                 <span>Cước tổng (gồm VAT): {(cost * 0.1).toFixed(0)}</span>
-                                <span><b>Tổng: {(cost * 1.1 + surcharge).toFixed(0)}</b></span>
+                                <span><b>Tổng: {(cost * 1.1 + 1 * surcharge).toFixed(0)}</b></span>
                             </div>
                         </div>
                     </div>
@@ -470,7 +470,7 @@ const TECreateShipment = () => {
                 <div>
                     <input type='checkbox'></input><span> Khách hàng xác nhận đồng ý với các điều khoản</span>
                 </div>
-                <input className='te-form-submit' type='submit' value={'Xác nhận thông tin đơn vận'}></input>
+                <input className='te-form-submit' type='submit' value={'Xác nhận thông tin đơn vận'} onClick={handleSubmit}></input>
             </form></div>
     </>
 }

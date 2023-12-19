@@ -30,6 +30,8 @@ import GMShipments from '../pages/GatheringManager/GMShipments';
 import GMShipmentDetail from '../pages/GatheringManager/GMShipmentDetail';
 import TradingEmp from './auth-component/TradingEmp'
 import TECreateShipment from '../pages/TradingEmployee/TECreateShipment';
+import TEComingToShop from '../pages/TradingEmployee/TEComingToShop';
+import TEComingDetail from '../pages/TradingEmployee/TEComingDetail';
 
 const Page = () => {
     return <>
@@ -67,6 +69,8 @@ const Page = () => {
 
                     {/* Trading Employee */}
                     <Route path='/te-create-shipment' element={<TradingEmp><TECreateShipment /></TradingEmp>}></Route>
+                    <Route path='/te-coming' element={<TradingEmp><TEComingToShop /></TradingEmp>}></Route>
+                    <Route path='/te-coming-detail' element={<TradingEmp><TEComingDetail /></TradingEmp>}></Route>
                 </Routes>
                 <Toaster toastOptions={{
                     style: {
