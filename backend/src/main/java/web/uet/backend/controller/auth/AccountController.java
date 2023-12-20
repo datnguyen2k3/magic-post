@@ -4,13 +4,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import web.uet.backend.dto.auth.AccountCreateRequest;
 import web.uet.backend.dto.auth.AccountGeneralResponse;
-import web.uet.backend.entity.auth.Account;
 import web.uet.backend.service.auth.AccountService;
 import web.uet.backend.service.auth.AuthenticationService;
 
@@ -22,13 +18,19 @@ import web.uet.backend.service.auth.AuthenticationService;
 public class AccountController {
 
   private final AuthenticationService authenticationService;
+  private final AccountService accountService;
 
   @PostMapping("")
-  public ResponseEntity<AccountGeneralResponse> createTest(
+  public ResponseEntity<AccountGeneralResponse> createAccount(
       @RequestBody AccountCreateRequest request
   ) {
     AccountGeneralResponse response = authenticationService.createAccount(request);
     return ResponseEntity.created(null).body(response);
+  }
+
+  @GetMapping("/profile")
+  public ResponseEntity<AccountGeneralResponse> getByCurrentAccount() {
+    return ResponseEntity.ok(accountService.getCurrentAccountResponse());
   }
 
 }

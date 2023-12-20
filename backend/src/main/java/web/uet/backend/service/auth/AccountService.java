@@ -5,8 +5,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import web.uet.backend.dto.auth.AccountGeneralResponse;
 import web.uet.backend.entity.auth.UserAuthentication;
 import web.uet.backend.entity.auth.Account;
+import web.uet.backend.mapper.auth.AccountGeneralMapper;
 import web.uet.backend.repository.auth.entity.AccountRepository;
 
 import java.util.UUID;
@@ -16,6 +18,7 @@ import java.util.UUID;
 public class AccountService implements UserDetailsService {
 
   private final AccountRepository accountRepository;
+  private final AccountGeneralMapper accountGeneralMapper;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,6 +31,11 @@ public class AccountService implements UserDetailsService {
     Account account = accountRepository.findById(accountId)
         .orElseThrow(() -> new RuntimeException("Account not found"));
     return new UserAuthentication(account);
+  }
+
+  public AccountGeneralResponse getCurrentAccountResponse() {
+    Account currentAccount = AuthenticationService.getCurrentAccount();
+    return accountGeneralMapper.toDto(currentAccount);
   }
 
 }

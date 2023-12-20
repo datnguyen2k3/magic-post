@@ -3,15 +3,12 @@ package web.uet.backend.service.business;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-import web.uet.backend.common.enums.StatusType;
 import web.uet.backend.dto.business.request.DeliveryStatusCreateRequest;
 import web.uet.backend.dto.business.response.DeliveryStatusGeneralResponse;
 import web.uet.backend.entity.business.Delivery;
 import web.uet.backend.entity.business.DeliveryStatus;
 import web.uet.backend.entity.business.Shop;
-import web.uet.backend.event.UpdateEvent;
 import web.uet.backend.exception.type.NotFoundException;
 import web.uet.backend.mapper.business.response.DeliveryStatusGeneralMapper;
 import web.uet.backend.repository.business.jpa.DeliveryRepository;
@@ -29,8 +26,6 @@ public class DeliveryStatusService {
   private final ShopRepository shopRepository;
 
   private final DeliveryStatusGeneralMapper deliveryStatusGeneralMapper;
-
-  private final ApplicationEventPublisher applicationEventPublisher;
 
   @Transactional
   public DeliveryStatusGeneralResponse createByDeliveryId(UUID deliveryId, DeliveryStatusCreateRequest request) {
@@ -51,7 +46,6 @@ public class DeliveryStatusService {
     delivery.setCurrentStatus(request.getStatus());
 
     deliveryRepository.save(delivery);
-    applicationEventPublisher.publishEvent(new UpdateEvent<>(delivery));
 
     return deliveryStatusGeneralMapper.toDto(deliveryStatus);
   }
