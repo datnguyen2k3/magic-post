@@ -1,8 +1,6 @@
 package web.uet.backend.service.elasticsearch.sync;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.persistence.PostRemove;
-import jakarta.persistence.PostUpdate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,4 +26,5 @@ public abstract class GenericSyncDataService<
     dr.deleteAll();
     dr.saveAll(documents);
   }
+
 }

@@ -11,8 +11,7 @@ import web.uet.backend.dto.business.response.DeliveryStatusGeneralResponse;
 import web.uet.backend.entity.business.Delivery;
 import web.uet.backend.entity.business.DeliveryStatus;
 import web.uet.backend.entity.business.Shop;
-import web.uet.backend.event.DeliveryCreateEvent;
-import web.uet.backend.event.DeliveryStatusCreateEvent;
+import web.uet.backend.event.UpdateEvent;
 import web.uet.backend.exception.type.NotFoundException;
 import web.uet.backend.mapper.business.response.DeliveryStatusGeneralMapper;
 import web.uet.backend.repository.business.jpa.DeliveryRepository;
@@ -52,6 +51,10 @@ public class DeliveryStatusService {
     delivery.setCurrentStatus(request.getStatus());
 
     deliveryRepository.save(delivery);
+    applicationEventPublisher.publishEvent(new UpdateEvent<>(delivery));
+
     return deliveryStatusGeneralMapper.toDto(deliveryStatus);
   }
+
+
 }

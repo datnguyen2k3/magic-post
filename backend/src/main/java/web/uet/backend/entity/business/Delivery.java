@@ -13,6 +13,9 @@ import org.hibernate.type.SqlTypes;
 import web.uet.backend.common.enums.ProductType;
 import web.uet.backend.common.enums.StatusType;
 import web.uet.backend.entity.location.Commune;
+import web.uet.backend.event.DeliveryCreateEvent;
+import web.uet.backend.event.DeliveryUpdateEvent;
+import web.uet.backend.service.PublisherService;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -86,4 +89,14 @@ public class Delivery {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @PostPersist
+    public void postPersist() {
+        PublisherService.INSTANCE.publishEvent(new DeliveryCreateEvent(this));
+    }
+
+    @PostUpdate
+    public void postUpdate() {
+        PublisherService.INSTANCE.publishEvent(new DeliveryUpdateEvent(this));
+    }
 }

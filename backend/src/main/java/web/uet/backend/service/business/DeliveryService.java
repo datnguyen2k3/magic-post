@@ -25,11 +25,11 @@ import web.uet.backend.repository.business.jpa.ShopRepository;
 import web.uet.backend.repository.location.jpa.CommuneRepository;
 import web.uet.backend.service.auth.AuthenticationService;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class DeliveryService {
-
-  private final ApplicationEventPublisher applicationEventPublisher;
 
   private final CommuneRepository communeRepository;
   private final ShopRepository shopRepository;
@@ -37,9 +37,6 @@ public class DeliveryService {
   private final DeliveryStatusRepository deliveryStatusRepository;
 
   private final DeliveryGeneralMapper deliveryGeneralMapper;
-
-  @PersistenceContext
-  private EntityManager entityManager;
 
   @Transactional
   public DeliveryGeneralResponse createDeliveryByCreateRequest(DeliveryCreateRequest deliveryCreateRequest) {
@@ -79,6 +76,8 @@ public class DeliveryService {
         .productType(deliveryCreateRequest.getProductType())
         .currentStatus(StatusType.RECEIVED_FROM_CUSTOMER)
         .currentShop(fromShop)
+        .createdAt(LocalDateTime.now())
+        .updatedAt(LocalDateTime.now())
         .build();
 
     delivery = deliveryRepository.save(delivery);
@@ -89,7 +88,7 @@ public class DeliveryService {
         .statusType(StatusType.RECEIVED_FROM_CUSTOMER)
         .build();
 
-    deliveryStatus = deliveryStatusRepository.save(deliveryStatus);
+    deliveryStatusRepository.save(deliveryStatus);
     return deliveryGeneralMapper.toDto(delivery);
   }
 
