@@ -21,6 +21,7 @@ public class AccountDocument {
   @Id
   private UUID accountId;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String username;
 
   private String name;
