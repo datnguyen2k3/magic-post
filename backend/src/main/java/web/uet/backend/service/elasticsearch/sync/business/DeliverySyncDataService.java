@@ -14,8 +14,10 @@ import web.uet.backend.service.elasticsearch.sync.GenericSyncDataService;
 import java.util.UUID;
 
 @Service
-public class DeliverySyncDataService extends GenericSyncDataService<DeliveryDocument, Delivery, UUID, DeliveryDocumentRepository, DeliveryRepository, DeliveryDocumentMapper> {
-  public DeliverySyncDataService(DeliveryDocumentRepository deliveryDocumentRepository, DeliveryRepository deliveryRepository, DeliveryDocumentMapper deliveryDocumentMapper) {
+public class DeliverySyncDataService extends GenericSyncDataService<DeliveryDocument, Delivery, UUID,
+    DeliveryDocumentRepository, DeliveryRepository, DeliveryDocumentMapper> {
+  public DeliverySyncDataService(DeliveryDocumentRepository deliveryDocumentRepository,
+                                 DeliveryRepository deliveryRepository, DeliveryDocumentMapper deliveryDocumentMapper) {
     super(deliveryDocumentRepository, deliveryRepository, deliveryDocumentMapper);
   }
 

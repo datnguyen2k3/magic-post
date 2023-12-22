@@ -3,8 +3,10 @@ package web.uet.backend.service.business;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.query.SortDirection;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import web.uet.backend.common.enums.StatusType;
 import web.uet.backend.common.enums.filter.DirectionSort;
 import web.uet.backend.dto.business.request.DeliveryStatusCreateRequest;
 import web.uet.backend.dto.business.response.delivery.DeliveryStatusDetailListResponse;
@@ -12,6 +14,8 @@ import web.uet.backend.dto.business.response.delivery.DeliveryStatusGeneralRespo
 import web.uet.backend.entity.business.Delivery;
 import web.uet.backend.entity.business.DeliveryStatus;
 import web.uet.backend.entity.business.Shop;
+import web.uet.backend.event.DeliveryCreateEvent;
+import web.uet.backend.event.DeliveryStatusCreateEvent;
 import web.uet.backend.exception.type.NotFoundException;
 import web.uet.backend.mapper.business.response.DeliveryStatusDetailMapper;
 import web.uet.backend.mapper.business.response.DeliveryStatusGeneralMapper;
@@ -46,8 +50,12 @@ public class DeliveryStatusService {
         .currentShop(currentShop)
         .statusType(request.getStatus())
         .build();
-
     deliveryStatus = deliveryStatusRepository.save(deliveryStatus);
+
+    delivery.setCurrentStatus(request.getStatus());
+    delivery.setCurrentShop(currentShop);
+    deliveryRepository.save(delivery);
+
     return deliveryStatusGeneralMapper.toDto(deliveryStatus);
   }
 

@@ -13,7 +13,7 @@ import web.uet.backend.entity.business.Delivery;
 import web.uet.backend.entity.business.DeliveryStatus;
 import web.uet.backend.entity.business.Shop;
 import web.uet.backend.entity.location.Commune;
-import web.uet.backend.event.UpdateStatusDeliveryEvent;
+import web.uet.backend.event.DeliveryStatusCreateEvent;
 import web.uet.backend.exception.type.InvalidAuthorizationException;
 import web.uet.backend.exception.type.NotFoundException;
 import web.uet.backend.mapper.business.response.DeliveryGeneralMapper;
@@ -82,22 +82,13 @@ public class DeliveryService {
 
     DeliveryStatus deliveryStatus = DeliveryStatus.builder()
         .delivery(delivery)
-        .currentShop(delivery.getFromShop())
+        .currentShop(fromShop)
         .statusType(StatusType.RECEIVED_FROM_CUSTOMER)
         .build();
 
     deliveryStatusRepository.save(deliveryStatus);
-    return deliveryGeneralMapper.toDto(delivery);
-  }
 
-  @EventListener
-  @Transactional
-  public void updateStatusDelivery(UpdateStatusDeliveryEvent event) {
-    DeliveryStatus deliveryStatus = (DeliveryStatus) event.getSource();
-    Delivery delivery = deliveryStatus.getDelivery();
-    delivery.setCurrentStatus(deliveryStatus.getStatusType());
-    delivery.setCurrentShop(deliveryStatus.getCurrentShop());
-    deliveryRepository.save(delivery);
+    return deliveryGeneralMapper.toDto(delivery);
   }
 
 }

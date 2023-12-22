@@ -11,7 +11,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 import web.uet.backend.common.enums.StatusType;
-import web.uet.backend.event.UpdateStatusDeliveryEvent;
+import web.uet.backend.event.DeliveryStatusCreateEvent;
 import web.uet.backend.service.PublisherService;
 
 import java.time.LocalDateTime;
@@ -29,7 +29,7 @@ public class DeliveryStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer deliveryStatusId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {})
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
@@ -50,11 +50,9 @@ public class DeliveryStatus {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @PrePersist
+    @PostPersist
     @Transactional
     public void prePersist() {
-        if (this.getStatusType() != StatusType.RECEIVED_FROM_CUSTOMER) {
-            PublisherService.INSTANCE.publishEvent(new UpdateStatusDeliveryEvent(this));
-        }
+        PublisherService.INSTANCE.publishEvent(new DeliveryStatusCreateEvent(this));
     }
 }

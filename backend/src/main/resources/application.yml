@@ -37,6 +37,8 @@ spring:
           lob:
             non_contextual_creation: true
         default_schema: magic-post
+        show_sql: true
+        format_sql: true
 
     generate-ddl: false
   flyway:

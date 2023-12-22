@@ -58,7 +58,9 @@ public class DeliveryDocument {
   @Field(type = FieldType.Nested, includeInParent = true)
   private ShopDocument currentShop;
 
+  @Field(type = FieldType.Date)
   private LocalDateTime createdAt;
 
+  @Field(type = FieldType.Date)
   private LocalDateTime updatedAt;
 }
