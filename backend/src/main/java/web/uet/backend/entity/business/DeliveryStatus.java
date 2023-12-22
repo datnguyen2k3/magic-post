@@ -1,6 +1,7 @@
 package web.uet.backend.entity.business;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,8 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 import web.uet.backend.common.enums.StatusType;
+import web.uet.backend.event.UpdateStatusDeliveryEvent;
+import web.uet.backend.service.PublisherService;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -46,4 +49,12 @@ public class DeliveryStatus {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    @Transactional
+    public void prePersist() {
+        if (this.getStatusType() != StatusType.RECEIVED_FROM_CUSTOMER) {
+            PublisherService.INSTANCE.publishEvent(new UpdateStatusDeliveryEvent(this));
+        }
+    }
 }

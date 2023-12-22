@@ -48,11 +48,6 @@ public class DeliveryStatusService {
         .build();
 
     deliveryStatus = deliveryStatusRepository.save(deliveryStatus);
-    delivery.setCurrentShop(currentShop);
-    delivery.setCurrentStatus(request.getStatus());
-
-    deliveryRepository.save(delivery);
-
     return deliveryStatusGeneralMapper.toDto(deliveryStatus);
   }
 
