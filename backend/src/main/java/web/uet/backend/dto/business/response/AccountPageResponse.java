@@ -6,9 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.common.enums.StatusType;
+import web.uet.backend.dto.auth.AccountGeneralResponse;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -16,17 +16,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-public class DeliveryStatusGeneralResponse {
+public class AccountPageResponse {
+  private List<AccountGeneralResponse> accounts;
+  private Integer page;
+  private Integer size;
+  private long totalElements;
+  private Integer totalPages;
 
-  private Integer deliveryStatusId;
-
-  private DeliveryGeneralResponse delivery;
-
-  private StatusType statusType;
-
-  private ShopGeneralResponse currentShop;
-
-  private LocalDateTime createdAt;
-
-  private LocalDateTime updatedAt;
 }

@@ -1,7 +1,6 @@
 package web.uet.backend.service.auth;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
-import co.elastic.clients.elasticsearch._types.query_dsl.WildcardQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Service;
 import web.uet.backend.document.AccountDocument;
 import web.uet.backend.dto.auth.AccountGeneralResponse;
 import web.uet.backend.dto.business.request.AccountPageRequest;
-import web.uet.backend.dto.business.request.AccountPageResponse;
+import web.uet.backend.dto.business.response.AccountPageResponse;
 import web.uet.backend.entity.auth.Account;
 import web.uet.backend.entity.auth.UserAuthentication;
 import web.uet.backend.mapper.auth.AccountGeneralFromDocumentMapper;
@@ -30,6 +29,9 @@ import web.uet.backend.repository.auth.entity.AccountRepository;
 
 import java.util.List;
 import java.util.UUID;
+
+import static web.uet.backend.service.elasticsearch.search.ElasticsearchQueryUtils.containsQuery;
+import static web.uet.backend.service.elasticsearch.search.ElasticsearchQueryUtils.matchQuery;
 
 @Service
 @RequiredArgsConstructor
@@ -61,27 +63,7 @@ public class AccountService implements UserDetailsService {
     return accountGeneralMapper.toDto(currentAccount);
   }
 
-  private BoolQuery.Builder containsQuery(BoolQuery.Builder query, String field, String value) {
-    return query.must(
-        new Query(
-            new WildcardQuery.Builder()
-                .field(field)
-                .value("*" + value + "*")
-                .build()
-        )
-    );
-  }
 
-    private BoolQuery.Builder matchQuery(BoolQuery.Builder query, String  field, String value) {
-    return query.must(
-        new Query(
-            new MatchQuery.Builder()
-                .field(field)
-                .query(value)
-                .build()
-        )
-    );
-  }
 
 
 

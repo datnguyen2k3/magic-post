@@ -1,4 +1,4 @@
-package web.uet.backend.dto.business.response;
+package web.uet.backend.dto.business.response.delivery;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -8,9 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import web.uet.backend.common.enums.ProductType;
+import web.uet.backend.dto.business.response.ShopGeneralResponse;
 import web.uet.backend.dto.location.response.CommuneGeneralResponse;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -19,6 +21,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class DeliveryGeneralResponse {
+
+  private UUID deliveryId;
 
   private CommuneGeneralResponse fromCommune;
 
