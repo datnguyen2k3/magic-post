@@ -32,11 +32,7 @@ public class DeliveryStatusDocument {
   @Field(type = FieldType.Nested, includeInParent = true)
   private ShopDocument currentShop;
 
-  @Field(type = FieldType.Date, fielddata = true)
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private Date createdAt;
+  private LocalDateTime createdAt;
 
-  @Field(type = FieldType.Date, pattern = "yyyy-MM-dd HH:mm:ss", fielddata = true)
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private Date updatedAt;
+  private LocalDateTime updatedAt;
 }

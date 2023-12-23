@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @NoArgsConstructor
@@ -15,4 +18,5 @@ import lombok.experimental.SuperBuilder;
 @Setter
 public class JwtAuthenticationResponse {
   private String token;
+  private Date expiredAt;
 }

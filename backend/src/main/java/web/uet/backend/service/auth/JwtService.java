@@ -1,6 +1,7 @@
 package web.uet.backend.service.auth;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -21,6 +22,8 @@ public class JwtService {
   @Value("${token.signing.key}")
   private String jwtSigningKey;
 
+  public static int EXPIRED_TIME = 1000 * 60 * 24;
+
   public UUID extractAccountID(String token) {
     return UUID.fromString(extractClaim(token, Claims::getSubject));
   }
@@ -40,7 +43,7 @@ public class JwtService {
         .setClaims(extraClaims)
         .setSubject(userAuthentication.getAccount().getAccountId().toString())
         .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+        .setExpiration(new Date(System.currentTimeMillis() + EXPIRED_TIME))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
   }
 

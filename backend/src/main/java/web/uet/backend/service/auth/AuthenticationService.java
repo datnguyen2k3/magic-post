@@ -22,6 +22,10 @@ import web.uet.backend.mapper.auth.AccountGeneralMapper;
 import web.uet.backend.repository.auth.entity.AccountRepository;
 import web.uet.backend.repository.business.jpa.ShopRepository;
 
+import java.util.Date;
+
+import static web.uet.backend.service.auth.JwtService.EXPIRED_TIME;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -43,7 +47,10 @@ public class AuthenticationService {
 
     UserAuthentication userAuthentication = new UserAuthentication(user);
     var jwt = jwtService.generateToken(userAuthentication);
-    return JwtAuthenticationResponse.builder().token(jwt).build();
+    return JwtAuthenticationResponse.builder()
+        .token(jwt)
+        .expiredAt(new Date(System.currentTimeMillis() + EXPIRED_TIME))
+        .build();
   }
 
   public static Account getCurrentAccount() {
