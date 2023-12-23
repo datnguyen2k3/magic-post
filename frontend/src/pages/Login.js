@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './Login.scss'
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { login } from '../app/authSlice';
+import { login, updateToken } from '../app/authSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,15 +36,20 @@ const Login = () => {
         } else if (!password) {
             toast.error('Không được để trống mật khẩu')
         } else {
-            await loginWithApi(`${backendUrl}/login`, username, password)
+            await loginWithApi(`${backendUrl}/auth/token`, `${backendUrl}/accounts/profile`, username, password)
                 .then(data => {
                     console.log(data);
                     if (!data || !data.success) {
                         toast.error(data.error)
                     } else {
+                        // Dispatch updateToken action
+                        const token = data.token;
+                        dispatch(updateToken({ token }));
+
                         toast.success('Đăng nhập thành công')
-                        const account = data.user // fake account information
-                        console.log('check bf dispatch: ', account)
+                        const account = data.account // account information from the second API
+
+                        // Dispatch login action
                         dispatch(login({ account }))
                         navigate('/')
                     }
@@ -52,52 +57,36 @@ const Login = () => {
         }
     }
 
-    //axios login
-    // async function login(url = '', username = '', password = '') {
-    //     const data = {
-    //         username: username,
-    //         password: password
-    //     };
-
-    //     try {
-    //         const response = await axios.post(url, data, {
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //         });
-    //         return response.data;
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
-
-    // login('https://example.com/api/v1/login', 'myUsername', 'myPassword')
-    //     .then(data => {
-    //         console.log(data); // JSON data parsed by `response.data`
-    //     });
-
-    //fake axios login
-
-    async function loginWithApi(url, username, password) {
+    async function loginWithApi(url, authUrl, username, password) {
         const data = {
             username,
             password,
         };
 
         try {
-            const response = await axios.get(`${url}?username=${username}&password=${password}`, {
+            // Gửi POST request để nhận token
+            const tokenResponse = await axios.post(`${url}`, data);
+            const token = tokenResponse.data.token;
+
+            if (!token) {
+                throw new Error('Không thể nhận token!');
+            }
+
+            // Sử dụng token trong header của GET request
+            const response = await axios.get(`${authUrl}`, {
                 headers: {
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
             });
 
-            if (response.data.length > 0) {
+            if (response) {
                 return {
                     success: true,
-                    user: response.data[0] // Trả về tài khoản hợp lệ đầu tiên
+                    account: response // Trả về tài khoản hợp lệ đầu tiên
                 };
             } else {
-                throw new Error('Username hoặc mật khẩu chưa chính xác!');
+                throw new Error('Không thể nhận thông tin tài khoản!');
             }
         } catch (error) {
             console.error(error);

@@ -1,0 +1,138 @@
+.te-create-shipment {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 30px;
+        align-items: center;
+        margin-top: 40px;
+        border: 2px solid #b9b9b9;
+        padding: 40px 20px;
+        border-radius: 20px;
+
+        .te-form-submit {
+            width: 300px;
+            padding: 20px 0;
+            border-radius: 16px;
+        }
+
+        .te-form-personal-info {
+            display: flex;
+            // flex-direction: column;
+            // gap: 20px;
+            width: 100%;
+
+            .te-form-sender,
+            .te-form-receiver {
+                display: flex;
+                width: 70%;
+                gap: 30px;
+                flex-direction: column;
+
+                .te-form-box {
+                    display: flex;
+                    width: 90%;
+                    justify-content: flex-start;
+                    gap: 60px;
+
+                    .te-form-sender-info,
+                    .te-form-receiver-info,
+                    .te-form-sender-address,
+                    .te-form-receiver-address {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                        // width: 25%;
+
+                        input,
+                        select {
+                            // min-width: 150%;
+                            border-radius: 10px;
+                        }
+
+                        input {
+                            padding: 8px 10px 8px 10px;
+                        }
+
+                        select {
+                            padding: 9px 4px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .te-form-shipment-info {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            .te-form-shipment-big-box {
+
+                display: flex;
+                gap: 100px;
+
+                input,
+                select {
+                    width: min-content;
+                }
+
+                input {
+                    padding: 8px 10px 8px 4px;
+                    border-radius: 10px;
+                }
+
+                select {
+                    padding: 10px 10px 10px 4px;
+                    border-radius: 10px;
+                }
+
+                .te-form-shipment-box-c {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    margin-top: 20px;
+
+                    div {
+                        display: flex;
+                        gap: 20px;
+                        align-items: center;
+                    }
+                }
+
+                .te-form-shipment-mass {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-top: 10px;
+                }
+
+                .te-form-shipment-cost {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    .te-form-shipment-cost-box {
+                        display: flex;
+                        gap: 10px;
+                    }
+
+                    .te-form-shipment-cost-box-sp {
+                        display: flex;
+                        width: 100%;
+                        font-size: 20px;
+                        justify-content: space-between;
+                    }
+                }
+
+                .te-form-shipment-1 {}
+            }
+        }
+    }
+}
