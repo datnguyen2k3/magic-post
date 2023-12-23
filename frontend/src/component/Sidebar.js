@@ -29,6 +29,7 @@ const Sidebar = () => {
     const isLoggedIn = (useSelector(selectRole) !== '')
     const isCEO = (useSelector(selectRole) === 'CEO')
     const isTradingEmp = (useSelector(selectRole) === 'EMPLOYEE')
+    const isPostHead = (useSelector(selectRole) === 'POST_HEAD')
     const account = useSelector(selectAccount)
 
     const goToLogin = () => {
@@ -97,6 +98,13 @@ const Sidebar = () => {
                             </button>
                         </Link></>
                     }
+                    {isPostHead && <>
+                        <Link to={'/ph-create-account'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Tạo tài khoản nhân viên
+                            </button>
+                        </Link>
+                    </>}
                 </div>
                 <div className='sidebar-2'>
                     <button className='sidebar-setting sidebar-top'>Cài đặt</button>
