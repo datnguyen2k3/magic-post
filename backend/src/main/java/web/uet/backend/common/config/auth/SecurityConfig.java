@@ -35,7 +35,8 @@ public class SecurityConfig {
                 new AntPathRequestMatcher("/swagger-ui/**"),
                 new AntPathRequestMatcher("/v3/api-docs/**"),
                 new AntPathRequestMatcher("/swagger-resources/**"),
-                new AntPathRequestMatcher("/webjars/**")
+                new AntPathRequestMatcher("/webjars/**"),
+                new AntPathRequestMatcher("/**", "OPTIONS")
             )
             .permitAll()
             .anyRequest()
@@ -43,6 +44,13 @@ public class SecurityConfig {
         .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
         .authenticationProvider(authenticationProvider())
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+//    http.cors(AbstractHttpConfigurer::disable)
+//        .authorizeHttpRequests(request -> request.requestMatchers(
+//                new AntPathRequestMatcher("/**")
+//            )
+//            .permitAll()
+//        );
 
     return http.build();
   }
