@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import toast from 'react-hot-toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import TradingEmp from './auth-component/TradingEmp';
 
 const Sidebar = () => {
 
@@ -27,7 +28,7 @@ const Sidebar = () => {
 
     const isLoggedIn = (useSelector(selectRole) !== '')
     const isCEO = (useSelector(selectRole) === 'CEO')
-    const isTradingManager = (useSelector(selectRole) === 'Trưởng điểm giao dịch')
+    const isTradingEmp = (useSelector(selectRole) === 'EMPLOYEE')
     const account = useSelector(selectAccount)
 
     const goToLogin = () => {
@@ -84,18 +85,18 @@ const Sidebar = () => {
                             </button>
                         </Link>
                     </>}
-                    {isTradingManager && <>
-                        <Link to={'/tm-create-account'}>
+                    {isTradingEmp && <>
+                        <Link to={'/te-create-shipment'}>
                             <button className='sidebar-statistics sidebar-bottom'>
-                                Tạo tài khoản nhân viên điểm giao dịch
+                                Tạo đơn vận mới cho khách
                             </button>
                         </Link>
-                        <Link to={'/tm-emps'}>
+                        <Link to={'/tm-coming'}>
                             <button className='sidebar-statistics sidebar-bottom'>
-                                Quản lý nhân viên điểm giao dịch
+                                Quản lý đơn hàng đang đến
                             </button>
-                        </Link>
-                    </>}
+                        </Link></>
+                    }
                 </div>
                 <div className='sidebar-2'>
                     <button className='sidebar-setting sidebar-top'>Cài đặt</button>
@@ -115,7 +116,7 @@ const Sidebar = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     </>
 }
 

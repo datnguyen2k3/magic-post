@@ -44,6 +44,7 @@ const Login = () => {
                     } else {
                         // Dispatch updateToken action
                         const token = data.token;
+                        console.log('check token: ', token)
                         dispatch(updateToken({ token }));
 
                         toast.success('Đăng nhập thành công')
@@ -67,11 +68,11 @@ const Login = () => {
             // Gửi POST request để nhận token
             const tokenResponse = await axios.post(`${url}`, data);
             const token = tokenResponse.data.token;
+            console.log(token)
 
-            if (!token) {
-                throw new Error('Không thể nhận token!');
-            }
-
+            // if (!token) {
+            //     throw new Error('Không thể nhận token!');
+            // }
             // Sử dụng token trong header của GET request
             const response = await axios.get(`${authUrl}`, {
                 headers: {
@@ -83,7 +84,8 @@ const Login = () => {
             if (response) {
                 return {
                     success: true,
-                    account: response // Trả về tài khoản hợp lệ đầu tiên
+                    account: response.data,
+                    token: tokenResponse.data.token // Trả về tài khoản hợp lệ đầu tiên
                 };
             } else {
                 throw new Error('Không thể nhận thông tin tài khoản!');

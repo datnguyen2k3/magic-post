@@ -18,6 +18,9 @@ import TradingManager from './auth-component/TradingManager'
 import ManagerDetail from '../pages/CEO/ManagerDetail';
 import TMEmps from '../pages/TradingManager/TMEmps';
 import TMEmpDetail from '../pages/TradingManager/TMEmpDetail';
+import TradingEmp from './auth-component/TradingEmp';
+import TECreateShipment from '../pages/TradingEmp/TECreateShipment';
+import TEComingToShop from '../pages/TradingEmp/TEComingToShop';
 
 const Page = () => {
     return <>
@@ -41,6 +44,11 @@ const Page = () => {
                     <Route path='/tm-create-account' element={<TradingManager><TMCreateAccount /></TradingManager>}></Route>
                     <Route path='/tm-emps' element={<TradingManager><TMEmps /></TradingManager>}></Route>
                     <Route path='/tm-emp-detail' element={<TradingManager><TMEmpDetail /></TradingManager>}></Route>
+
+                    TradingEmp
+                    <Route path='/te-create-shipment' element={<TradingEmp><TECreateShipment /></TradingEmp>}></Route>
+                    <Route path='/te-coming' element={<TradingEmp><TEComingToShop /></TradingEmp>}></Route>
+
                 </Routes>
                 <Toaster toastOptions={{
                     style: {

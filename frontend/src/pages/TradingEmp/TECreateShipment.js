@@ -17,27 +17,24 @@ const TECreateShipment = () => {
     const [sDCode, setSDCode] = useState()
     const [senderName, setSenderName] = useState('')
     const [senderPhone, setSenderPhone] = useState('')
-    const [senderEmail, setSenderEmail] = useState('')
 
     const [rRCode, setRRCode] = useState()
     const [rPCode, setRPCode] = useState()
     const [rDCode, setRDCode] = useState()
     const [receiverName, setReceiverName] = useState('')
     const [receiverPhone, setReceiverPhone] = useState('')
-    const [receiverEmail, setReceiverEmail] = useState('')
 
     const [type, setType] = useState('')
-    const [quantity, setQuantity] = useState(0)
-    const [values, setValues] = useState(0)
-    const [attached, setAttached] = useState(0)
-    const [mass, setMass] = useState(0)
-    const [cost, setCost] = useState(0)
-    const [surcharge, setSurcharge] = useState(0)
 
     const [sProvinceData, setSProvinceData] = useState(null)
     const [sDistrictData, setSDistrictData] = useState(null)
+    const [sCommuneData, setSCommuneData] = useState(null)
     const [rProvinceData, setRProvinceData] = useState(null)
     const [rDistrictData, setRDistrictData] = useState(null)
+    const [rCommuneData, setRCommuneData] = useState(null)
+
+    const [sCommuneId, setSCommuneId] = useState(0)
+    const [rCommuneId, setRCommuneId] = useState(0)
 
     const handleSRegionChange = (e) => {
         setSRCode(e.target.value)
@@ -49,6 +46,10 @@ const TECreateShipment = () => {
 
     const handleSDistrictChange = (e) => {
         setSDCode(e.target.value)
+    }
+
+    const handleSCommuneChange = (e) => {
+        setSCommuneId(e.target.value)
     }
 
     const handleRRegionChange = (e) => {
@@ -63,21 +64,13 @@ const TECreateShipment = () => {
         setRDCode(e.target.value)
     }
 
+    const handleRCommuneChange = (e) => {
+        setRCommuneId(e.target.value)
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let headers = {
-                    'Authorization': `Bearer ${token}`,
-                    'Access-Control-Request-Method': 'GET',
-                    'Access-Control-Request-Headers': 'Authorization, Content-Type',
-                }
-                // Preflight (OPTIONS) request
-                await axios.options(`${backendUrl}/states/${sRCode}/provinces`, {
-                    headers: headers,
-                    credentials: 'include',
-                });
-
-                // Real GET request
                 const response = await axios.get(`${backendUrl}/states/${sRCode}/provinces`, {
                     credentials: 'include',
                     headers: {
@@ -119,6 +112,25 @@ const TECreateShipment = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const response = await axios.get(`${backendUrl}/districts/${sDCode}/communes`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Thay thế token bằng token thực tế của bạn
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = response.data.communes;
+                // Xử lý dữ liệu tại đây
+                setSCommuneData(data)
+            } catch (error) {
+                console.error('Lỗi khi lấy dữ liệu:', error);
+            }
+        };
+        fetchData();
+    }, [sDCode]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
                 const response = await axios.get(`${backendUrl}/states/${rRCode}/provinces`, {
                     headers: {
                         'Authorization': `Bearer ${token}`, // Thay thế token bằng token thực tế của bạn
@@ -154,6 +166,25 @@ const TECreateShipment = () => {
         fetchData();
     }, [rPCode]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${backendUrl}/districts/${rDCode}/communes`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Thay thế token bằng token thực tế của bạn
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = response.data.communes;
+                // Xử lý dữ liệu tại đây
+                setRCommuneData(data)
+            } catch (error) {
+                console.error('Lỗi khi lấy dữ liệu:', error);
+            }
+        };
+        fetchData();
+    }, [rDCode]);
+
     const handleInputChange = (e) => {
         switch (e.target.name) {
             case 'senderName':
@@ -162,38 +193,14 @@ const TECreateShipment = () => {
             case 'senderPhone':
                 setSenderPhone(e.target.value);
                 break;
-            case 'senderEmail':
-                setSenderEmail(e.target.value);
-                break;
             case 'receiverName':
                 setReceiverName(e.target.value);
                 break;
             case 'receiverPhone':
                 setReceiverPhone(e.target.value);
                 break;
-            case 'receiverEmail':
-                setReceiverEmail(e.target.value);
-                break;
             case 'type':
                 setType(e.target.value);
-                break;
-            case 'quantity':
-                setQuantity(e.target.value);
-                break;
-            case 'values':
-                setValues(e.target.value);
-                break;
-            case 'attached':
-                setAttached(e.target.value);
-                break;
-            case 'mass':
-                setMass(e.target.value);
-                break;
-            case 'cost':
-                setCost(e.target.value);
-                break;
-            case 'surcharge':
-                setSurcharge(e.target.value);
                 break;
             default:
                 break
@@ -202,35 +209,36 @@ const TECreateShipment = () => {
 
     const getAddress = async (regioncode, provincecode, districtcode) => {
         try {
+            // Thiết lập header cho request
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+
             // Gọi API1 để lấy các province dựa vào regioncode
-            const response1 = await fetch(`api1/${regioncode}`);
-            const data1 = await response1.json();
+            const response1 = await axios.get(`${backendUrl}/states/${regioncode}/provinces`, config);
+            const province = response1.data.provinces.find(province => province.provinceId == provincecode);
 
             // Lọc province có provinceId = provincecode
-            const province = data1.provinces.find(province => province.provinceId === provincecode);
             if (!province) {
                 throw new Error('Không tìm thấy province!');
             }
 
             // Gọi API2 để lấy district dựa vào provincecode
-            const response2 = await fetch(`api2/${provincecode}`);
-            const data2 = await response2.json();
+            const response2 = await axios.get(`${backendUrl}/provinces/${provincecode}/districts`, config);
+            const district = response2.data.districts.find(district => district.districtId == districtcode);
 
             // Lọc district có districtId = districtcode
-            const district = data2.districts.find(district => district.districtId === districtcode);
             if (!district) {
                 throw new Error('Không tìm thấy district!');
             }
 
             // Trả về province và district
-            return {
-                province: province,
-                district: district
-            };
+            return district.name + ', ' + province.name;
         } catch (error) {
             console.error('Lỗi khi lấy dữ liệu:', error);
         }
-    }
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -239,17 +247,11 @@ const TECreateShipment = () => {
         if (!isValidName(senderName)) {
             message = 'Tên người gửi không hợp lệ'
             isValidAll = false;
-        } else if (!isValidEmail(senderEmail)) {
-            message = 'Email người gửi không hợp lệ'
-            isValidAll = false;
         } else if (!isValidPhoneNumber(senderPhone)) {
             message = 'Số điện thoại người gửi không hợp lệ'
             isValidAll = false;
         } else if (!isValidName(receiverName)) {
             message = 'Tên người nhận không hợp lệ'
-            isValidAll = false;
-        } else if (!isValidEmail(receiverEmail)) {
-            message = 'Email người nhận không hợp lệ'
             isValidAll = false;
         } else if (!isValidPhoneNumber(receiverPhone)) {
             message = 'Số điện thoại người nhận không hợp lệ'
@@ -269,27 +271,17 @@ const TECreateShipment = () => {
             const rAddress = await getAddress(rRCode, rPCode, rDCode)
             toast.success(message)
             let info = {
-                sender: {
-                    senderName,
-                    senderEmail,
-                    senderPhone,
-                    sAddress
-                },
-                receiver: {
-                    receiverName,
-                    receiverEmail,
-                    receiverPhone,
-                    rAddress
-                },
-                detail: {
-                    type,
-                    quantity,
-                    values,
-                    attached,
-                    mass,
-                    cost,
-                    surcharge,
-                }
+                fromCommuneId: sDCode,
+                fromName: senderName,
+                fromPhone: senderPhone,
+                fromAddress: sAddress,
+                toCommuneId: rDCode,
+                toName: receiverName,
+                toPhone: receiverPhone,
+                toAddress: rAddress,
+                fromShop: sCommuneId,
+                toShop: rCommuneId,
+                productType: type,
             }
             console.log(info, 'check info')
         }
@@ -309,8 +301,6 @@ const TECreateShipment = () => {
                                 <input name='senderName' type='text' onChange={(e) => handleInputChange(e)}></input>
                                 <label>Số điện thoại người nhận</label>
                                 <input name='senderPhone' type='text' onChange={(e) => handleInputChange(e)}></input>
-                                <label>Email người nhận</label>
-                                <input name='senderEmail' type='email' onChange={(e) => handleInputChange(e)}></input>
                             </div>
                             <div className='te-form-sender-address'>
                                 <h3>Điểm gửi</h3>
@@ -347,8 +337,6 @@ const TECreateShipment = () => {
                                 <input name='receiverName' type='text' onChange={(e) => handleInputChange(e)}></input>
                                 <label>Số điện thoại người nhận</label>
                                 <input name='receiverPhone' type='text' onChange={(e) => handleInputChange(e)}></input>
-                                <label>Email người nhận</label>
-                                <input name='receiverEmail' type='email' onChange={(e) => handleInputChange(e)}></input>
                             </div>
                             <div className='te-form-receiver-address'>
                                 <h3>Điểm gửi</h3>
@@ -378,48 +366,38 @@ const TECreateShipment = () => {
                     </div>
                 </div>
                 <div className='te-form-shipment-info'>
-                    <h2>Thông tin chi tiết đơn vận</h2>
-                    <div className='te-form-shipment-big-box'>
-                        <div className='te-form-shipment-1'>
-                            <h4>Loại hàng</h4>
-                            <select name='type' value={type} onChange={handleInputChange}>
-                                <option value={''}>-- Chọn loại --</option>
-                                <option value={'document'}>Tài liệu</option>
-                                <option value={'goods'}>Hàng hóa</option>
-                            </select>
-                            <div className='te-form-shipment-box-c'>
-                                <h4>Nội dung trị giá bưu gửi</h4>
-                                <div>
-                                    <label>Số lượng:</label>
-                                    <input type='number' name='quantity' value={quantity} onChange={handleInputChange}></input>
-                                </div>
-                                <div>
-                                    <label>Trị giá:</label>
-                                    <input type='number' name='values' value={values} onChange={handleInputChange}></input>
-                                </div>
-                                <div>
-                                    <label>Giấy tờ đính kèm:</label>
-                                    <input type='number' name='attached' value={attached} onChange={handleInputChange}></input>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='te-form-shipment-cost'>
-                            <div className='te-form-shipment-mass'><label><h4>Khối lượng:</h4></label>
-                                <input type='number' name='mass' value={mass} onChange={handleInputChange}></input> &nbsp;kg</div>
-                            <h4>Cước:</h4>
-                            <div className='te-form-shipment-cost-box'>
-                                <span>Cước chính: <input type='number' name='cost' value={cost} onChange={handleInputChange}></input></span>
-                                <span>Phụ thu: <input type='number' name='surcharge' value={surcharge} onChange={handleInputChange}></input></span>
-                            </div>
-                            <div className='te-form-shipment-cost-box-sp'>
-                                <span>Cước tổng (gồm VAT): {(cost * 0.1).toFixed(0)}</span>
-                                <span><b>Tổng: {(cost * 1.1 + 1 * surcharge).toFixed(0)}</b></span>
+                    <div className='te-form-shipment-info-1'>
+                        <h2>Thông tin chi tiết đơn vận</h2>
+                        <div className='te-form-shipment-big-box'>
+                            <div className='te-form-shipment-1'>
+                                <h4>Loại hàng</h4>
+                                <select name='type' value={type} onChange={handleInputChange}>
+                                    <option value={''}>-- Chọn loại --</option>
+                                    <option value={'document'}>Tài liệu</option>
+                                    <option value={'goods'}>Hàng hóa</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <input type='checkbox'></input><span> Khách hàng xác nhận đồng ý với các điều khoản</span>
+                    <div className='te-form-shipment-info-2'>
+                        <h2>Xác nhận điểm giao dịch đầu và cuối</h2>
+                        <div className='te-confirm-offices-box'>
+                            <label>Điểm giao dịch đầu</label>
+                            <select onChange={(e) => handleSCommuneChange(e)}>
+                                <option value=''>Chọn điểm</option>
+                                {
+                                    (sPCode && sRCode && sDCode && sCommuneData) ? sCommuneData.map(commune => <option value={commune.communeId}>{commune.name}</option>) : <></>
+                                }
+                            </select>
+                            <label>Điểm giao dịch cuối</label>
+                            <select onChange={(e) => handleRCommuneChange(e)}>
+                                <option value=''>Chọn điểm</option>
+                                {
+                                    (rPCode && rRCode && rDCode && rCommuneData) ? rCommuneData.map(commune => <option value={commune.communeId}>{commune.name}</option>) : <></>
+                                }
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <input className='te-form-submit' type='submit' value={'Xác nhận thông tin đơn vận'} onClick={handleSubmit}></input>
             </form></div>
