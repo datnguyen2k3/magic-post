@@ -12,6 +12,7 @@ import web.uet.backend.entity.business.Shop;
 import web.uet.backend.entity.location.Commune;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Document(indexName = "delivery")
@@ -58,9 +59,9 @@ public class DeliveryDocument {
   @Field(type = FieldType.Nested, includeInParent = true)
   private ShopDocument currentShop;
 
-  @Field(type = FieldType.Date)
-  private LocalDateTime createdAt;
+  @Field(type = FieldType.Date, pattern = "yyyy-MM-dd HH:mm:ss", fielddata = true)
+  private Date createdAt;
 
-  @Field(type = FieldType.Date)
-  private LocalDateTime updatedAt;
+  @Field(type = FieldType.Date, pattern = "yyyy-MM-dd HH:mm:ss", fielddata = true)
+  private Date updatedAt;
 }

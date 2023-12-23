@@ -5,10 +5,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.format.annotation.DateTimeFormat;
 import web.uet.backend.common.enums.StatusType;
 import web.uet.backend.entity.business.Shop;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Document(indexName = "delivery_status")
 @Builder
@@ -30,9 +32,11 @@ public class DeliveryStatusDocument {
   @Field(type = FieldType.Nested, includeInParent = true)
   private ShopDocument currentShop;
 
-  @Field(type = FieldType.Date)
-  private LocalDateTime createdAt;
+  @Field(type = FieldType.Date, fielddata = true)
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private Date createdAt;
 
-  @Field(type = FieldType.Date)
-  private LocalDateTime updatedAt;
+  @Field(type = FieldType.Date, pattern = "yyyy-MM-dd HH:mm:ss", fielddata = true)
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private Date updatedAt;
 }

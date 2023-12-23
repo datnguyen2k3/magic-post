@@ -1,10 +1,11 @@
 package web.uet.backend.service.elasticsearch.search;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.WildcardQuery;
+import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ElasticsearchQueryUtils {
@@ -26,6 +27,32 @@ public class ElasticsearchQueryUtils {
             new MatchQuery.Builder()
                 .field(field)
                 .query(value)
+                .build()
+        )
+    );
+  }
+
+  static public BoolQuery.Builder matchQuery(BoolQuery.Builder query, String field, Integer value) {
+    return query.must(
+        new Query(
+            new MatchQuery.Builder()
+                .field(field)
+                .query(value)
+                .build()
+        )
+    );
+  }
+
+  static public BoolQuery.Builder inQuery(BoolQuery.Builder query, String field, List<String> values) {
+    TermsQueryField termsQueryField = new TermsQueryField.Builder()
+        .value(values.stream().map(FieldValue::of).collect(Collectors.toList()))
+        .build();
+
+    return query.must(
+        new Query(
+            new TermsQuery.Builder()
+                .field(field)
+                .terms(termsQueryField)
                 .build()
         )
     );

@@ -1,22 +1,32 @@
 package web.uet.backend.service.business;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.SortDirection;
-import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.elasticsearch.client.elc.NativeQuery;
+import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHitSupport;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.SearchPage;
 import org.springframework.stereotype.Service;
-import web.uet.backend.common.enums.StatusType;
 import web.uet.backend.common.enums.filter.DirectionSort;
+import web.uet.backend.document.business.DeliveryStatusDocument;
 import web.uet.backend.dto.business.request.DeliveryStatusCreateRequest;
+import web.uet.backend.dto.business.request.DeliveryStatusPageRequest;
 import web.uet.backend.dto.business.response.delivery.DeliveryStatusDetailListResponse;
+import web.uet.backend.dto.business.response.delivery.DeliveryStatusDetailResponse;
 import web.uet.backend.dto.business.response.delivery.DeliveryStatusGeneralResponse;
+import web.uet.backend.dto.business.response.delivery.DeliveryStatusPageResponse;
 import web.uet.backend.entity.business.Delivery;
 import web.uet.backend.entity.business.DeliveryStatus;
 import web.uet.backend.entity.business.Shop;
-import web.uet.backend.event.DeliveryCreateEvent;
-import web.uet.backend.event.DeliveryStatusCreateEvent;
 import web.uet.backend.exception.type.NotFoundException;
+import web.uet.backend.mapper.business.document.DeliveryStatusDetailMapperFromDocument;
 import web.uet.backend.mapper.business.response.DeliveryStatusDetailMapper;
 import web.uet.backend.mapper.business.response.DeliveryStatusGeneralMapper;
 import web.uet.backend.repository.business.jpa.DeliveryRepository;
@@ -25,6 +35,9 @@ import web.uet.backend.repository.business.jpa.ShopRepository;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static web.uet.backend.service.elasticsearch.search.ElasticsearchQueryUtils.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,9 +49,12 @@ public class DeliveryStatusService {
 
   private final DeliveryStatusGeneralMapper deliveryStatusGeneralMapper;
   private final DeliveryStatusDetailMapper deliveryStatusDetailMapper;
+  private final DeliveryStatusDetailMapperFromDocument deliveryStatusDetailMapperFromDocument;
+
+  private final ElasticsearchOperations elasticsearchOperations;
 
   @Transactional
-  public DeliveryStatusGeneralResponse createByDeliveryId(UUID deliveryId, DeliveryStatusCreateRequest request) {
+  public DeliveryStatusGeneralResponse createDeliveryStatusByDeliveryId(UUID deliveryId, DeliveryStatusCreateRequest request) {
     Delivery delivery = deliveryRepository.findById(deliveryId)
         .orElseThrow(() -> new NotFoundException("Delivery not found"));
 
@@ -59,7 +75,7 @@ public class DeliveryStatusService {
     return deliveryStatusGeneralMapper.toDto(deliveryStatus);
   }
 
-  public DeliveryStatusDetailListResponse getByDelivery(UUID deliveryId, DirectionSort directionSort) {
+  public DeliveryStatusDetailListResponse getDeliveryStatusesByDeliveryId(UUID deliveryId, DirectionSort directionSort) {
     Delivery delivery = deliveryRepository.findById(deliveryId)
         .orElseThrow(() -> new NotFoundException("Delivery not found"));
 
@@ -72,5 +88,100 @@ public class DeliveryStatusService {
         .build();
   }
 
+  private Query getQueryBy(DeliveryStatusPageRequest request) {
+    BoolQuery.Builder boolQueryBuilder = new BoolQuery.Builder();
+
+    if (request.getFromCommuneId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "delivery.fromCommune.id", request.getToCommuneId());
+    } else if (request.getFromDistrictId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "delivery.fromCommune.district.id", request.getToDistrictId());
+    } else if (request.getFromProvinceId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder,
+          "delivery.fromCommune.district.province.id",
+          request.getToProvinceId()
+      );
+    }
+
+    if (request.getToCommuneId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "delivery.toCommune.id", request.getToCommuneId());
+    } else if (request.getToDistrictId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "delivery.toCommune.district.id", request.getToDistrictId());
+    } else if (request.getToProvinceId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder,
+          "delivery.toCommune.district.province.id",
+          request.getToProvinceId()
+      );
+    }
+
+    if (request.getFromAddressContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "delivery.fromAddress", request.getFromAddressContains());
+    }
+    if (request.getToAddressContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "delivery.toAddress", request.getToAddressContains());
+    }
+
+    if (request.getFromPhoneContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "delivery.fromPhone", request.getFromPhoneContains());
+    }
+    if (request.getToPhoneContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "delivery.toPhone", request.getToPhoneContains());
+    }
+
+    if (request.getFromNameContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "delivery.fromName", request.getFromNameContains());
+    }
+    if (request.getToNameContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "delivery.toName", request.getToNameContains());
+    }
+
+    if (request.getFromShopId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "delivery.fromShop.shopId", request.getFromShopId());
+    }
+    if (request.getToShopId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "delivery.toShop.shopId", request.getToShopId());
+    }
+
+    if (request.getProductType() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "delivery.productType", request.getProductType().getValue());
+    }
+
+    if (request.getStatuses() != null) {
+      boolQueryBuilder = inQuery(boolQueryBuilder, "statusType", request.getStatuses().stream()
+          .map(Enum::name)
+          .collect(Collectors.toList())
+      );
+    }
+
+    if (request.getCurrentShopId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "currentShop.shopId", request.getCurrentShopId());
+    }
+
+    return new Query(boolQueryBuilder.build());
+  }
+
+  public DeliveryStatusPageResponse getDeliveryStatusPageResponseBy(DeliveryStatusPageRequest request) {
+    Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
+
+    NativeQueryBuilder nativeQueryBuilder = NativeQuery.builder()
+        .withQuery(getQueryBy(request))
+        .withPageable(pageable);
+
+    SearchHits<DeliveryStatusDocument> searchHits = elasticsearchOperations.search(
+        nativeQueryBuilder.build(),
+        DeliveryStatusDocument.class
+    );
+    SearchPage<DeliveryStatusDocument> searchPage = SearchHitSupport.searchPageFor(searchHits, nativeQueryBuilder.getPageable());
+
+    List<DeliveryStatusDetailResponse> deliveryStatuses =
+        searchHits.stream().map(s -> deliveryStatusDetailMapperFromDocument.toDto(s.getContent())).toList();
+
+    return DeliveryStatusPageResponse.builder()
+        .totalElements(searchPage.getTotalElements())
+        .totalPages(searchPage.getTotalPages())
+        .page(request.getPage())
+        .size(request.getSize())
+        .deliveryStatuses(deliveryStatuses)
+        .build();
+  }
 
 }

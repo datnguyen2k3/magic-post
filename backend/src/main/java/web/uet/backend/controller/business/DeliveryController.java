@@ -2,7 +2,6 @@ package web.uet.backend.controller.business;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.SortDirection;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +38,7 @@ public class DeliveryController {
       @RequestBody DeliveryStatusCreateRequest request,
       @RequestParam UUID deliveryId
   ) {
-    return ResponseEntity.created(null).body(deliveryStatusService.createByDeliveryId(deliveryId, request));
+    return ResponseEntity.created(null).body(deliveryStatusService.createDeliveryStatusByDeliveryId(deliveryId, request));
   }
 
   @GetMapping("/{deliveryId}/deliveryStatuses")
@@ -47,7 +46,7 @@ public class DeliveryController {
       @PathVariable UUID deliveryId,
       @RequestParam DirectionSort directionSort
       ) {
-    return ResponseEntity.ok(deliveryStatusService.getByDelivery(deliveryId, directionSort));
+    return ResponseEntity.ok(deliveryStatusService.getDeliveryStatusesByDeliveryId(deliveryId, directionSort));
   }
 
 }

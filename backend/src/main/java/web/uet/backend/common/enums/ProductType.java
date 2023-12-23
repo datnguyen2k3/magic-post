@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum ProductType {
-    DOCUMENT,
-    PRODUCT
+    DOCUMENT("DOCUMENT"),
+    PRODUCT("PRODUCT");
+
+    private final String value;
 }

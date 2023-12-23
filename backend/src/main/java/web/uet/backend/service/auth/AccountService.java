@@ -63,10 +63,6 @@ public class AccountService implements UserDetailsService {
     return accountGeneralMapper.toDto(currentAccount);
   }
 
-
-
-
-
   private Query getBy(AccountPageRequest request) {
     BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
 
@@ -98,7 +94,7 @@ public class AccountService implements UserDetailsService {
   }
 
   public AccountPageResponse getAll(AccountPageRequest request) {
-    Sort sort = Sort.by(request.getDirection(), request.getSortBy().getValue());
+//    Sort sort = Sort.by(request.getDirection(), request.getSortBy().getValue());
     Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
 
     NativeQueryBuilder nativeQueryBuilder = NativeQuery.builder()

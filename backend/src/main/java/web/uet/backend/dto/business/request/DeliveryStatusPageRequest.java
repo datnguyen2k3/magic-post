@@ -19,11 +19,11 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class DeliveryPageRequest {
+public class DeliveryStatusPageRequest {
 
-  private Integer page;
+  private Integer page = 1;
 
-  private Integer size;
+  private Integer size = 10;
 
   private DeliverySort sort;
 
@@ -46,6 +46,4 @@ public class DeliveryPageRequest {
   private ProductType productType;
   private List<StatusType> statuses;
   private Integer currentShopId;
-
-
 }
