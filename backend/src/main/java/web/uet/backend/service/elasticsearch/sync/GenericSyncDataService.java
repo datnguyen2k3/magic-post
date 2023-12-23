@@ -19,7 +19,7 @@ public abstract class GenericSyncDataService<
   protected ER er;
   protected M m;
 
-//  @PostConstruct
+  @PostConstruct
   protected void syncData() {
     List<E> entities = er.findAll();
     List<D> documents = m.toDto(entities);
