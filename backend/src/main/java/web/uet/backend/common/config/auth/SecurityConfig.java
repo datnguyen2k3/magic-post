@@ -45,13 +45,6 @@ public class SecurityConfig {
         .authenticationProvider(authenticationProvider())
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-//    http.cors(AbstractHttpConfigurer::disable)
-//        .authorizeHttpRequests(request -> request.requestMatchers(
-//                new AntPathRequestMatcher("/**")
-//            )
-//            .permitAll()
-//        );
-
     return http.build();
   }
 
