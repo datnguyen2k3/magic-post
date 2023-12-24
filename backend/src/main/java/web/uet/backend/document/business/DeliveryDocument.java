@@ -59,7 +59,7 @@ public class DeliveryDocument {
 
   private BigDecimal weight;
 
-  @Field(type = FieldType.Text, fielddata = true)
+  @Field(type = FieldType.Keyword, fielddata = true)
   private StatusType currentStatus;
 
   @Field(type = FieldType.Nested, includeInParent = true)

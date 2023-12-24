@@ -19,7 +19,7 @@ public class ShopDocument {
   @Id
   private Integer shopId;
 
-  @Field(type = FieldType.Text, fielddata = true)
+  @Field(type = FieldType.Keyword, fielddata = true)
   private ShopType type;
 
   @Field(type = FieldType.Object)
