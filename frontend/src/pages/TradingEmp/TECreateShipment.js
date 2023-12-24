@@ -4,37 +4,50 @@ import axios from 'axios'
 import { isValidEmail, isValidName, isValidPhoneNumber } from '../../logic/verification'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
-import { selectToken } from '../../app/authSlice'
+import { selectToken, selectAccount } from '../../app/authSlice'
 
 const TECreateShipment = () => {
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
+    console.log(useSelector(selectAccount))
+    const shopId = (useSelector(selectAccount).workAt.shopId)
+
 
     const token = useSelector(selectToken)
 
     const [sRCode, setSRCode] = useState()
     const [sPCode, setSPCode] = useState()
     const [sDCode, setSDCode] = useState()
+    const [sWCode, setSWCode] = useState()
     const [senderName, setSenderName] = useState('')
     const [senderPhone, setSenderPhone] = useState('')
+
+    const [sProvinceData, setSProvinceData] = useState(null)
+    const [sDistrictData, setSDistrictData] = useState(null)
+    const [sWardData, setSWardData] = useState(null)
 
     const [rRCode, setRRCode] = useState()
     const [rPCode, setRPCode] = useState()
     const [rDCode, setRDCode] = useState()
+    const [rWCode, setRWCode] = useState()
     const [receiverName, setReceiverName] = useState('')
     const [receiverPhone, setReceiverPhone] = useState('')
 
-    const [type, setType] = useState('')
-
-    const [sProvinceData, setSProvinceData] = useState(null)
-    const [sDistrictData, setSDistrictData] = useState(null)
-    const [sCommuneData, setSCommuneData] = useState(null)
     const [rProvinceData, setRProvinceData] = useState(null)
     const [rDistrictData, setRDistrictData] = useState(null)
-    const [rCommuneData, setRCommuneData] = useState(null)
+    const [rWardData, setRWardData] = useState(null)
 
-    const [sCommuneId, setSCommuneId] = useState(0)
-    const [rCommuneId, setRCommuneId] = useState(0)
+    const [type, setType] = useState('')
+
+    const [shopRCode, setShopRCode] = useState()
+    const [shopPCode, setShopPCode] = useState()
+    const [shopDCode, setShopDCode] = useState()
+    const [shopCommuneId, setShopCommuneId] = useState(0)
+
+    const [shopProvinceData, setShopProvinceData] = useState(null)
+    const [shopDistrictData, setShopDistrictData] = useState(null)
+    const [shopCommuneData, setShopCommuneData] = useState(null)
 
     const handleSRegionChange = (e) => {
         setSRCode(e.target.value)
@@ -48,8 +61,8 @@ const TECreateShipment = () => {
         setSDCode(e.target.value)
     }
 
-    const handleSCommuneChange = (e) => {
-        setSCommuneId(e.target.value)
+    const handleSWardChange = (e) => {
+        setSWCode(e.target.value)
     }
 
     const handleRRegionChange = (e) => {
@@ -64,8 +77,24 @@ const TECreateShipment = () => {
         setRDCode(e.target.value)
     }
 
-    const handleRCommuneChange = (e) => {
-        setRCommuneId(e.target.value)
+    const handleRWardChange = (e) => {
+        setRWCode(e.target.value)
+    }
+
+    const handleShopRegionChange = (e) => {
+        setShopRCode(e.target.value)
+    }
+
+    const handleShopProvinceChange = (e) => {
+        setShopPCode(e.target.value)
+    }
+
+    const handleShopDistrictChange = (e) => {
+        setShopDCode(e.target.value)
+    }
+
+    const handleShopCommuneChange = (e) => {
+        setShopCommuneId(e.target.value)
     }
 
     useEffect(() => {
@@ -120,7 +149,7 @@ const TECreateShipment = () => {
                 });
                 const data = response.data.communes;
                 // Xử lý dữ liệu tại đây
-                setSCommuneData(data)
+                setSWardData(data)
             } catch (error) {
                 console.error('Lỗi khi lấy dữ liệu:', error);
             }
@@ -177,13 +206,70 @@ const TECreateShipment = () => {
                 });
                 const data = response.data.communes;
                 // Xử lý dữ liệu tại đây
-                setRCommuneData(data)
+                setRWardData(data)
             } catch (error) {
                 console.error('Lỗi khi lấy dữ liệu:', error);
             }
         };
         fetchData();
     }, [rDCode]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${backendUrl}/states/${shopRCode}/provinces`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Thay thế token bằng token thực tế của bạn
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = response.data.provinces;
+                // Xử lý dữ liệu tại đây
+                setShopProvinceData(data)
+            } catch (error) {
+                console.error('Lỗi khi lấy dữ liệu:', error);
+            }
+        };
+        fetchData();
+    }, [shopRCode]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${backendUrl}/provinces/${shopPCode}/districts`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Thay thế token bằng token thực tế của bạn
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = response.data.districts;
+                // Xử lý dữ liệu tại đây
+                setShopDistrictData(data)
+            } catch (error) {
+                console.error('Lỗi khi lấy dữ liệu:', error);
+            }
+        };
+        fetchData();
+    }, [shopPCode]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${backendUrl}/districts/${shopDCode}/communes`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Thay thế token bằng token thực tế của bạn
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = response.data.communes;
+                // Xử lý dữ liệu tại đây
+                setShopCommuneData(data)
+            } catch (error) {
+                console.error('Lỗi khi lấy dữ liệu:', error);
+            }
+        };
+        fetchData();
+    }, [shopDCode]);
 
     const handleInputChange = (e) => {
         switch (e.target.name) {
@@ -256,8 +342,9 @@ const TECreateShipment = () => {
         } else if (!isValidPhoneNumber(receiverPhone)) {
             message = 'Số điện thoại người nhận không hợp lệ'
             isValidAll = false;
-        } else if (!(sRCode && sPCode && sDCode &&
-            rRCode && rPCode && rDCode)) {
+        } else if (!(sRCode && sPCode && sDCode && sWCode &&
+            rRCode && rPCode && rDCode && rWCode &&
+            shopRCode && shopDCode && shopDCode && shopCommuneId)) {
             message = 'Thông tin địa chỉ bị thiếu';
             isValidAll = false;
         } else {
@@ -271,19 +358,28 @@ const TECreateShipment = () => {
             const rAddress = await getAddress(rRCode, rPCode, rDCode)
             toast.success(message)
             let info = {
-                fromCommuneId: sDCode,
+                fromCommuneId: Number(sWCode),
                 fromName: senderName,
                 fromPhone: senderPhone,
                 fromAddress: sAddress,
-                toCommuneId: rDCode,
+                toCommuneId: Number(rWCode),
                 toName: receiverName,
                 toPhone: receiverPhone,
                 toAddress: rAddress,
-                fromShop: sCommuneId,
-                toShop: rCommuneId,
+                fromShop: Number(shopId),
+                toShop: Number(shopCommuneId),
                 productType: type,
             }
             console.log(info, 'check info')
+            try {
+                const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                };
+                const response = await axios.post(`${backendUrl}/deliveries`, info, config);
+                console.log(response.data); // Xử lý dữ liệu trả về từ API
+            } catch (error) {
+                console.error('Lỗi khi gửi thông tin đơn hàng:', error);
+            }
         }
     }
 
@@ -325,6 +421,13 @@ const TECreateShipment = () => {
                                         (sDistrictData && sPCode && sRCode) ? sDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
                                     }
                                 </select>
+                                <label>Phường/Xã</label>
+                                <select onChange={(e) => handleSWardChange(e)}>
+                                    <option value=''>Chọn Phường/Xã</option>
+                                    {
+                                        (sWardData && sPCode && sRCode && sDCode) ? sWardData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
+                                    }
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -361,6 +464,13 @@ const TECreateShipment = () => {
                                         (rDistrictData && rPCode && rRCode) ? rDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
                                     }
                                 </select>
+                                <label>Phường/Xã</label>
+                                <select onChange={(e) => handleRWardChange(e)}>
+                                    <option value=''>Chọn Phường/Xã</option>
+                                    {
+                                        (rWardData && sPCode && sRCode && sDCode) ? rWardData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
+                                    }
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -373,8 +483,8 @@ const TECreateShipment = () => {
                                 <h4>Loại hàng</h4>
                                 <select name='type' value={type} onChange={handleInputChange}>
                                     <option value={''}>-- Chọn loại --</option>
-                                    <option value={'document'}>Tài liệu</option>
-                                    <option value={'goods'}>Hàng hóa</option>
+                                    <option value={'DOCUMENT'}>Tài liệu</option>
+                                    <option value={'GOODS'}>Hàng hóa</option>
                                 </select>
                             </div>
                         </div>
@@ -382,18 +492,33 @@ const TECreateShipment = () => {
                     <div className='te-form-shipment-info-2'>
                         <h2>Xác nhận điểm giao dịch đầu và cuối</h2>
                         <div className='te-confirm-offices-box'>
-                            <label>Điểm giao dịch đầu</label>
-                            <select onChange={(e) => handleSCommuneChange(e)}>
-                                <option value=''>Chọn điểm</option>
+                            <label>Điểm giao dịch cuối</label><br></br>
+                            <label>Miền</label>
+                            <select onChange={(e) => handleShopRegionChange(e)}>
+                                <option value=''>Chọn miền</option>
+                                <option value={1}>Miền Bắc</option>
+                                <option value={2}>Miền Trung</option>
+                                <option value={3}>Miền Nam</option>
+                            </select>
+                            <label>Tỉnh/thành</label>
+                            <select onChange={(e) => handleShopProvinceChange(e)}>
+                                <option value=''>Chọn Tỉnh/thành</option>
                                 {
-                                    (sPCode && sRCode && sDCode && sCommuneData) ? sCommuneData.map(commune => <option value={commune.communeId}>{commune.name}</option>) : <></>
+                                    (shopProvinceData && shopRCode) ? shopProvinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
                                 }
                             </select>
-                            <label>Điểm giao dịch cuối</label>
-                            <select onChange={(e) => handleRCommuneChange(e)}>
-                                <option value=''>Chọn điểm</option>
+                            <label>Quận/Huyện</label>
+                            <select onChange={(e) => handleShopDistrictChange(e)}>
+                                <option value=''>Chọn Quận/Huyện</option>
                                 {
-                                    (rPCode && rRCode && rDCode && rCommuneData) ? rCommuneData.map(commune => <option value={commune.communeId}>{commune.name}</option>) : <></>
+                                    (shopDistrictData && shopPCode && shopRCode) ? shopDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
+                                }
+                            </select>
+                            <label>Phường/Xã</label>
+                            <select onChange={(e) => handleShopCommuneChange(e)}>
+                                <option value=''>Chọn Phường/Xã</option>
+                                {
+                                    (shopCommuneData && shopPCode && shopRCode && shopDCode) ? rWardData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
                                 }
                             </select>
                         </div>

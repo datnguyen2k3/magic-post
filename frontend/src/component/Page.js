@@ -6,7 +6,7 @@ import Details from '../pages/Details';
 import CreateForm from '../pages/CreateForm';
 import { Toaster } from 'react-hot-toast'
 import Login from '../pages/Login';
-import Logged from './auth-component/CEO';
+import Logged from './auth-component/Logged';
 import NotLogged from './auth-component/NotLogged';
 import Register from '../pages/Register';
 import Offices from '../pages/CEO/Offices';
@@ -23,6 +23,8 @@ import TECreateShipment from '../pages/TradingEmp/TECreateShipment';
 import TEComingToShop from '../pages/TradingEmp/TEComingToShop';
 import PostHead from './auth-component/PostHead';
 import PHCreateAccount from '../pages/PostHead/PHCreateAccount';
+import Account from '../pages/Account';
+import NeedLogged from './auth-component/NeedLogged';
 
 const Page = () => {
     return <>
@@ -35,6 +37,7 @@ const Page = () => {
                     <Route path='/create-form' element={<Logged><CreateForm /></Logged>}></Route>
                     <Route path='/login' element={<NotLogged><Login /></NotLogged>}></Route>
                     <Route path='/register' element={<NotLogged><Register /></NotLogged>}></Route>
+                    <Route path='/account' element={<NeedLogged><Account /></NeedLogged>}></Route>
 
                     {/* CEO */}
                     <Route path='/offices' element={<CEO><Offices /></CEO>}></Route>

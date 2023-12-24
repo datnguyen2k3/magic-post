@@ -113,7 +113,7 @@ const Sidebar = () => {
                             <button className='sidebar-account sidebar-view-account'>{account !== undefined ? account.name : 'Tài khoản'} &nbsp;<FontAwesomeIcon icon={faChevronRight} />
                                 <div className='sidebar-account-dropdown'>
                                     <button className='sidebar-account sidebar-account-dropdown-item' style={{ fontSize: '20px' }}><b>{account.role}</b></button>
-                                    <button className='sidebar-account sidebar-account-dropdown-item'>Tài khoản</button>
+                                    <button className='sidebar-account sidebar-account-dropdown-item'><Link to={'/account'}>Tài khoản</Link></button>
                                     <button className='sidebar-account sidebar-account-dropdown-item' onClick={() => goToLogout()}>Đăng xuất</button>
                                 </div>
                             </button>
