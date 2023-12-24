@@ -1,6 +1,7 @@
 package web.uet.backend.service.auth;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import web.uet.backend.common.config.auth.SecurityConfig;
 import web.uet.backend.document.AccountDocument;
+import web.uet.backend.dto.auth.request.AccountPatchRequest;
 import web.uet.backend.dto.auth.response.AccountGeneralResponse;
 import web.uet.backend.dto.auth.request.AccountPageRequest;
 import web.uet.backend.dto.auth.response.AccountPageResponse;
@@ -24,6 +27,7 @@ import web.uet.backend.entity.auth.Account;
 import web.uet.backend.entity.auth.UserAuthentication;
 import web.uet.backend.entity.enums.Role;
 import web.uet.backend.exception.type.InvalidAuthorizationException;
+import web.uet.backend.exception.type.NotFoundException;
 import web.uet.backend.mapper.auth.AccountGeneralFromDocumentMapper;
 import web.uet.backend.mapper.auth.AccountGeneralMapper;
 import web.uet.backend.repository.auth.elasticsearch.AccountDocumentRepository;
@@ -128,6 +132,38 @@ public class AccountService implements UserDetailsService {
         .totalPages(searchPage.getTotalPages())
         .accounts(accounts)
         .build();
+  }
+
+  @Transactional
+  public AccountGeneralResponse patchAccountBy(AccountPatchRequest request) {
+    Account currentAccount = AuthenticationService.getCurrentAccount();
+    Account account = accountRepository.findByUsername(request.getUsername())
+        .orElseThrow(() -> new NotFoundException("Account not found"));
+
+    if (!validateRole(account.getRole(), currentAccount.getRole())) {
+      throw new InvalidAuthorizationException("Permission denied");
+    }
+
+    if (request.getPassword() != null) {
+      account.setPassword(SecurityConfig.passwordEncoder().encode(request.getPassword()));
+    }
+    if (request.getName() != null) {
+      account.setName(request.getName());
+    }
+    if (request.getEmail() != null) {
+      account.setEmail(request.getEmail());
+    }
+    if (request.getPhone() != null) {
+      account.setPhone(request.getPhone());
+    }
+    if (request.getAddress() != null) {
+      account.setAddress(request.getAddress());
+    }
+    if (request.getCccd() != null) {
+      account.setCccd(request.getCccd());
+    }
+    account = accountRepository.save(account);
+    return accountGeneralMapper.toDto(account);
   }
 
 }
