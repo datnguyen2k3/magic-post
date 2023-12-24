@@ -1,6 +1,8 @@
 package web.uet.backend.dto.business.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +23,12 @@ import java.util.List;
 @Setter
 public class DeliveryStatusPageRequest {
 
-  private Integer page = 1;
+  @NotNull
+  @Min(0)
+  private Integer page = 0;
 
+  @NotNull
+  @Min(1)
   private Integer size = 10;
 
   private DeliverySort sort;

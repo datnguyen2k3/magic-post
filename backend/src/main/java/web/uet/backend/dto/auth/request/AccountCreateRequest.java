@@ -1,4 +1,4 @@
-package web.uet.backend.dto.auth;
+package web.uet.backend.dto.auth.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Min;

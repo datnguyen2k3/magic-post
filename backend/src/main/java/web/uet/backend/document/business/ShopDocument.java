@@ -24,4 +24,12 @@ public class ShopDocument {
 
   @Field(type = FieldType.Object)
   private CommuneDocument commune;
+
+  private Integer employeeNumber;
+
+  private Integer comingDeliveryNumber;
+
+  private Integer currentDeliveryNumber;
+
+  private Integer goneDeliveryNumber;
 }

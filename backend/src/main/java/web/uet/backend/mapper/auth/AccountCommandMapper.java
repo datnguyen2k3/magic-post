@@ -1,11 +1,9 @@
 package web.uet.backend.mapper.auth;
 
-import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import web.uet.backend.dto.auth.AccountCreateRequest;
+import web.uet.backend.dto.auth.request.AccountCreateRequest;
 import web.uet.backend.entity.auth.Account;
 
 @Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
