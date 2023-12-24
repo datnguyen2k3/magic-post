@@ -14,17 +14,16 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHitSupport;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.SearchPage;
-import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import web.uet.backend.document.business.ShopDocument;
-import web.uet.backend.entity.enums.Role;
 import web.uet.backend.dto.business.request.ShopPageRequest;
 import web.uet.backend.dto.business.response.ShopGeneralResponse;
 import web.uet.backend.dto.business.response.ShopPageResponse;
 import web.uet.backend.entity.auth.Account;
 import web.uet.backend.entity.business.DeliveryStatus;
 import web.uet.backend.entity.business.Shop;
+import web.uet.backend.entity.enums.Role;
 import web.uet.backend.event.DeliveryStatusCreateEvent;
 import web.uet.backend.exception.type.InvalidAuthorizationException;
 import web.uet.backend.exception.type.NotFoundException;
@@ -113,9 +112,14 @@ public class ShopService {
   }
 
   public ShopPageResponse getShopPageResponseBy(ShopPageRequest request) {
+    Account currentAccount = AuthenticationService.getCurrentAccount();
+    if (currentAccount.getRole() != Role.CEO) {
+      throw new InvalidAuthorizationException("Permission denied");
+    }
+
     Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
 
-     NativeQueryBuilder nativeQueryBuilder = NativeQuery.builder()
+    NativeQueryBuilder nativeQueryBuilder = NativeQuery.builder()
         .withQuery(getQueryBy(request))
         .withPageable(pageable);
 
