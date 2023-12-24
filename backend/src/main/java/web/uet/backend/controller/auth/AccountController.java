@@ -1,6 +1,7 @@
 package web.uet.backend.controller.auth;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -45,7 +46,7 @@ public class AccountController {
 
   @GetMapping("")
   public ResponseEntity<AccountPageResponse> getByAccountPageRequest(
-      @Validated @ModelAttribute AccountPageRequest request
+      @Valid @ModelAttribute AccountPageRequest request
   ) {
     AccountPageResponse response = accountService.getAll(request);
     return ResponseEntity.ok(response);
