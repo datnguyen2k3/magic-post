@@ -1,4 +1,4 @@
-package web.uet.backend.exception;
+package web.uet.backend.exception.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

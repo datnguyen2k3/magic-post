@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,8 +42,6 @@ public class AccountPageRequest {
   private String phoneContains;
   private String addressContains;
 
-  @NotNull
-  @Min(0)
-  @Max(5)
+  @Size(max = 5)
   private List<Role> roles;
 }

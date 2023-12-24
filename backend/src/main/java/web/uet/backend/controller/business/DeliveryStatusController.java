@@ -1,6 +1,7 @@
 package web.uet.backend.controller.business;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,7 +21,7 @@ public class DeliveryStatusController {
 
   @GetMapping("")
   public ResponseEntity<DeliveryStatusPageResponse> getDeliveryStatusPageResponseBy(
-      DeliveryStatusPageRequest request
+      @Valid @ModelAttribute DeliveryStatusPageRequest request
   ) {
     return ResponseEntity.ok(deliveryStatusService.getDeliveryStatusPageResponseBy(request));
   }

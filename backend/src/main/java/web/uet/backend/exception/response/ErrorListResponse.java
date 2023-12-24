@@ -1,13 +1,13 @@
-package web.uet.backend.dto.business.request;
+package web.uet.backend.exception.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.entity.enums.StatusType;
+
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -15,9 +15,6 @@ import web.uet.backend.entity.enums.StatusType;
 @AllArgsConstructor
 @Getter
 @Setter
-public class DeliveryStatusCreateRequest {
-
-  @Positive
-  private Integer shopId;
-  private StatusType status;
+public class ErrorListResponse {
+  private List<ErrorResponse> errors;
 }

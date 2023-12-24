@@ -130,6 +130,8 @@ public class AccountService implements UserDetailsService {
     return AccountPageResponse.builder()
         .totalElements(searchPage.getTotalElements())
         .totalPages(searchPage.getTotalPages())
+        .page(request.getPage())
+        .size(request.getSize())
         .accounts(accounts)
         .build();
   }

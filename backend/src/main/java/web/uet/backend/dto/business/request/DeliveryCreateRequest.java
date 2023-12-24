@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,12 +48,13 @@ public class DeliveryCreateRequest {
   @NotBlank
   private String toName;
 
-  @Min(1)
+  @Positive
   private Integer fromShop;
 
-  @Min(1)
+  @Positive
   private Integer toShop;
 
+  @NotNull
   private ProductType productType;
 
   @NotBlank

@@ -1,13 +1,11 @@
 package web.uet.backend.controller.business;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import web.uet.backend.dto.business.request.ShopPageRequest;
 import web.uet.backend.dto.business.response.ShopGeneralResponse;
 import web.uet.backend.dto.business.response.ShopPageResponse;
@@ -29,8 +27,8 @@ public class ShopController {
 
   @GetMapping("")
   public ResponseEntity<ShopPageResponse> getShopGeneralResponseBy(
-      ShopPageRequest request
-  ) {
+      @Valid @ModelAttribute ShopPageRequest request
+      ) {
     return ResponseEntity.ok(shopService.getShopPageResponseBy(request));
   }
 }
