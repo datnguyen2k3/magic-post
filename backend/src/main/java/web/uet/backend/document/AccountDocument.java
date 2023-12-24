@@ -32,7 +32,7 @@ public class AccountDocument {
 
   private String address;
 
-  @Field(type = FieldType.Text)
+  @Field(type = FieldType.Keyword)
   private Role role;
 
   @Field(type = FieldType.Nested, includeInParent = true)

@@ -14,6 +14,8 @@ import web.uet.backend.dto.enums.DirectionSort;
 import web.uet.backend.entity.enums.Role;
 import web.uet.backend.dto.enums.AccountSort;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
 @NoArgsConstructor
@@ -38,5 +40,9 @@ public class AccountPageRequest {
   private String emailContains;
   private String phoneContains;
   private String addressContains;
-  private Role role;
+
+  @NotNull
+  @Min(0)
+  @Max(5)
+  private List<Role> roles;
 }

@@ -87,14 +87,14 @@ public class AuthenticationService {
     return accountGeneralMapper.toDto(newAccount);
   }
 
-  private boolean validateRole(Role create, Role request) {
+  public static boolean validateRole(Role access, Role request) {
 
     if (request == Role.CEO) {
-      return create == Role.CEO || create == Role.WAREHOUSE_HEAD || create == Role.POST_HEAD;
+      return access == Role.CEO || access == Role.WAREHOUSE_HEAD || access == Role.POST_HEAD;
     }
 
     if (request == Role.WAREHOUSE_HEAD || request == Role.POST_HEAD) {
-      return create == Role.EMPLOYEE;
+      return access == Role.EMPLOYEE;
     }
 
     return false;

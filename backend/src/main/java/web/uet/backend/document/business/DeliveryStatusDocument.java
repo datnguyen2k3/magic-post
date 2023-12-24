@@ -23,7 +23,7 @@ public class DeliveryStatusDocument {
   @Field(type = FieldType.Nested, includeInParent = true)
   private DeliveryDocument delivery;
 
-  @Field(type = FieldType.Text, fielddata = true)
+  @Field(type = FieldType.Keyword)
   private StatusType statusType;
 
   @Field(type = FieldType.Nested, includeInParent = true)
