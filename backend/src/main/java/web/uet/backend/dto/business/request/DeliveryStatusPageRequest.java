@@ -8,10 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.common.enums.ProductType;
-import web.uet.backend.common.enums.StatusType;
-import web.uet.backend.common.enums.filter.DeliverySort;
-import web.uet.backend.common.enums.filter.DirectionSort;
+import web.uet.backend.entity.enums.ProductType;
+import web.uet.backend.entity.enums.StatusType;
+import web.uet.backend.dto.enums.DeliverySort;
+import web.uet.backend.dto.enums.DirectionSort;
 
 import java.util.List;
 

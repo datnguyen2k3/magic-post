@@ -31,6 +31,6 @@ public class ShopController {
   public ResponseEntity<ShopPageResponse> getShopGeneralResponseBy(
       ShopPageRequest request
   ) {
-    return ResponseEntity.ok(null);
+    return ResponseEntity.ok(shopService.getShopPageResponseBy(request));
   }
 }

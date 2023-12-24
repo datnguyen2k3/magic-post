@@ -10,17 +10,15 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
-import web.uet.backend.common.enums.ProductType;
-import web.uet.backend.common.enums.StatusType;
+import web.uet.backend.entity.enums.ProductType;
+import web.uet.backend.entity.enums.StatusType;
 import web.uet.backend.entity.location.Commune;
 import web.uet.backend.event.DeliveryCreateEvent;
 import web.uet.backend.event.DeliveryUpdateEvent;
 import web.uet.backend.service.PublisherService;
 
-import javax.validation.constraints.Max;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Entity

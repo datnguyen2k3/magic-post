@@ -10,12 +10,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
-import web.uet.backend.common.enums.StatusType;
+import web.uet.backend.entity.enums.StatusType;
 import web.uet.backend.event.DeliveryStatusCreateEvent;
 import web.uet.backend.service.PublisherService;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(schema = "public", name = "delivery_status")

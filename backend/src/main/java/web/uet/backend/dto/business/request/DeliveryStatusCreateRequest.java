@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.common.enums.StatusType;
-
-import java.util.UUID;
+import web.uet.backend.entity.enums.StatusType;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder

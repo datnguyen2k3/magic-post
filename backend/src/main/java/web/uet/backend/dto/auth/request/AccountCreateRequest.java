@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.common.enums.Role;
+import web.uet.backend.entity.enums.Role;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder

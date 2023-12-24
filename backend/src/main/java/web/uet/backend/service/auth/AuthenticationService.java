@@ -7,7 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import web.uet.backend.common.enums.Role;
+import web.uet.backend.entity.enums.Role;
 import web.uet.backend.dto.auth.request.AccountCreateRequest;
 import web.uet.backend.dto.auth.response.AccountGeneralResponse;
 import web.uet.backend.dto.auth.response.JwtAuthenticationResponse;

@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.domain.Sort;
-import web.uet.backend.common.enums.Role;
-import web.uet.backend.common.enums.filter.AccountSort;
-import web.uet.backend.common.enums.filter.DirectionSort;
+import web.uet.backend.entity.enums.Role;
+import web.uet.backend.dto.enums.AccountSort;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder

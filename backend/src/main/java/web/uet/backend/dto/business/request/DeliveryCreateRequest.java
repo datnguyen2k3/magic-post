@@ -1,7 +1,6 @@
 package web.uet.backend.dto.business.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,10 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.common.enums.ProductType;
+import web.uet.backend.entity.enums.ProductType;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder

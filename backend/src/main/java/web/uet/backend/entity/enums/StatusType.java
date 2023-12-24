@@ -1,4 +1,4 @@
-package web.uet.backend.common.enums;
+package web.uet.backend.entity.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import web.uet.backend.common.enums.ShopType;
+import web.uet.backend.entity.enums.ShopType;
 import web.uet.backend.entity.location.Commune;
 import web.uet.backend.event.ShopUpdateEvent;
 import web.uet.backend.service.PublisherService;

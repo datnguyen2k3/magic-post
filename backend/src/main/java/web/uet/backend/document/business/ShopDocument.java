@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-import web.uet.backend.common.enums.ShopType;
+import web.uet.backend.entity.enums.ShopType;
 import web.uet.backend.document.location.CommuneDocument;
 
 @Document(indexName = "shop")

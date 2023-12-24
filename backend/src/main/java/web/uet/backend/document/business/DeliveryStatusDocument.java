@@ -5,11 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.format.annotation.DateTimeFormat;
-import web.uet.backend.common.enums.StatusType;
-import web.uet.backend.entity.business.Shop;
+import web.uet.backend.entity.enums.StatusType;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document(indexName = "delivery_status")

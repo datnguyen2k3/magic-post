@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.common.enums.ShopType;
+import web.uet.backend.entity.enums.ShopType;
 import web.uet.backend.dto.location.response.CommuneGeneralResponse;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

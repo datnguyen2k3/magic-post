@@ -7,15 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.common.enums.ProductType;
-import web.uet.backend.common.enums.StatusType;
+import web.uet.backend.entity.enums.ProductType;
+import web.uet.backend.entity.enums.StatusType;
 import web.uet.backend.dto.business.response.ShopGeneralResponse;
 import web.uet.backend.dto.location.response.CommuneGeneralResponse;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

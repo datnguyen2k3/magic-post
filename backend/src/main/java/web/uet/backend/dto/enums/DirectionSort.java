@@ -1,4 +1,4 @@
-package web.uet.backend.common.enums.filter;
+package web.uet.backend.dto.enums;
 
 public enum DirectionSort {
   ASC("asc"),
