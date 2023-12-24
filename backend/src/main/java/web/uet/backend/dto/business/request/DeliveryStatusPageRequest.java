@@ -1,15 +1,17 @@
 package web.uet.backend.dto.business.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.common.enums.ProductType;
-import web.uet.backend.common.enums.StatusType;
-import web.uet.backend.common.enums.filter.DeliverySort;
-import web.uet.backend.common.enums.filter.DirectionSort;
+import web.uet.backend.entity.enums.ProductType;
+import web.uet.backend.entity.enums.StatusType;
+import web.uet.backend.dto.enums.DeliverySort;
+import web.uet.backend.dto.enums.DirectionSort;
 
 import java.util.List;
 
@@ -21,8 +23,12 @@ import java.util.List;
 @Setter
 public class DeliveryStatusPageRequest {
 
-  private Integer page = 1;
+  @NotNull
+  @Min(0)
+  private Integer page = 0;
 
+  @NotNull
+  @Min(1)
   private Integer size = 10;
 
   private DeliverySort sort;

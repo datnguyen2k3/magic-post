@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.dto.auth.AccountGeneralResponse;
+import web.uet.backend.dto.location.response.CommuneGeneralResponse;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AccountPageResponse {
-  private List<AccountGeneralResponse> accounts;
+public class ShopPageResponse {
   private Integer page;
   private Integer size;
   private long totalElements;
   private Integer totalPages;
 
+  private List<ShopGeneralResponse> shops;
 }

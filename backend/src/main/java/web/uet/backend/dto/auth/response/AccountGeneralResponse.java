@@ -1,4 +1,4 @@
-package web.uet.backend.dto.auth;
+package web.uet.backend.dto.auth.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

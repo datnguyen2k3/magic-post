@@ -2,18 +2,16 @@ package web.uet.backend.service.business;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-import web.uet.backend.common.enums.Role;
-import web.uet.backend.common.enums.ShopType;
-import web.uet.backend.common.enums.StatusType;
+import web.uet.backend.entity.enums.Role;
+import web.uet.backend.entity.enums.ShopType;
+import web.uet.backend.entity.enums.StatusType;
 import web.uet.backend.dto.business.request.DeliveryCreateRequest;
 import web.uet.backend.dto.business.response.delivery.DeliveryGeneralResponse;
 import web.uet.backend.entity.business.Delivery;
 import web.uet.backend.entity.business.DeliveryStatus;
 import web.uet.backend.entity.business.Shop;
 import web.uet.backend.entity.location.Commune;
-import web.uet.backend.event.DeliveryStatusCreateEvent;
 import web.uet.backend.exception.type.InvalidAuthorizationException;
 import web.uet.backend.exception.type.NotFoundException;
 import web.uet.backend.mapper.business.response.DeliveryGeneralMapper;
@@ -72,6 +70,10 @@ public class DeliveryService {
         .fromShop(fromShop)
         .toShop(toShop)
         .productType(deliveryCreateRequest.getProductType())
+        .name(deliveryCreateRequest.getName())
+        .description(deliveryCreateRequest.getDescription())
+        .shippingFee(deliveryCreateRequest.getShippingFee())
+        .weight(deliveryCreateRequest.getWeight())
         .currentStatus(StatusType.RECEIVED_FROM_CUSTOMER)
         .currentShop(fromShop)
         .createdAt(LocalDateTime.now())

@@ -14,7 +14,7 @@ import org.springframework.data.elasticsearch.core.SearchHitSupport;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.SearchPage;
 import org.springframework.stereotype.Service;
-import web.uet.backend.common.enums.filter.DirectionSort;
+import web.uet.backend.dto.enums.DirectionSort;
 import web.uet.backend.document.business.DeliveryStatusDocument;
 import web.uet.backend.dto.business.request.DeliveryStatusCreateRequest;
 import web.uet.backend.dto.business.request.DeliveryStatusPageRequest;
@@ -183,5 +183,4 @@ public class DeliveryStatusService {
         .deliveryStatuses(deliveryStatuses)
         .build();
   }
-
 }

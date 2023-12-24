@@ -17,11 +17,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import web.uet.backend.document.AccountDocument;
-import web.uet.backend.dto.auth.AccountGeneralResponse;
-import web.uet.backend.dto.business.request.AccountPageRequest;
-import web.uet.backend.dto.business.response.AccountPageResponse;
+import web.uet.backend.dto.auth.response.AccountGeneralResponse;
+import web.uet.backend.dto.auth.request.AccountPageRequest;
+import web.uet.backend.dto.auth.response.AccountPageResponse;
 import web.uet.backend.entity.auth.Account;
 import web.uet.backend.entity.auth.UserAuthentication;
+import web.uet.backend.entity.enums.Role;
+import web.uet.backend.exception.type.InvalidAuthorizationException;
 import web.uet.backend.mapper.auth.AccountGeneralFromDocumentMapper;
 import web.uet.backend.mapper.auth.AccountGeneralMapper;
 import web.uet.backend.repository.auth.elasticsearch.AccountDocumentRepository;
@@ -30,8 +32,8 @@ import web.uet.backend.repository.auth.entity.AccountRepository;
 import java.util.List;
 import java.util.UUID;
 
-import static web.uet.backend.service.elasticsearch.search.ElasticsearchQueryUtils.containsQuery;
-import static web.uet.backend.service.elasticsearch.search.ElasticsearchQueryUtils.matchQuery;
+import static web.uet.backend.service.auth.AuthenticationService.validateRole;
+import static web.uet.backend.service.elasticsearch.search.ElasticsearchQueryUtils.*;
 
 @Service
 @RequiredArgsConstructor
@@ -86,24 +88,34 @@ public class AccountService implements UserDetailsService {
       boolQueryBuilder = containsQuery(boolQueryBuilder, "address", request.getAddressContains());
     }
 
-    if (request.getRole() != null) {
-      boolQueryBuilder = matchQuery(boolQueryBuilder, "role", request.getRole().getValue());
+    if (request.getRoles() != null) {
+      List<String> roles = request.getRoles().stream().map(Enum::name).toList();
+      boolQueryBuilder = inQuery(boolQueryBuilder, "role", roles );
     }
 
     return new Query(boolQueryBuilder.build());
   }
 
   public AccountPageResponse getAll(AccountPageRequest request) {
-//    Sort sort = Sort.by(request.getDirection(), request.getSortBy().getValue());
+    Account currentAccount = AuthenticationService.getCurrentAccount();
+
+    request.getRoles().stream()
+        .filter(role -> !validateRole(role, currentAccount.getRole()))
+        .findAny()
+        .ifPresent(role -> {
+          throw new InvalidAuthorizationException("Permission denied");
+        });
+
     Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
 
     NativeQueryBuilder nativeQueryBuilder = NativeQuery.builder()
         .withQuery(getBy(request))
         .withPageable(pageable);
 
-//    if (request.getSortBy() != null) {
-//      nativeQueryBuilder.withSort(sort);
-//    }
+    if (request.getSortBy() != null) {
+      Sort sort = Sort.by(request.getDirection().getValue(), request.getSortBy().getValue());
+      nativeQueryBuilder.withSort(sort);
+    }
 
     SearchHits<AccountDocument> searchHits = elasticsearchOperations.search(nativeQueryBuilder.build(), AccountDocument.class);
     SearchPage<AccountDocument> searchPage = SearchHitSupport.searchPageFor(searchHits, nativeQueryBuilder.getPageable());

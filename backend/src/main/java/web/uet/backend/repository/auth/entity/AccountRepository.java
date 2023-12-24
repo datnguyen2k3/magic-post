@@ -2,7 +2,7 @@ package web.uet.backend.repository.auth.entity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import web.uet.backend.common.enums.Role;
+import web.uet.backend.entity.enums.Role;
 import web.uet.backend.entity.auth.Account;
 import web.uet.backend.entity.business.Shop;
 

@@ -7,11 +7,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import web.uet.backend.common.enums.Role;
-import web.uet.backend.dto.auth.AccountCreateRequest;
-import web.uet.backend.dto.auth.AccountGeneralResponse;
-import web.uet.backend.dto.auth.JwtAuthenticationResponse;
-import web.uet.backend.dto.auth.TokenCreateRequest;
+import web.uet.backend.entity.enums.Role;
+import web.uet.backend.dto.auth.request.AccountCreateRequest;
+import web.uet.backend.dto.auth.response.AccountGeneralResponse;
+import web.uet.backend.dto.auth.response.JwtAuthenticationResponse;
+import web.uet.backend.dto.auth.request.TokenCreateRequest;
 import web.uet.backend.entity.auth.Account;
 import web.uet.backend.entity.auth.UserAuthentication;
 import web.uet.backend.entity.business.Shop;
@@ -87,14 +87,14 @@ public class AuthenticationService {
     return accountGeneralMapper.toDto(newAccount);
   }
 
-  private boolean validateRole(Role create, Role request) {
+  public static boolean validateRole(Role access, Role request) {
 
     if (request == Role.CEO) {
-      return create == Role.CEO || create == Role.WAREHOUSE_HEAD || create == Role.POST_HEAD;
+      return access == Role.CEO || access == Role.WAREHOUSE_HEAD || access == Role.POST_HEAD;
     }
 
     if (request == Role.WAREHOUSE_HEAD || request == Role.POST_HEAD) {
-      return create == Role.EMPLOYEE;
+      return access == Role.EMPLOYEE;
     }
 
     return false;

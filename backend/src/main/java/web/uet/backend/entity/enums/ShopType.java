@@ -1,13 +1,13 @@
-package web.uet.backend.common.enums;
+package web.uet.backend.entity.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum ProductType {
-    DOCUMENT("DOCUMENT"),
-    PRODUCT("PRODUCT");
+public enum ShopType {
+    POST("POST"),
+    WAREHOUSE("WAREHOUSE");
 
     private final String value;
 }

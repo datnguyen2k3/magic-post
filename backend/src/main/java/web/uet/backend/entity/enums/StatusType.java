@@ -1,4 +1,4 @@
-package web.uet.backend.common.enums;
+package web.uet.backend.entity.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,6 @@ public enum StatusType {
     SENT_TO_CUSTOMER_SUCCESS,
     SHIPPING_TO_CUSTOMER,
 
-    RETURNED_TO_CUSTOMER,
     RECEIVED_FROM_SHOP,
     COMING_TO_SHOP,
     GONE_FROM_SHOP

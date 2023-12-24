@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import web.uet.backend.dto.auth.JwtAuthenticationResponse;
-import web.uet.backend.dto.auth.TokenCreateRequest;
+import web.uet.backend.dto.auth.response.JwtAuthenticationResponse;
+import web.uet.backend.dto.auth.request.TokenCreateRequest;
 import web.uet.backend.service.auth.AuthenticationService;
 
 @Validated

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import web.uet.backend.common.enums.Role;
+import web.uet.backend.entity.enums.Role;
 import web.uet.backend.entity.business.Shop;
 
 import java.util.UUID;
