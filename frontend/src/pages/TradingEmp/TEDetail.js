@@ -43,6 +43,7 @@ const TEDetail = () => {
                 const response = await axios.get(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, config)
                 setDelivery(response.data.deliveryStatusDetailHistory[0].delivery)
                 setHistory(response.data.deliveryStatusDetailHistory)
+                console.log(response)
             } catch (error) {
                 console.log(error)
             }

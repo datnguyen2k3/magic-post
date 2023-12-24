@@ -1,95 +1,149 @@
 import './TEComingToShop.scss'
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { Table } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import { selectAccount, selectToken } from '../../app/authSlice'
+import { Link } from 'react-router-dom'
 
 const TEComingToShop = () => {
 
-    const [shipments, setShipments] = useState()
+    const [deliveries, setDeliveries] = useState();
+    const [filterData, setFilterData] = useState();
+    const [name, setName] = useState();
+    const [productType, setProductType] = useState();
+    const [fromName, setFromName] = useState();
+    const [fromAddress, setFromAddress] = useState();
+    const [fromShop, setFromShop] = useState();
+    const [toName, setToName] = useState();
+    const [toAddress, setToAddress] = useState();
+    const [toShop, setToShop] = useState();
 
-    const navigate = useNavigate()
+    const token = useSelector(selectToken);
+    const shopId = useSelector(selectAccount).workAt.shopId
 
-    const [filteredData, setFilteredData] = useState({
-        search: '',
-        transactionId: '',
-        senderLocation: '',
-        receiverLocation: '',
-        senderPhone: '',
-        senderName: '',
-        receiverName: '',
-        receiverPhone: '',
-        receivingStoreId: '',
-        sendingStoreId: '',
-        currentLocation: '',
-        status: '',
-    })
-
-    const handleChange = (event) => {
-        setFilteredData({
-            ...filteredData,
-            [event.target.name]: event.target.value
-        });
-    };
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_URL}/ceoshipments`).then(res => {
-            setShipments(res.data);
-            console.log(res.data);
-            console.log(filteredData)
-        }).catch(error => {
-            console.log(error)
-        })
-    }, [filteredData])
+        const fetchData = async () => {
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                params: {
+                    ...filterData,
+                    currentShopId: shopId,
+                    status: 'RECEIVED_FROM_CUSTOMER',
+                }
+            }
 
-    const handleViewShipmentDetail = (transactionId) => {
-        navigate(`/te-coming-detail?transactionId=${transactionId}`)
+            try {
+                const response = await axios.get(`${backendUrl}/deliveryStatuses`, config)
+                console.log(config.params)
+                setDeliveries(response.data.deliveryStatuses)
+                console.log(response.data.deliveryStatuses)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData();
+    }, [filterData])
+
+    const handleInputChange = (e) => {
+        switch (e.target.name) {
+            case 'productType':
+                setProductType(e.target.value);
+                break;
+            case 'fromName':
+                setFromName(e.target.value);
+                break;
+            case 'fromAddress':
+                setFromAddress(e.target.value);
+                break;
+            case 'fromShop':
+                setFromShop(e.target.value);
+                break;
+            case 'toName':
+                setToName(e.target.value);
+                break;
+            case 'toAddress':
+                setToAddress(e.target.value);
+                break;
+            case 'toShop':
+                setToShop(e.target.value);
+                break;
+            default:
+                break;
+        }
     }
 
+    useEffect(() => {
+        setFilterData({
+            ...filterData,
+            productType,
+            fromAddressContains: fromAddress,
+            toAddressContains: toAddress,
+            fromNameContains: fromName,
+            toNameContains: toName,
+            fromShopId: fromShop,
+            toShopId: toShop
+        })
+
+    }, [productType, fromAddress, fromName, fromShop, toAddress, toName, toShop])
+
     return <>
-        <div className='te-coming-to-shop'>
-            <h2>Các đơn vận đang tới shop: (click vào đơn để đến trang xác nhận)</h2>
-            <div><span>Tìm kiếm theo tất cả các trường: </span><input disabled={!!(filteredData.name || filteredData.province || filteredData.type || filteredData.username || filteredData.email || filteredData.idNumber || filteredData.phone)} name="all" value={filteredData.all} onChange={handleChange} /></div>
-            <Table striped bordered hover className='te-managers-table'>
+        <div className='te-coming'>
+            <Table>
                 <thead>
                     <tr>
-                        <th>Mã đơn</th>
+                        <th>Thời gian nhận</th>
+                        <th>Đơn hàng</th>
+                        <th>Loại hàng</th>
                         <th>Người gửi</th>
-                        <th>Điểm gửi</th>
-                        <th>VP gửi</th>
+                        <th>Địa chỉ người gửi</th>
+                        <th>Văn phòng gửi</th>
                         <th>Người nhận</th>
-                        <th>Điểm nhận</th>
-                        <th>VP nhận</th>
-                        <th>Địa điểm hiện tại</th>
+                        <th>Địa chỉ người nhận</th>
+                        <th>Văn phòng nhận</th>
+                        <th>Chọn điểm đến kế tiếp</th>
                     </tr>
                     <tr>
-                        <th><input disabled={!!filteredData.all} name="transactionId" value={filteredData.transactionId} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="senderName" value={filteredData.senderName} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="senderLocation" value={filteredData.senderLocation} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="sendingStoreId" value={filteredData.sendingStoreId} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="receiverName" value={filteredData.receiverName} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="receiverLocation" value={filteredData.receiverLocation} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="receivingStoreId" value={filteredData.receivingStoreId} onChange={handleChange}></input></th>
-                        <th><input disabled={!!filteredData.all} name="currentLocation" value={filteredData.currentLocation} onChange={handleChange}></input></th>
+                        <th></th>
+                        <th></th>
+                        <th><select name='productType' onChange={handleInputChange}>
+                            <option value={''}>Tất cả các loại hàng</option>
+                            <option value={'DOCUMENT'}>DOCUMENT</option>
+                            <option value={'GOODS'}>GOODS</option>
+                        </select></th>
+                        <th><input onChange={handleInputChange} type='text' name='fromName'></input></th>
+                        <th><input onChange={handleInputChange} type='text' name='fromAddress'></input></th>
+                        <th><input onChange={handleInputChange} type='number' name='fromShop'></input></th>
+                        <th><input onChange={handleInputChange} type='text' name='toName'></input></th>
+                        <th><input onChange={handleInputChange} type='text' name='toAddress'></input></th>
+                        <th><input onChange={handleInputChange} type='number' name='toShop'></input></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {shipments ? shipments.map(shipment => {
-                        return <tr onClick={() => handleViewShipmentDetail(shipment.transactionId)}>
-                            <td>{shipment.transactionId}</td>
-                            <td>{shipment.senderName}</td>
-                            <td>{shipment.senderLocation}</td>
-                            <td>{shipment.sendingStoreId}</td>
-                            <td>{shipment.receiverName}</td>
-                            <td>{shipment.receiverLocation}</td>
-                            <td>{shipment.receivingStoreId}</td>
-                            <td>{shipment.currentLocation}</td>
+                    {deliveries ? deliveries.map(del => (
+                        <tr>
+                            <td>{del.createdAt}</td>
+                            <td>{del.delivery.name}</td>
+                            <td>{del.delivery.productType}</td>
+                            <td>{del.delivery.fromName}</td>
+                            <td>{del.delivery.fromAddress}</td>
+                            <td>{del.delivery.fromShop.commune.name} ({del.delivery.fromShop.commune.communeId})</td>
+                            <td>{del.delivery.toName}</td>
+                            <td>{del.delivery.toAddress}</td>
+                            <td>{del.delivery.toShop.commune.name} ({del.delivery.toShop.commune.communeId})</td>
+                            <td><Link to={`/te-next?deliveryId=${del.delivery.deliveryId}`}>Chọn</Link></td>
                         </tr>
-                    }) : ''}
+                    )) : <></>}
                 </tbody>
             </Table>
         </div>
     </>
+
 }
 
 export default TEComingToShop

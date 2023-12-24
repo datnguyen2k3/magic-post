@@ -388,25 +388,8 @@ const TECreateShipment = () => {
                 };
                 const response = await axios.post(`${backendUrl}/deliveries`, info, config);
 
-                try {
-                    const id = response.data.deliveryId;
-                    const params = {
-                        deliveryId: id
-                    }
-                    const config = {
-                        headers: { Authorization: `Bearer ${token}` },
-                        params: params
-                    }
-                    const body = {
-                        shopId,
-                        status: "RECEIVED_FROM_CUSTOMER"
-                    }
-                    const response2 = await axios.post(`${backendUrl}/deliveries/${id}/deliveryStatuses`, body, config)
-                    console.log(response2)
-                    navigate(`/te-detail?deliveryId=${id}`)
-                } catch (error) {
-                    console.error('Lỗi khi gửi thông tin đơn hàng:', error);
-                }
+                const id = response.data.deliveryId;
+                navigate(`/te-detail?deliveryId=${id}`)
             } catch (error) {
                 console.error('Lỗi khi gửi thông tin đơn hàng:', error);
             }

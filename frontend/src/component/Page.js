@@ -26,6 +26,7 @@ import PHCreateAccount from '../pages/PostHead/PHCreateAccount';
 import Account from '../pages/Account';
 import NeedLogged from './auth-component/NeedLogged';
 import TEDetail from '../pages/TradingEmp/TEDetail';
+import TENext from '../pages/TradingEmp/TENext';
 
 const Page = () => {
     return <>
@@ -55,6 +56,7 @@ const Page = () => {
                     <Route path='/te-create-shipment' element={<TradingEmp><TECreateShipment /></TradingEmp>}></Route>
                     <Route path='/te-coming' element={<TradingEmp><TEComingToShop /></TradingEmp>}></Route>
                     <Route path='/te-detail' element={<TradingEmp><TEDetail /></TradingEmp>}></Route>
+                    <Route path='/te-next' element={<TradingEmp><TENext /></TradingEmp>}></Route>
 
                     {/* PostHead */}
                     <Route path='/ph-create-account' element={<PostHead><PHCreateAccount /></PostHead>}></Route>
