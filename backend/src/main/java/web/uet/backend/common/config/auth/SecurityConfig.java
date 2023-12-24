@@ -31,7 +31,7 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(request -> request.requestMatchers(
-                new AntPathRequestMatcher("/auth/**"),
+                new AntPathRequestMatcher("/accounts/token"),
                 new AntPathRequestMatcher("/swagger-ui/**"),
                 new AntPathRequestMatcher("/v3/api-docs/**"),
                 new AntPathRequestMatcher("/swagger-resources/**"),
@@ -49,7 +49,7 @@ public class SecurityConfig {
   }
 
   @Bean
-  public PasswordEncoder passwordEncoder() {
+  public static PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 

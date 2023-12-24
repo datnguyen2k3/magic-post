@@ -6,9 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import web.uet.backend.dto.auth.request.AccountCreateRequest;
+import web.uet.backend.dto.auth.request.AccountPatchRequest;
+import web.uet.backend.dto.auth.request.TokenCreateRequest;
 import web.uet.backend.dto.auth.response.AccountGeneralResponse;
 import web.uet.backend.dto.auth.request.AccountPageRequest;
 import web.uet.backend.dto.auth.response.AccountPageResponse;
+import web.uet.backend.dto.auth.response.JwtAuthenticationResponse;
 import web.uet.backend.service.auth.AccountService;
 import web.uet.backend.service.auth.AuthenticationService;
 
@@ -21,6 +24,11 @@ public class AccountController {
 
   private final AuthenticationService authenticationService;
   private final AccountService accountService;
+
+  @PostMapping("/token")
+  public ResponseEntity<JwtAuthenticationResponse> getByTokenCreateRequest(@RequestBody TokenCreateRequest request) {
+    return ResponseEntity.ok(authenticationService.getByTokenCreateRequest(request));
+  }
 
   @PostMapping("")
   public ResponseEntity<AccountGeneralResponse> createAccount(
@@ -35,11 +43,19 @@ public class AccountController {
     return ResponseEntity.ok(accountService.getCurrentAccountResponse());
   }
 
-  @GetMapping("/page")
+  @GetMapping("")
   public ResponseEntity<AccountPageResponse> getByAccountPageRequest(
       @Validated @ModelAttribute AccountPageRequest request
   ) {
     AccountPageResponse response = accountService.getAll(request);
+    return ResponseEntity.ok(response);
+  }
+
+  @PatchMapping("/profile")
+  public ResponseEntity<AccountGeneralResponse> patchAccountBy(
+      @RequestBody AccountPatchRequest request
+  ) {
+    AccountGeneralResponse response = accountService.patchAccountBy(request);
     return ResponseEntity.ok(response);
   }
 
