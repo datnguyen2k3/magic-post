@@ -11,7 +11,6 @@ CREATE TYPE delivery_status_type AS ENUM (
     );
 CREATE TYPE product_type AS ENUM ('DOCUMENT', 'PRODUCT');
 
-
 CREATE TABLE delivery (
     delivery_id UUID NOT NULL DEFAULT uuid_generate_v1(),
 
@@ -27,10 +26,13 @@ CREATE TABLE delivery (
     to_shop_id INT NOT NULL,
 
     product product_type NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
+    weight DECIMAL(10, 2) NOT NULL,
+    shipping_fee DECIMAL(10, 2) NOT NULL,
+
     current_status delivery_status_type NOT NULL,
     current_shop_id INT NOT NULL,
-
-
 
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -17,7 +17,10 @@ import web.uet.backend.event.DeliveryCreateEvent;
 import web.uet.backend.event.DeliveryUpdateEvent;
 import web.uet.backend.service.PublisherService;
 
+import javax.validation.constraints.Max;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -72,6 +75,18 @@ public class Delivery {
     @Column(name = "product", columnDefinition = "product_type")
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private ProductType productType;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "weight")
+    private BigDecimal weight;
+
+    @Column(name = "shipping_fee")
+    private BigDecimal shippingFee;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "current_status", columnDefinition = "delivery_status")

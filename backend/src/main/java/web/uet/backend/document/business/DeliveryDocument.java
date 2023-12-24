@@ -5,15 +5,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.format.annotation.DateTimeFormat;
 import web.uet.backend.common.enums.ProductType;
 import web.uet.backend.common.enums.StatusType;
 import web.uet.backend.document.location.CommuneDocument;
-import web.uet.backend.entity.business.Shop;
-import web.uet.backend.entity.location.Commune;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Document(indexName = "delivery")
@@ -53,6 +51,14 @@ public class DeliveryDocument {
 
   @Field(type = FieldType.Text, fielddata = true)
   private ProductType productType;
+
+  private String name;
+
+  private String description;
+
+  private BigDecimal shippingFee;
+
+  private BigDecimal weight;
 
   @Field(type = FieldType.Text, fielddata = true)
   private StatusType currentStatus;
