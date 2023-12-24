@@ -92,13 +92,13 @@ public class DeliveryStatusService {
     BoolQuery.Builder boolQueryBuilder = new BoolQuery.Builder();
 
     if (request.getFromCommuneId() != null) {
-      boolQueryBuilder = matchQuery(boolQueryBuilder, "delivery.fromCommune.id", request.getToCommuneId());
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "delivery.fromCommune.id", request.getFromCommuneId());
     } else if (request.getFromDistrictId() != null) {
-      boolQueryBuilder = matchQuery(boolQueryBuilder, "delivery.fromCommune.district.id", request.getToDistrictId());
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "delivery.fromCommune.district.id", request.getFromProvinceId());
     } else if (request.getFromProvinceId() != null) {
       boolQueryBuilder = matchQuery(boolQueryBuilder,
           "delivery.fromCommune.district.province.id",
-          request.getToProvinceId()
+          request.getFromProvinceId()
       );
     }
 
