@@ -2,22 +2,19 @@ package web.uet.backend.exception.handler;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import web.uet.backend.exception.ErrorResponse;
+import web.uet.backend.exception.response.ErrorResponse;
 import web.uet.backend.exception.type.InvalidAuthorizationException;
 import web.uet.backend.exception.type.InvalidException;
 import web.uet.backend.exception.type.NotFoundException;
 
 @RestControllerAdvice
 @Slf4j
-@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CustomExceptionHandlerController {
   @ExceptionHandler(NotFoundException.class)
   public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException ex) {
