@@ -4,6 +4,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.client.elc.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
@@ -93,16 +94,16 @@ public class AccountService implements UserDetailsService {
   }
 
   public AccountPageResponse getAll(AccountPageRequest request) {
-//    Sort sort = Sort.by(request.getDirection(), request.getSortBy().getValue());
     Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
 
     NativeQueryBuilder nativeQueryBuilder = NativeQuery.builder()
         .withQuery(getBy(request))
         .withPageable(pageable);
 
-//    if (request.getSortBy() != null) {
-//      nativeQueryBuilder.withSort(sort);
-//    }
+    if (request.getSortBy() != null) {
+      Sort sort = Sort.by(request.getDirection().getValue(), request.getSortBy().getValue());
+      nativeQueryBuilder.withSort(sort);
+    }
 
     SearchHits<AccountDocument> searchHits = elasticsearchOperations.search(nativeQueryBuilder.build(), AccountDocument.class);
     SearchPage<AccountDocument> searchPage = SearchHitSupport.searchPageFor(searchHits, nativeQueryBuilder.getPageable());

@@ -1,5 +1,7 @@
 package web.uet.backend.dto.enums;
 
+import org.springframework.data.domain.Sort;
+
 public enum DirectionSort {
   ASC("asc"),
   DESC("desc");
@@ -10,7 +12,7 @@ public enum DirectionSort {
     this.value = value;
   }
 
-  public String getValue() {
-    return value;
+  public Sort.Direction getValue() {
+    return Sort.Direction.fromString(this.value);
   }
 }
