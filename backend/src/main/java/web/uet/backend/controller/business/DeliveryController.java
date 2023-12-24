@@ -49,4 +49,11 @@ public class DeliveryController {
     return ResponseEntity.ok(deliveryStatusService.getDeliveryStatusesByDeliveryId(deliveryId, directionSort));
   }
 
+  @GetMapping("/{deliveryId}")
+  public ResponseEntity<DeliveryGeneralResponse> getByDeliveryId(
+      @PathVariable UUID deliveryId
+  ) {
+    return ResponseEntity.ok(deliveryService.getDeliveryByDeliveryId(deliveryId));
+  }
+
 }

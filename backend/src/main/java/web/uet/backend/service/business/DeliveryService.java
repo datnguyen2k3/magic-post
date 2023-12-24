@@ -22,6 +22,7 @@ import web.uet.backend.repository.location.jpa.CommuneRepository;
 import web.uet.backend.service.auth.AuthenticationService;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -93,4 +94,10 @@ public class DeliveryService {
     return deliveryGeneralMapper.toDto(delivery);
   }
 
+  public DeliveryGeneralResponse getDeliveryByDeliveryId(UUID deliveryId) {
+    Delivery delivery = deliveryRepository.findById(deliveryId)
+        .orElseThrow(() -> new NotFoundException("Delivery not found"));
+
+    return deliveryGeneralMapper.toDto(delivery);
+  }
 }
