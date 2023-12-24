@@ -36,7 +36,7 @@ const Login = () => {
         } else if (!password) {
             toast.error('Không được để trống mật khẩu')
         } else {
-            await loginWithApi(`${backendUrl}/auth/token`, `${backendUrl}/accounts/profile`, username, password)
+            await loginWithApi(`${backendUrl}/accounts/token`, `${backendUrl}/accounts/profile`, username, password)
                 .then(data => {
                     console.log(data);
                     if (!data || !data.success) {

@@ -5,16 +5,23 @@ import { isValidEmail, isValidName, isValidPhoneNumber } from '../../logic/verif
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { selectToken, selectAccount } from '../../app/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 const TECreateShipment = () => {
 
+    const navigate = useNavigate()
+
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
-    console.log(useSelector(selectAccount))
     const shopId = (useSelector(selectAccount).workAt.shopId)
-
+    console.log(shopId)
 
     const token = useSelector(selectToken)
+
+    const [name, setName] = useState('')
+    const [des, setDes] = useState('')
+    const [fee, setFee] = useState(0)
+    const [weight, setWeight] = useState(0)
 
     const [sRCode, setSRCode] = useState()
     const [sPCode, setSPCode] = useState()
@@ -369,6 +376,10 @@ const TECreateShipment = () => {
                 fromShop: Number(shopId),
                 toShop: Number(shopCommuneId),
                 productType: type,
+                name,
+                description: des,
+                shippingFee: fee,
+                weight
             }
             console.log(info, 'check info')
             try {
@@ -376,7 +387,26 @@ const TECreateShipment = () => {
                     headers: { Authorization: `Bearer ${token}` }
                 };
                 const response = await axios.post(`${backendUrl}/deliveries`, info, config);
-                console.log(response.data); // Xử lý dữ liệu trả về từ API
+
+                try {
+                    const id = response.data.deliveryId;
+                    const params = {
+                        deliveryId: id
+                    }
+                    const config = {
+                        headers: { Authorization: `Bearer ${token}` },
+                        params: params
+                    }
+                    const body = {
+                        shopId,
+                        status: "RECEIVED_FROM_CUSTOMER"
+                    }
+                    const response2 = await axios.post(`${backendUrl}/deliveries/${id}/deliveryStatuses`, body, config)
+                    console.log(response2)
+                    navigate(`/te-detail?deliveryId=${id}`)
+                } catch (error) {
+                    console.error('Lỗi khi gửi thông tin đơn hàng:', error);
+                }
             } catch (error) {
                 console.error('Lỗi khi gửi thông tin đơn hàng:', error);
             }
@@ -486,6 +516,14 @@ const TECreateShipment = () => {
                                     <option value={'DOCUMENT'}>Tài liệu</option>
                                     <option value={'GOODS'}>Hàng hóa</option>
                                 </select>
+                                <label>Tên đơn vận: </label>
+                                <input type='text' name='name' onChange={handleInputChange}></input>
+                                <label>Mô tả đơn vận: </label>
+                                <input type='textarea' name='des' onChange={handleInputChange}></input>
+                                <label>Phí: </label>
+                                <input type='number' name='fee' onChange={handleInputChange}></input>
+                                <label>Cân nặng (kg): </label>
+                                <input type='number' name='weight' onChange={handleInputChange}></input>
                             </div>
                         </div>
                     </div>
@@ -518,7 +556,7 @@ const TECreateShipment = () => {
                             <select onChange={(e) => handleShopCommuneChange(e)}>
                                 <option value=''>Chọn Phường/Xã</option>
                                 {
-                                    (shopCommuneData && shopPCode && shopRCode && shopDCode) ? rWardData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
+                                    (shopCommuneData && shopPCode && shopRCode && shopDCode) ? shopCommuneData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
                                 }
                             </select>
                         </div>

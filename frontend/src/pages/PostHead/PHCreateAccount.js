@@ -4,13 +4,18 @@ import { useState, useEffect } from 'react'
 import { isValidEmail, isValidName, isValidPhoneNumber } from '../../logic/verification'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import { selectToken } from '../../app/authSlice'
+import { useNavigate } from 'react-router-dom'
+import { selectToken, selectAccount } from '../../app/authSlice'
 
 const PHCreateAccount = () => {
+
+    const navigate = useNavigate()
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     const token = useSelector(selectToken)
+
+    const shopId = useSelector(selectAccount).workAt.shopId
 
     const [user, setUser] = useState({
         name: '',
@@ -29,7 +34,7 @@ const PHCreateAccount = () => {
     const [dCode, setDCode] = useState()
     const [communeId, setCommuneId] = useState(0)
 
-    const [role, setRole] = useState('')
+    const [role, setRole] = useState('EMPLOYEE')
 
     const handleInputChange = (e) => {
         setUser({
@@ -63,6 +68,8 @@ const PHCreateAccount = () => {
 
                 const data = response.data;
                 // Process data here
+                navigate('/')
+                console.log(data)
                 toast.success('Tạo tài khoản thành công!')
             } catch (error) {
                 toast.error('Tạo tài khoản không thành công!')
@@ -79,7 +86,7 @@ const PHCreateAccount = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const address = await getAddress(rCode, pCode, dCode)
+        const address = await getAddress(rCode, pCode, dCode, communeId)
         if (Object.values(user).some(value => value === '')) {
             toast.error('Không được để trường nào trống!')
         } else if (!isValidName(user.name)) {
@@ -88,8 +95,10 @@ const PHCreateAccount = () => {
             toast.error('Email chưa đúng định dạng!')
         } else if (!isValidPhoneNumber(user.phone)) {
             toast.error('Số điện thoại chưa đúng định dạng!')
+        } else if (!(rCode && pCode && dCode && communeId)) {
+            toast.error('Thông tin địa chỉ chưa đủ!')
         } else {
-            createNewAccount({ ...user, role, address, workAt: Number(communeId) })
+            createNewAccount({ ...user, role, address, workAt: Number(shopId) })
         }
     }
 
@@ -158,7 +167,7 @@ const PHCreateAccount = () => {
         fetchData();
     }, [dCode]);
 
-    const getAddress = async (regioncode, provincecode, districtcode) => {
+    const getAddress = async (regioncode, provincecode, districtcode, wardcode) => {
         try {
             // Thiết lập header cho request
             const config = {
@@ -183,8 +192,11 @@ const PHCreateAccount = () => {
                 throw new Error('Không tìm thấy district!');
             }
 
+            const response3 = await axios.get(`${backendUrl}/districts/${districtcode}/communes`, config);
+            const ward = response3.data.communes.find(commune => commune.communeId == wardcode);
+
             // Trả về province và district
-            return district.name + ', ' + province.name;
+            return district.name + ', ' + province.name + ', ' + ward.name;
         } catch (error) {
             console.error('Lỗi khi lấy dữ liệu:', error);
         }
@@ -208,11 +220,6 @@ const PHCreateAccount = () => {
                         <input type='text' name='phone' value={user.phone} onChange={handleInputChange}></input>
                         <label>CCCD</label>
                         <input type='text' name='cccd' value={user.idNumber} onChange={handleInputChange}></input>
-                        <label>Chọn vai trò</label>
-                        <select onChange={handleRoleChange}>
-                            <option value=''>Vai trò</option>
-                            <option value='EMPLOYEE'>Nhân viên điểm giao dịch</option>
-                        </select>
                         <label>Miền</label>
                         <select onChange={(e) => handleRegionChange(e)}>
                             <option value=''>Chọn miền</option>
@@ -234,7 +241,7 @@ const PHCreateAccount = () => {
                                 (districtData && pCode && rCode) ? districtData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
                             }
                         </select>
-                        <label>Văn phòng làm việc</label>
+                        <label>Xã/Phường</label>
                         <select onChange={(e) => handleCommuneChange(e)}>
                             <option value=''>Chọn điểm</option>
                             {
