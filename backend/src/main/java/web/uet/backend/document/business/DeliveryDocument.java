@@ -60,7 +60,7 @@ public class DeliveryDocument {
   @Field(type = FieldType.Nested, includeInParent = true)
   private ShopDocument currentShop;
 
-  private LocalDateTime createdAt;
+  private Date createdAt;
 
-  private LocalDateTime updatedAt;
+  private Date updatedAt;
 }

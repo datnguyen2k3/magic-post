@@ -12,6 +12,7 @@ import web.uet.backend.dto.business.response.ShopGeneralResponse;
 import web.uet.backend.dto.location.response.CommuneGeneralResponse;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -47,8 +48,8 @@ public class DeliveryGeneralResponse {
   private ProductType productType;
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private LocalDateTime createdAt;
+  private Date createdAt;
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private LocalDateTime updatedAt;
+  private Date updatedAt;
 }
