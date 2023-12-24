@@ -22,8 +22,9 @@ public class DeliveryStatusController {
 
   @GetMapping("")
   public ResponseEntity<DeliveryStatusPageResponse> getDeliveryStatusPageResponseBy(
-      @RequestBody @Valid DeliveryStatusPageRequest request
+      @RequestBody(required = false) @Valid DeliveryStatusPageRequest request
   ) {
+    if (request == null) request = DeliveryStatusPageRequest.builder().build();
     return ResponseEntity.ok(deliveryStatusService.getDeliveryStatusPageResponseBy(request));
   }
 

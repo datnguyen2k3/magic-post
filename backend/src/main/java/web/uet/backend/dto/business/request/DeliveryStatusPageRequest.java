@@ -59,7 +59,11 @@ public class DeliveryStatusPageRequest {
   private String toPhoneContains;
   private String fromNameContains;
   private String toNameContains;
+
+  @Positive
   private Integer fromShopId;
+
+  @Positive
   private Integer toShopId;
   private ProductType productType;
   private List<StatusType> statuses;
