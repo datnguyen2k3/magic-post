@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import web.uet.backend.dto.business.request.ShopPageRequest;
-import web.uet.backend.dto.business.response.ShopGeneralResponse;
+import web.uet.backend.dto.business.response.ShopDetailResponse;
 import web.uet.backend.dto.business.response.ShopPageResponse;
 import web.uet.backend.service.business.ShopService;
 
@@ -21,7 +21,7 @@ public class ShopController {
   private final ShopService shopService;
 
   @GetMapping("/{shopId}")
-  public ResponseEntity<ShopGeneralResponse> getShopGeneralResponseBy(@PathVariable Integer shopId) {
+  public ResponseEntity<ShopDetailResponse> getShopGeneralResponseBy(@PathVariable Integer shopId) {
     return ResponseEntity.ok(shopService.getShopGeneralResponseBy(shopId));
   }
 

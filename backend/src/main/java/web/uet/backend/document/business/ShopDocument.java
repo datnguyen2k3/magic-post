@@ -19,17 +19,20 @@ public class ShopDocument {
   @Id
   private Integer shopId;
 
-  @Field(type = FieldType.Keyword, fielddata = true)
+  @Field(type = FieldType.Keyword)
   private ShopType type;
 
-  @Field(type = FieldType.Object)
+  @Field(type = FieldType.Nested, includeInParent = true)
   private CommuneDocument commune;
 
   private Integer employeeNumber;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private Integer comingDeliveryNumber;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private Integer currentDeliveryNumber;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private Integer goneDeliveryNumber;
 }

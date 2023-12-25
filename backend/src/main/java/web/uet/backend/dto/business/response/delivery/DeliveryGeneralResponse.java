@@ -9,7 +9,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import web.uet.backend.entity.enums.ProductType;
 import web.uet.backend.entity.enums.StatusType;
-import web.uet.backend.dto.business.response.ShopGeneralResponse;
+import web.uet.backend.dto.business.response.ShopDetailResponse;
 import web.uet.backend.dto.location.response.CommuneGeneralResponse;
 
 import java.math.BigDecimal;
@@ -42,9 +42,9 @@ public class DeliveryGeneralResponse {
 
   private String toName;
 
-  private ShopGeneralResponse fromShop;
+  private ShopDetailResponse fromShop;
 
-  private ShopGeneralResponse toShop;
+  private ShopDetailResponse toShop;
 
   private ProductType productType;
 
@@ -58,7 +58,7 @@ public class DeliveryGeneralResponse {
 
   private StatusType currentStatus;
 
-  private ShopGeneralResponse currentShop;
+  private ShopDetailResponse currentShop;
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date createdAt;

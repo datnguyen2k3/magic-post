@@ -30,10 +30,13 @@ public class DeliveryDocument {
   @Field(type = FieldType.Nested, includeInParent = true)
   private CommuneDocument toCommune;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String fromAddress;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String toAddress;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String fromPhone;
 
   private String toPhone;
@@ -59,7 +62,7 @@ public class DeliveryDocument {
 
   private BigDecimal weight;
 
-  @Field(type = FieldType.Keyword, fielddata = true)
+  @Field(type = FieldType.Keyword)
   private StatusType currentStatus;
 
   @Field(type = FieldType.Nested, includeInParent = true)

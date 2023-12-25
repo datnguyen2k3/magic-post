@@ -18,7 +18,7 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import web.uet.backend.document.business.ShopDocument;
 import web.uet.backend.dto.business.request.ShopPageRequest;
-import web.uet.backend.dto.business.response.ShopGeneralResponse;
+import web.uet.backend.dto.business.response.ShopDetailResponse;
 import web.uet.backend.dto.business.response.ShopPageResponse;
 import web.uet.backend.entity.auth.Account;
 import web.uet.backend.entity.business.DeliveryStatus;
@@ -27,8 +27,8 @@ import web.uet.backend.entity.enums.Role;
 import web.uet.backend.event.DeliveryStatusCreateEvent;
 import web.uet.backend.exception.type.InvalidAuthorizationException;
 import web.uet.backend.exception.type.NotFoundException;
-import web.uet.backend.mapper.business.response.ShopGeneralMapper;
-import web.uet.backend.mapper.business.response.ShopGeneralMapperFromDocument;
+import web.uet.backend.mapper.business.response.ShopDetailMapper;
+import web.uet.backend.mapper.business.response.ShopDetailMapperFromDocument;
 import web.uet.backend.repository.business.jpa.ShopRepository;
 import web.uet.backend.service.auth.AuthenticationService;
 
@@ -42,8 +42,8 @@ public class ShopService {
 
   private final ShopRepository shopRepository;
 
-  private final ShopGeneralMapper shopGeneralMapper;
-  private final ShopGeneralMapperFromDocument shopGeneralMapperFromDocument;
+  private final ShopDetailMapper shopDetailMapper;
+  private final ShopDetailMapperFromDocument shopDetailMapperFromDocument;
 
   private final ElasticsearchOperations elasticsearchOperations;
 
@@ -82,7 +82,7 @@ public class ShopService {
     shopRepository.save(currentShop);
   }
 
-  public ShopGeneralResponse getShopGeneralResponseBy(Integer shopId) {
+  public ShopDetailResponse getShopGeneralResponseBy(Integer shopId) {
     Account currentAccount = AuthenticationService.getCurrentAccount();
     if (currentAccount.getRole() != Role.CEO && !currentAccount.getWorkAt().getShopId().equals(shopId)) {
       throw new InvalidAuthorizationException("You are not have permission to access this shop");
@@ -91,7 +91,7 @@ public class ShopService {
     Shop shop = shopRepository.findById(shopId)
         .orElseThrow(() -> new NotFoundException("Shop not found"));
 
-    return shopGeneralMapper.toDto(shop);
+    return shopDetailMapper.toDto(shop);
   }
 
   private Query getQueryBy(ShopPageRequest request) {
@@ -113,9 +113,10 @@ public class ShopService {
 
   public ShopPageResponse getShopPageResponseBy(ShopPageRequest request) {
     Account currentAccount = AuthenticationService.getCurrentAccount();
-    if (currentAccount.getRole() != Role.CEO) {
-      throw new InvalidAuthorizationException("Permission denied");
-    }
+    // TODO: refactor code
+//    if (currentAccount.getRole() != Role.CEO) {
+//      throw new InvalidAuthorizationException("Permission denied");
+//    }
 
     Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
 
@@ -128,8 +129,8 @@ public class ShopService {
         ShopDocument.class
     );
     SearchPage<ShopDocument> searchPage = SearchHitSupport.searchPageFor(searchHits, pageable);
-    List<ShopGeneralResponse> shops =
-        searchHits.stream().map(s -> shopGeneralMapperFromDocument.toDto(s.getContent())).toList();
+    List<ShopDetailResponse> shops =
+        searchHits.stream().map(s -> shopDetailMapperFromDocument.toDto(s.getContent())).toList();
 
     return ShopPageResponse.builder()
         .shops(shops)

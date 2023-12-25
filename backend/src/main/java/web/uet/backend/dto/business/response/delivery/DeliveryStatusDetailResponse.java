@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import web.uet.backend.entity.enums.StatusType;
-import web.uet.backend.dto.business.response.ShopGeneralResponse;
+import web.uet.backend.dto.business.response.ShopDetailResponse;
 
 import java.util.Date;
 
@@ -28,7 +28,7 @@ public class DeliveryStatusDetailResponse {
   private StatusType statusType;
 
   @JsonProperty("shop")
-  private ShopGeneralResponse currentShop;
+  private ShopDetailResponse currentShop;
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date createdAt;

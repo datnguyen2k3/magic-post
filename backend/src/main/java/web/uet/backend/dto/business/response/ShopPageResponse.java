@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.dto.location.response.CommuneGeneralResponse;
 
 import java.util.List;
 
@@ -22,5 +21,5 @@ public class ShopPageResponse {
   private long totalElements;
   private Integer totalPages;
 
-  private List<ShopGeneralResponse> shops;
+  private List<ShopDetailResponse> shops;
 }

@@ -15,7 +15,7 @@ import web.uet.backend.dto.location.response.CommuneGeneralResponse;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ShopGeneralResponse {
+public class ShopDetailResponse {
   private Integer shopId;
 
   private CommuneGeneralResponse commune;

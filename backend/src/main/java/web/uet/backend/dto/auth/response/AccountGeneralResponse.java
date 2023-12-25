@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import web.uet.backend.dto.business.response.ShopGeneralResponse;
+import web.uet.backend.dto.business.response.ShopDetailResponse;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -21,5 +21,5 @@ public class AccountGeneralResponse {
   private String phone;
   private String address;
   private String role;
-  private ShopGeneralResponse workAt;
+  private ShopDetailResponse workAt;
 }
