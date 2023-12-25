@@ -2,7 +2,7 @@ import './TENext.scss'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import { selectAccount, selectToken } from '../../app/authSlice'
+import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 

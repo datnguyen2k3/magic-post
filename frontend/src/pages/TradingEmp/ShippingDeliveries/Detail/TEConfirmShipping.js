@@ -1,14 +1,16 @@
-import './TEConfirmReceive.scss'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { useSelector } from 'react-redux'
-import { selectAccount, selectToken } from '../../app/authSlice'
-import { useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
+import { useEffect, useState } from 'react';
+import './TEConfirmShipping.scss'
+import { useSelector } from 'react-redux';
+import { selectToken, selectAccount } from '../../../../app/authSlice';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
-const TEConfirmReceive = () => {
+const TEConfirmShipping = () => {
 
-    const navigate = useNavigate();
+    const shopId = useSelector(selectAccount).workAt.shopId;
+
+    const navigate = useNavigate()
 
     const token = useSelector(selectToken)
 
@@ -16,11 +18,10 @@ const TEConfirmReceive = () => {
 
     const deliveryId = params.get('deliveryId')
 
-    const shopId = useSelector(selectAccount).workAt.shopId;
-
     const [direction, setDirection] = useState('ASC')
     const [delivery, setDelivery] = useState(null)
     const [history, setHistory] = useState(null)
+    const [result, setResult] = useState(null)
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL
 
@@ -73,11 +74,11 @@ const TEConfirmReceive = () => {
             console.log(shopId)
             const body = {
                 shopId: shopId,
-                status: 'RECEIVED_FROM_SHOP'
+                status: result
             }
             const response = await axios.post(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, body, config)
             if (response) {
-                toast.success('Xác nhận thành công!')
+                toast.success('Xác nhận bắt đầu ship đến khách!')
                 navigate('/')
             }
         } catch (error) {
@@ -85,8 +86,12 @@ const TEConfirmReceive = () => {
         }
     }
 
+    const handleResultChange = (e) => {
+        setResult(e.target.value)
+    }
+
     return <>
-        {delivery ? <div className='te-confirm-receive'>
+        {delivery ? <div className='te-detail'>
             <label>Thứ tự trạng thái:</label>
             <select onChange={handleDirectionChange}>
                 <option value={'ASC'}>Tăng dần</option>
@@ -105,11 +110,19 @@ const TEConfirmReceive = () => {
                     <span><b>Thời gian: </b>{his.createdAt}</span>
                     <span><b>Địa điểm: </b>{his.shop.commune.name}</span>
                     <span><b>Loại văn phòng: </b>{his.shop.type === 'POST' ? 'Điểm giao dịch' : 'Điểm tập kết'}</span>
-                </>) : <></>}
+                </>
+                ) : <>Loading...</>}
             </div>
+            <div className=''>
+                <select onChange={handleResultChange}>
+                    <option value={''}>---</option>
+                    <option value={'SENT_TO_CUSTOMER_SUCCESS'}>Gửi hàng thành công</option>
+                    <option value={'SENT_TO_CUSTOMER_FAIL'}>Gửi hàng thất bại</option>
+                </select>
+            </div>
+            <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận</button>
         </div> : <></>}
-        <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận nhận đơn</button>
     </>
 }
 
-export default TEConfirmReceive;
+export default TEConfirmShipping

@@ -59,17 +59,6 @@ const Sidebar = () => {
                             Trang chủ
                         </button>
                     </Link>
-                    {isLoggedIn && <>
-                        <Link to={'/stat'}>
-                            <button className='sidebar-statistics sidebar-bottom'>
-                                Thống kê
-                            </button>
-                        </Link>
-                        <Link to={'/create-form'}>
-                            <button className='sidebar-statistics sidebar-bottom'>
-                                Tạo đơn vận mới
-                            </button>
-                        </Link></>}
                     {isCEO && <>
                         <Link to={'/offices'}>
                             <button className='sidebar-statistics sidebar-bottom'>
@@ -102,6 +91,21 @@ const Sidebar = () => {
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đang đến
                             </button>
+                        </Link>
+                        <Link to={'/te-inshop'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý đơn hàng đang đợi khách
+                            </button>
+                        </Link>
+                        <Link to={'/te-shipping'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý đơn hàng đang giao cho khách
+                            </button>
+                        </Link>
+                        <Link to={'/te-after'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý đơn hàng đã giao cho khách
+                            </button>
                         </Link></>
                     }
                     {isPostHead && <>
@@ -120,7 +124,6 @@ const Sidebar = () => {
                     </>}
                 </div>
                 <div className='sidebar-2'>
-                    <button className='sidebar-setting sidebar-top'>Cài đặt</button>
                     <div className='sidebar-account-box sidebar-top'>
                         {isLoggedIn ? <div>
                             <button className='sidebar-account sidebar-view-account'>{account !== undefined ? account.name : 'Tài khoản'} &nbsp;<FontAwesomeIcon icon={faChevronRight} />

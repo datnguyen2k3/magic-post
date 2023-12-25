@@ -1,10 +1,10 @@
 import './TECreateShipment.scss'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { isValidEmail, isValidName, isValidPhoneNumber } from '../../logic/verification'
+import { isValidEmail, isValidName, isValidPhoneNumber } from '../../../../logic/verification'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
-import { selectToken, selectAccount } from '../../app/authSlice'
+import { selectToken, selectAccount } from '../../../../app/authSlice'
 import { useNavigate } from 'react-router-dom'
 
 const TECreateShipment = () => {

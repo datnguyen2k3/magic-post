@@ -19,18 +19,23 @@ import ManagerDetail from '../pages/CEO/ManagerDetail';
 import TMEmps from '../pages/TradingManager/TMEmps';
 import TMEmpDetail from '../pages/TradingManager/TMEmpDetail';
 import TradingEmp from './auth-component/TradingEmp';
-import TECreateShipment from '../pages/TradingEmp/TECreateShipment';
+import TECreateShipment from '../pages/TradingEmp/CreateShipment/Create/TECreateShipment';
 import PostHead from './auth-component/PostHead';
 import PHCreateAccount from '../pages/PostHead/PHCreateAccount';
 import Account from '../pages/Account';
 import NeedLogged from './auth-component/NeedLogged';
-import TEDetail from '../pages/TradingEmp/TEDetail';
-import TENext from '../pages/TradingEmp/TENext';
-import TEReceive from '../pages/TradingEmp/TEReceive';
-import TEComing from '../pages/TradingEmp/TEComing';
+import TEDetail from '../pages/TradingEmp/CreateShipment/Detail/TEDetail';
+import TENext from '../pages/TradingEmp/InShopDeliveries/Detail/TENext'
+import TEReceive from '../pages/TradingEmp/InShopDeliveries/All/TEReceive';
+import TEComing from '../pages/TradingEmp/ComingDeliveries/All/TEComing';
 import WHCreateAccount from '../pages/WarehouseHead/WHCreateAccount';
 import WarehouseHead from './auth-component/WarehouseHead';
-import TEConfirmReceive from '../pages/TradingEmp/TEConfirmReceive';
+import TEConfirmReceive from '../pages/TradingEmp/ComingDeliveries/Detail/TEConfirmReceive';
+import TEInShop from '../pages/TradingEmp/GoingToShipping/All/TEInShop';
+import TEShipToCus from '../pages/TradingEmp/GoingToShipping/Detail/TEShipToCus';
+import TEShipping from '../pages/TradingEmp/ShippingDeliveries/All/TEShipping';
+import TEConfirmShipping from '../pages/TradingEmp/ShippingDeliveries/Detail/TEConfirmShipping';
+import TEAfter from '../pages/TradingEmp/AfterShipping/All/TEAfter';
 
 const Page = () => {
     return <>
@@ -63,6 +68,11 @@ const Page = () => {
                     <Route path='/te-next' element={<TradingEmp><TENext /></TradingEmp>}></Route>
                     <Route path='/te-coming' element={<TradingEmp><TEComing /></TradingEmp>}></Route>
                     <Route path='/te-confirm-receive' element={<TradingEmp><TEConfirmReceive /></TradingEmp>}></Route>
+                    <Route path='/te-inshop' element={<TradingEmp><TEInShop /></TradingEmp>}></Route>
+                    <Route path='/te-shiptocus' element={<TradingEmp><TEShipToCus /></TradingEmp>}></Route>
+                    <Route path='/te-shipping' element={<TradingEmp><TEShipping /></TradingEmp>}></Route>
+                    <Route path='/te-confirm-shipping' element={<TradingEmp><TEConfirmShipping /></TradingEmp>}></Route>
+                    <Route path='/te-after' element={<TradingEmp><TEAfter /></TradingEmp>}></Route>
 
                     {/* PostHead */}
                     <Route path='/ph-create-account' element={<PostHead><PHCreateAccount /></PostHead>}></Route>

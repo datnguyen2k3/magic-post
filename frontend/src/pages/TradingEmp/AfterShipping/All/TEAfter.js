@@ -1,16 +1,15 @@
-import './TEComing.scss'
+import './TEAfter.scss'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Table } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
-import { selectAccount, selectToken } from '../../app/authSlice'
+import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { Link } from 'react-router-dom'
 
-const TEComing = () => {
+const TEAfter = () => {
 
     const [deliveries, setDeliveries] = useState();
     const [filterData, setFilterData] = useState();
-    const [name, setName] = useState();
     const [productType, setProductType] = useState();
     const [fromName, setFromName] = useState();
     const [fromAddress, setFromAddress] = useState();
@@ -26,7 +25,7 @@ const TEComing = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const config = {
+            const config1 = {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -34,15 +33,27 @@ const TEComing = () => {
                 params: {
                     ...filterData,
                     currentShopId: shopId,
-                    status: 'COMING_TO_SHOP',
+                    status: 'SENT_TO_CUSTOMER_SUCCESS',
+                }
+            }
+
+            const config2 = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                params: {
+                    ...filterData,
+                    currentShopId: shopId,
+                    status: 'SENT_TO_CUSTOMER_FAIL',
                 }
             }
 
             try {
-                const response = await axios.get(`${backendUrl}/deliveryStatuses`, config)
-                console.log(config.params)
-                setDeliveries(response.data.deliveryStatuses)
-                console.log(response.data.deliveryStatuses)
+                const response1 = await axios.get(`${backendUrl}/deliveryStatuses`, config1)
+                const response2 = await axios.get(`${backendUrl}/deliveryStatuses`, config2)
+                setDeliveries(response1.data.deliveryStatuses)
+                setDeliveries(...deliveries, response2.data.deliveryStatuses)
             } catch (error) {
                 console.log(error)
             }
@@ -104,12 +115,12 @@ const TEComing = () => {
     }
 
     return <>
-        <div className='te-receive'>
+        <div className='te-after'>
             <Table>
                 <thead>
                     <tr>
                         <th>Thời gian nhận</th>
-                        <th>Đơn hàng</th>
+                        <th>Trạng thái</th>
                         <th>Loại hàng</th>
                         <th>Người gửi</th>
                         <th>Địa chỉ người gửi</th>
@@ -117,7 +128,7 @@ const TEComing = () => {
                         <th>Người nhận</th>
                         <th>Địa chỉ người nhận</th>
                         <th>Văn phòng nhận</th>
-                        <th>Chọn điểm đến kế tiếp</th>
+                        <th>Xác nhận văn phòng đã nhận được</th>
                     </tr>
                     <tr>
                         <th></th>
@@ -139,7 +150,7 @@ const TEComing = () => {
                     {deliveries ? deliveries.map(del => (
                         <tr>
                             <td>{del.createdAt}</td>
-                            <td>{del.delivery.name}</td>
+                            <td>{del.statusType}</td>
                             <td>{del.delivery.productType}</td>
                             <td>{del.delivery.fromName}</td>
                             <td>{del.delivery.fromAddress}</td>
@@ -147,7 +158,7 @@ const TEComing = () => {
                             <td>{del.delivery.toName}</td>
                             <td>{del.delivery.toAddress}</td>
                             <td>{del.delivery.toShop.commune.name} ({del.delivery.toShop.commune.communeId})</td>
-                            <td><Link to={`/te-confirm-receive?deliveryId=${del.delivery.deliveryId}`}>Chọn</Link></td>
+                            <td><Link to={`/te-next?deliveryId=${del.delivery.deliveryId}`}>Chọn</Link></td>
                         </tr>
                     )) : <></>}
                 </tbody>
@@ -162,4 +173,4 @@ const TEComing = () => {
 
 }
 
-export default TEComing
+export default TEAfter

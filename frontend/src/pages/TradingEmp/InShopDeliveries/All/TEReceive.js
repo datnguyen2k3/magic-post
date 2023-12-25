@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Table } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
-import { selectAccount, selectToken } from '../../app/authSlice'
+import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { Link } from 'react-router-dom'
 
 const TEReceive = () => {
