@@ -1,16 +1,22 @@
-import { useEffect, useState } from 'react';
-import './TEDetail.scss'
-import { useSelector } from 'react-redux';
-import { selectToken } from '../../app/authSlice';
-import axios from 'axios';
+import './TEConfirmReceive.scss'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
+import { selectAccount, selectToken } from '../../app/authSlice'
+import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
-const TEDetail = () => {
+const TEConfirmReceive = () => {
+
+    const navigate = useNavigate();
 
     const token = useSelector(selectToken)
 
     const params = new URLSearchParams(window.location.search);
 
     const deliveryId = params.get('deliveryId')
+
+    const shopId = useSelector(selectAccount).workAt.shopId;
 
     const [direction, setDirection] = useState('ASC')
     const [delivery, setDelivery] = useState(null)
@@ -52,8 +58,35 @@ const TEDetail = () => {
         fetchData();
     }, [direction])
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`, // Thay thế token bằng token thực tế của bạn
+                    'Content-Type': 'application/json'
+                },
+                params: {
+                    deliveryId
+                }
+            }
+            console.log(shopId)
+            const body = {
+                shopId: shopId,
+                status: 'RECEIVED_FROM_SHOP'
+            }
+            const response = await axios.post(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, body, config)
+            if (response) {
+                toast.success('Xác nhận thành công!')
+                navigate('/')
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return <>
-        {delivery ? <div className='te-detail'>
+        {delivery ? <div className='te-confirm-receive'>
             <label>Thứ tự trạng thái:</label>
             <select onChange={handleDirectionChange}>
                 <option value={'ASC'}>Tăng dần</option>
@@ -72,10 +105,11 @@ const TEDetail = () => {
                     <span><b>Thời gian: </b>{his.createdAt}</span>
                     <span><b>Địa điểm: </b>{his.shop.commune.name}</span>
                     <span><b>Loại văn phòng: </b>{his.shop.type === 'POST' ? 'Điểm giao dịch' : 'Điểm tập kết'}</span>
-                </>) : <>Loading...</>}
+                </>) : <></>}
             </div>
         </div> : <></>}
+        <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận nhận đơn</button>
     </>
 }
 
-export default TEDetail
+export default TEConfirmReceive;

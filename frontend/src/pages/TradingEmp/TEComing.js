@@ -1,4 +1,4 @@
-import './TEComingToShop.scss'
+import './TEComing.scss'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Table } from 'react-bootstrap'
@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { selectAccount, selectToken } from '../../app/authSlice'
 import { Link } from 'react-router-dom'
 
-const TEComingToShop = () => {
+const TEComing = () => {
 
     const [deliveries, setDeliveries] = useState();
     const [filterData, setFilterData] = useState();
@@ -34,7 +34,7 @@ const TEComingToShop = () => {
                 params: {
                     ...filterData,
                     currentShopId: shopId,
-                    status: 'RECEIVED_FROM_CUSTOMER',
+                    status: 'COMING_TO_SHOP',
                 }
             }
 
@@ -78,6 +78,8 @@ const TEComingToShop = () => {
         }
     }
 
+    const [page, setPage] = useState(1);
+
     useEffect(() => {
         setFilterData({
             ...filterData,
@@ -87,13 +89,22 @@ const TEComingToShop = () => {
             fromNameContains: fromName,
             toNameContains: toName,
             fromShopId: fromShop,
-            toShopId: toShop
+            toShopId: toShop,
+            page: page - 1
         })
 
-    }, [productType, fromAddress, fromName, fromShop, toAddress, toName, toShop])
+    }, [productType, fromAddress, fromName, fromShop, toAddress, toName, toShop, page])
+
+    const prev = (e) => {
+        setPage(Math.max(1, page - 1))
+    }
+
+    const next = (e) => {
+        setPage(page + 1)
+    }
 
     return <>
-        <div className='te-coming'>
+        <div className='te-receive'>
             <Table>
                 <thead>
                     <tr>
@@ -136,14 +147,19 @@ const TEComingToShop = () => {
                             <td>{del.delivery.toName}</td>
                             <td>{del.delivery.toAddress}</td>
                             <td>{del.delivery.toShop.commune.name} ({del.delivery.toShop.commune.communeId})</td>
-                            <td><Link to={`/te-next?deliveryId=${del.delivery.deliveryId}`}>Chọn</Link></td>
+                            <td><Link to={`/te-confirm-receive?deliveryId=${del.delivery.deliveryId}`}>Chọn</Link></td>
                         </tr>
                     )) : <></>}
                 </tbody>
             </Table>
+            <div className='te-coming-pagination'>
+                <button onClick={prev}>Trang trước</button>
+                <span>{page}</span>
+                <button onClick={next}>Trang sau</button>
+            </div>
         </div>
     </>
 
 }
 
-export default TEComingToShop
+export default TEComing

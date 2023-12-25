@@ -30,6 +30,7 @@ const Sidebar = () => {
     const isCEO = (useSelector(selectRole) === 'CEO')
     const isTradingEmp = (useSelector(selectRole) === 'EMPLOYEE')
     const isPostHead = (useSelector(selectRole) === 'POST_HEAD')
+    const isWarehouseHead = (useSelector(selectRole) === 'WAREHOUSE_HEAD')
     const account = useSelector(selectAccount)
 
     const goToLogin = () => {
@@ -92,6 +93,11 @@ const Sidebar = () => {
                                 Tạo đơn vận mới cho khách
                             </button>
                         </Link>
+                        <Link to={'/te-receive'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý đơn hàng đang ở văn phòng
+                            </button>
+                        </Link>
                         <Link to={'/te-coming'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đang đến
@@ -100,6 +106,13 @@ const Sidebar = () => {
                     }
                     {isPostHead && <>
                         <Link to={'/ph-create-account'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Tạo tài khoản nhân viên
+                            </button>
+                        </Link>
+                    </>}
+                    {isWarehouseHead && <>
+                        <Link to={'/wh-create-account'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Tạo tài khoản nhân viên
                             </button>

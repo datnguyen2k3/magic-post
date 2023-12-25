@@ -3,8 +3,12 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { selectAccount, selectToken } from '../../app/authSlice'
+import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const TENext = () => {
+
+    const navigate = useNavigate();
 
     const token = useSelector(selectToken)
 
@@ -58,10 +62,14 @@ const TENext = () => {
     const [shopPCode, setShopPCode] = useState()
     const [shopDCode, setShopDCode] = useState()
     const [shopCommuneId, setShopCommuneId] = useState(0)
+    const [sId, setShopId] = useState()
 
     const [shopProvinceData, setShopProvinceData] = useState(null)
     const [shopDistrictData, setShopDistrictData] = useState(null)
     const [shopCommuneData, setShopCommuneData] = useState(null)
+    const [shopData, setShopData] = useState(null)
+
+    const [type, setType] = useState('')
 
     const handleShopRegionChange = (e) => {
         setShopRCode(e.target.value)
@@ -77,6 +85,10 @@ const TENext = () => {
 
     const handleShopCommuneChange = (e) => {
         setShopCommuneId(e.target.value)
+    }
+
+    const handleTypeChange = (e) => {
+        setType(e.target.value)
     }
 
     useEffect(() => {
@@ -136,6 +148,32 @@ const TENext = () => {
         fetchData();
     }, [shopDCode]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const params = {
+                    type,
+                    communeId: shopCommuneId,  // Thay thế bằng ID quận/huyện thực tế của bạn
+                };
+                const config = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Thay thế token bằng token thực tế của bạn
+                        'Content-Type': 'application/json'
+                    },
+                    params
+                };
+                const response = await axios.get('http://localhost:8090/magic-post/api/shops', config);
+                const data = response.data.shops;
+                console.log(response.data.shops, 'dcm')
+                // Xử lý dữ liệu tại đây
+                setShopData(data)
+            } catch (error) {
+                console.error('Lỗi khi lấy dữ liệu:', error);
+            }
+        };
+        fetchData();
+    }, [shopCommuneId, type]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -156,15 +194,24 @@ const TENext = () => {
             const response = await axios.post(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, body, config)
             if (response) {
                 const body = {
-                    shopId: shopCommuneId,
+                    shopId: sId,
                     status: 'COMING_TO_SHOP'
                 }
                 const response = await axios.post(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, body, config)
                 console.log(response);
+
+                if (response) {
+                    toast.success('Chọn điểm đến thành công!')
+                    navigate('/')
+                }
             }
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const handleShopIdChange = (e) => {
+        setShopId(e.target.value)
     }
 
     return <>
@@ -198,6 +245,12 @@ const TENext = () => {
                 <option value={2}>Miền Trung</option>
                 <option value={3}>Miền Nam</option>
             </select>
+            <label>Loại văn phòng tiếp theo</label>
+            <select onChange={(e) => handleTypeChange(e)}>
+                <option value={''}>Chọn loại văn phòng</option>
+                <option value={'POST'}>Văn phòng giao dịch</option>
+                <option value={'WAREHOUSE'}>Văn phòng tập kết</option>
+            </select>
             <label>Tỉnh/thành</label>
             <select onChange={(e) => handleShopProvinceChange(e)}>
                 <option value=''>Chọn Tỉnh/thành</option>
@@ -217,6 +270,13 @@ const TENext = () => {
                 <option value=''>Chọn Phường/Xã</option>
                 {
                     (shopCommuneData && shopPCode && shopRCode && shopDCode) ? shopCommuneData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
+                }
+            </select>
+            <label>Chọn văn phòng</label>
+            <select onChange={(e) => handleShopIdChange(e)}>
+                <option value=''>Chọn Phường/Xã</option>
+                {
+                    (shopData && shopCommuneId && shopPCode && shopRCode && shopDCode) ? shopData.map(shop => <option value={shop.shopId}>{shop.shopId}</option>) : <></>
                 }
             </select>
         </div>

@@ -245,7 +245,7 @@ const TECreateShipment = () => {
             try {
                 const response = await axios.get(`${backendUrl}/provinces/${shopPCode}/districts`, {
                     headers: {
-                        'Authorization': `Bearer ${token}`, // Thay thế token bằng token thực tế của bạn
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
                 });
@@ -264,7 +264,7 @@ const TECreateShipment = () => {
             try {
                 const response = await axios.get(`${backendUrl}/districts/${shopDCode}/communes`, {
                     headers: {
-                        'Authorization': `Bearer ${token}`, // Thay thế token bằng token thực tế của bạn
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
                 });
