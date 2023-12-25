@@ -1,4 +1,4 @@
-import './TENext.scss'
+import './TEWNext.scss'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
@@ -6,7 +6,7 @@ import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
-const TENext = () => {
+const TEWNext = () => {
 
     const navigate = useNavigate();
 
@@ -236,7 +236,7 @@ const TENext = () => {
                 </>) : <></>}
             </div>
         </div> : <></>}
-        {(history && history[history.length - 1].statusType === 'RECEIVED_FROM_CUSTOMER' && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
+        {(history && history[history.length - 1].statusType === 'RECEIVED_FROM_SHOP' && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
             <div className='te-next-place'>
                 <label>Miền</label>
                 <select onChange={(e) => handleShopRegionChange(e)}>
@@ -248,6 +248,7 @@ const TENext = () => {
                 <label>Loại văn phòng tiếp theo</label>
                 <select onChange={(e) => handleTypeChange(e)}>
                     <option value={''}>Chọn loại văn phòng</option>
+                    <option value={'POST'}>Văn phòng giao dịch</option>
                     <option value={'WAREHOUSE'}>Văn phòng tập kết</option>
                 </select>
                 <label>Tỉnh/thành</label>
@@ -284,4 +285,4 @@ const TENext = () => {
     </>
 }
 
-export default TENext;
+export default TEWNext;

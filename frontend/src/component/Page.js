@@ -19,7 +19,7 @@ import WHCreateAccount from '../pages/WarehouseHead/WHCreateAccount';
 import WarehouseHead from './auth-component/WarehouseHead';
 import TEConfirmReceive from '../pages/TradingEmp/ComingDeliveries/Detail/TEConfirmReceive';
 import TEInShop from '../pages/TradingEmp/GoingToShipping/All/TEInShop';
-import TEShipToCus from '../pages/TradingEmp/GoingToShipping/Detail/TEShipToCus';
+import TEShipToCus from '../pages/TradingEmp/GoingToShipping/PostDetail/TEShipToCus';
 import TEShipping from '../pages/TradingEmp/ShippingDeliveries/All/TEShipping';
 import TEConfirmShipping from '../pages/TradingEmp/ShippingDeliveries/Detail/TEConfirmShipping';
 import TEAfter from '../pages/TradingEmp/AfterShipping/All/TEAfter';
@@ -27,6 +27,9 @@ import DetailOffice from '../pages/CEO/DetailOffice/DetailOffice';
 import Accounts from '../pages/CEO/Accounts/Accounts';
 import DetailAccount from '../pages/CEO/DetailAcc/DetailAccount';
 import Deliveries from '../pages/CEO/Deliveries/Deliveries';
+import TEWNext from '../pages/TradingEmp/GoingToShipping/WarehouseDetail/TEWNext';
+import Account from '../pages/Account';
+import NeedLogged from '../component/auth-component/NeedLogged'
 
 const Page = () => {
     return <>
@@ -35,6 +38,7 @@ const Page = () => {
                 <Routes>
                     <Route path='/' element={<Home />}></Route>
                     <Route path='/login' element={<NotLogged><Login /></NotLogged>}></Route>
+                    <Route path='/account' element={<NeedLogged><Account /></NeedLogged>}></Route>
 
                     {/* CEO */}
                     <Route path='/offices' element={<CEO><Offices /></CEO>}></Route>
@@ -49,6 +53,7 @@ const Page = () => {
                     <Route path='/te-receive' element={<TradingEmp><TEReceive /></TradingEmp>}></Route>
                     <Route path='/te-detail' element={<TradingEmp><TEDetail /></TradingEmp>}></Route>
                     <Route path='/te-next' element={<TradingEmp><TENext /></TradingEmp>}></Route>
+                    <Route path='/te-w-next' element={<TradingEmp><TEWNext /></TradingEmp>}></Route>
                     <Route path='/te-coming' element={<TradingEmp><TEComing /></TradingEmp>}></Route>
                     <Route path='/te-confirm-receive' element={<TradingEmp><TEConfirmReceive /></TradingEmp>}></Route>
                     <Route path='/te-inshop' element={<TradingEmp><TEInShop /></TradingEmp>}></Route>
