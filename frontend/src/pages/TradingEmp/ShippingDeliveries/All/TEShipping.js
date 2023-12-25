@@ -33,7 +33,7 @@ const TEShipping = () => {
                 params: {
                     ...filterData,
                     currentShopId: shopId,
-                    status: 'SHIPPING_TO_CUSTOMER',
+                    statuses: 'SHIPPING_TO_CUSTOMER',
                 }
             }
 

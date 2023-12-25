@@ -113,6 +113,8 @@ const TEConfirmShipping = () => {
                 </>
                 ) : <>Loading...</>}
             </div>
+        </div> : <></>}
+        {(history && history[history.length - 1].statusType === 'SHIPPING_TO_CUSTOMER' && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
             <div className=''>
                 <select onChange={handleResultChange}>
                     <option value={''}>---</option>
@@ -121,7 +123,7 @@ const TEConfirmShipping = () => {
                 </select>
             </div>
             <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận</button>
-        </div> : <></>}
+        </> : <></>}
     </>
 }
 
