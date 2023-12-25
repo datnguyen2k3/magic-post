@@ -50,6 +50,9 @@ const TENext = () => {
                 setDelivery(response.data.deliveryStatusDetailHistory[0].delivery)
                 setHistory(response.data.deliveryStatusDetailHistory)
                 console.log(response)
+                console.log(response.data.deliveryStatusDetailHistory[response.data.deliveryStatusDetailHistory.length - 1].shop.shopId,
+                    response.data.deliveryStatusDetailHistory[response.data.deliveryStatusDetailHistory.length - 1].statusType,
+                    shopId, typeof shopId)
             } catch (error) {
                 console.log(error)
             }
@@ -237,50 +240,52 @@ const TENext = () => {
                 </>) : <></>}
             </div>
         </div> : <></>}
-        <div className='te-next-place'>
-            <label>Miền</label>
-            <select onChange={(e) => handleShopRegionChange(e)}>
-                <option value=''>Chọn miền</option>
-                <option value={1}>Miền Bắc</option>
-                <option value={2}>Miền Trung</option>
-                <option value={3}>Miền Nam</option>
-            </select>
-            <label>Loại văn phòng tiếp theo</label>
-            <select onChange={(e) => handleTypeChange(e)}>
-                <option value={''}>Chọn loại văn phòng</option>
-                <option value={'POST'}>Văn phòng giao dịch</option>
-                <option value={'WAREHOUSE'}>Văn phòng tập kết</option>
-            </select>
-            <label>Tỉnh/thành</label>
-            <select onChange={(e) => handleShopProvinceChange(e)}>
-                <option value=''>Chọn Tỉnh/thành</option>
-                {
-                    (shopProvinceData && shopRCode) ? shopProvinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
-                }
-            </select>
-            <label>Quận/Huyện</label>
-            <select onChange={(e) => handleShopDistrictChange(e)}>
-                <option value=''>Chọn Quận/Huyện</option>
-                {
-                    (shopDistrictData && shopPCode && shopRCode) ? shopDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
-                }
-            </select>
-            <label>Phường/Xã</label>
-            <select onChange={(e) => handleShopCommuneChange(e)}>
-                <option value=''>Chọn Phường/Xã</option>
-                {
-                    (shopCommuneData && shopPCode && shopRCode && shopDCode) ? shopCommuneData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
-                }
-            </select>
-            <label>Chọn văn phòng</label>
-            <select onChange={(e) => handleShopIdChange(e)}>
-                <option value=''>Chọn Phường/Xã</option>
-                {
-                    (shopData && shopCommuneId && shopPCode && shopRCode && shopDCode) ? shopData.map(shop => <option value={shop.shopId}>{shop.shopId}</option>) : <></>
-                }
-            </select>
-        </div>
-        <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận</button>
+        {(history && history[history.length - 1].statusType === 'RECEIVED_FROM_CUSTOMER' && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
+            <div className='te-next-place'>
+                <label>Miền</label>
+                <select onChange={(e) => handleShopRegionChange(e)}>
+                    <option value=''>Chọn miền</option>
+                    <option value={1}>Miền Bắc</option>
+                    <option value={2}>Miền Trung</option>
+                    <option value={3}>Miền Nam</option>
+                </select>
+                <label>Loại văn phòng tiếp theo</label>
+                <select onChange={(e) => handleTypeChange(e)}>
+                    <option value={''}>Chọn loại văn phòng</option>
+                    <option value={'POST'}>Văn phòng giao dịch</option>
+                    <option value={'WAREHOUSE'}>Văn phòng tập kết</option>
+                </select>
+                <label>Tỉnh/thành</label>
+                <select onChange={(e) => handleShopProvinceChange(e)}>
+                    <option value=''>Chọn Tỉnh/thành</option>
+                    {
+                        (shopProvinceData && shopRCode) ? shopProvinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
+                    }
+                </select>
+                <label>Quận/Huyện</label>
+                <select onChange={(e) => handleShopDistrictChange(e)}>
+                    <option value=''>Chọn Quận/Huyện</option>
+                    {
+                        (shopDistrictData && shopPCode && shopRCode) ? shopDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
+                    }
+                </select>
+                <label>Phường/Xã</label>
+                <select onChange={(e) => handleShopCommuneChange(e)}>
+                    <option value=''>Chọn Phường/Xã</option>
+                    {
+                        (shopCommuneData && shopPCode && shopRCode && shopDCode) ? shopCommuneData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
+                    }
+                </select>
+                <label>Chọn văn phòng</label>
+                <select onChange={(e) => handleShopIdChange(e)}>
+                    <option value=''>Chọn Phường/Xã</option>
+                    {
+                        (shopData && shopCommuneId && shopPCode && shopRCode && shopDCode) ? shopData.map(shop => <option value={shop.shopId}>{shop.shopId}</option>) : <></>
+                    }
+                </select>
+            </div>
+            <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận</button>
+        </> : <></>}
     </>
 }
 

@@ -1,4 +1,4 @@
-import './Account.scss'
+import './Accounts.scss'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { selectToken } from '../../../app/authSlice'

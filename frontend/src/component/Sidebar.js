@@ -75,6 +75,11 @@ const Sidebar = () => {
                                 Quản lý tài khoản trưởng điểm
                             </button>
                         </Link>
+                        <Link to={'/deliveries'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý các đơn hàng
+                            </button>
+                        </Link>
                     </>}
                     {isTradingEmp && <>
                         <Link to={'/te-create-shipment'}>

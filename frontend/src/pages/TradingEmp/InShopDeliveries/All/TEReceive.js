@@ -34,13 +34,12 @@ const TEReceive = () => {
                 params: {
                     ...filterData,
                     currentShopId: shopId,
-                    status: 'RECEIVED_FROM_CUSTOMER',
+                    statuses: 'RECEIVED_FROM_CUSTOMER',
                 }
             }
 
             try {
                 const response = await axios.get(`${backendUrl}/deliveryStatuses`, config)
-                console.log(config.params)
                 setDeliveries(response.data.deliveryStatuses)
                 console.log(response.data.deliveryStatuses)
             } catch (error) {
