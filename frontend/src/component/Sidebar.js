@@ -99,7 +99,7 @@ const Sidebar = () => {
                         </Link>
                         <Link to={'/te-inshop'}>
                             <button className='sidebar-statistics sidebar-bottom'>
-                                Quản lý đơn hàng đang đợi khách
+                                Quản lý đơn hàng đã được nhận bởi văn phòng
                             </button>
                         </Link>
                         <Link to={'/te-shipping'}>

@@ -49,10 +49,6 @@ const TENext = () => {
                 const response = await axios.get(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, config)
                 setDelivery(response.data.deliveryStatusDetailHistory[0].delivery)
                 setHistory(response.data.deliveryStatusDetailHistory)
-                console.log(response)
-                console.log(response.data.deliveryStatusDetailHistory[response.data.deliveryStatusDetailHistory.length - 1].shop.shopId,
-                    response.data.deliveryStatusDetailHistory[response.data.deliveryStatusDetailHistory.length - 1].statusType,
-                    shopId, typeof shopId)
             } catch (error) {
                 console.log(error)
             }

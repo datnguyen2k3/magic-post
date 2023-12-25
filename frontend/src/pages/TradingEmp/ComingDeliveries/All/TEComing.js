@@ -34,7 +34,7 @@ const TEComing = () => {
                 params: {
                     ...filterData,
                     currentShopId: shopId,
-                    status: 'COMING_TO_SHOP',
+                    statuses: 'COMING_TO_SHOP',
                 }
             }
 

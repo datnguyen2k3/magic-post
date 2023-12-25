@@ -108,7 +108,9 @@ const TEConfirmReceive = () => {
                 </>) : <></>}
             </div>
         </div> : <></>}
-        <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận nhận đơn</button>
+        {(history && history[history.length - 1].statusType === 'COMING_TO_SHOP' && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
+            <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận nhận đơn</button>
+        </> : <></>}
     </>
 }
 
