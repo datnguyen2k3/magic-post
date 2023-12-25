@@ -9,15 +9,9 @@ import Login from '../pages/Login';
 import Logged from './auth-component/Logged';
 import NotLogged from './auth-component/NotLogged';
 import Register from '../pages/Register';
-import Offices from '../pages/CEO/Offices';
+import Offices from '../pages/CEO/Offices/Offices';
 import CEO from './auth-component/CEO';
-import Managers from '../pages/CEO/Managers';
-import CreateAccount from '../pages/CEO/CreateAccount';
-import TMCreateAccount from '../pages/TradingManager/TMCreateAccount';
-import TradingManager from './auth-component/TradingManager'
-import ManagerDetail from '../pages/CEO/ManagerDetail';
-import TMEmps from '../pages/TradingManager/TMEmps';
-import TMEmpDetail from '../pages/TradingManager/TMEmpDetail';
+import CreateAccount from '../pages/CEO/CreateAcc/CreateAccount';
 import TradingEmp from './auth-component/TradingEmp';
 import TECreateShipment from '../pages/TradingEmp/CreateShipment/Create/TECreateShipment';
 import PostHead from './auth-component/PostHead';
@@ -36,6 +30,8 @@ import TEShipToCus from '../pages/TradingEmp/GoingToShipping/Detail/TEShipToCus'
 import TEShipping from '../pages/TradingEmp/ShippingDeliveries/All/TEShipping';
 import TEConfirmShipping from '../pages/TradingEmp/ShippingDeliveries/Detail/TEConfirmShipping';
 import TEAfter from '../pages/TradingEmp/AfterShipping/All/TEAfter';
+import DetailOffice from '../pages/CEO/DetailOffice/DetailOffice';
+import Accounts from '../pages/CEO/Accounts/Accounts';
 
 const Page = () => {
     return <>
@@ -52,14 +48,9 @@ const Page = () => {
 
                     {/* CEO */}
                     <Route path='/offices' element={<CEO><Offices /></CEO>}></Route>
-                    <Route path='/managers' element={<CEO><Managers /></CEO>}></Route>
                     <Route path='/create-account' element={<CEO><CreateAccount /></CEO>}></Route>
-                    <Route path='/manager-detail' element={<CEO><ManagerDetail /></CEO>}></Route>
-
-                    {/* Trading Manager */}
-                    <Route path='/tm-create-account' element={<TradingManager><TMCreateAccount /></TradingManager>}></Route>
-                    <Route path='/tm-emps' element={<TradingManager><TMEmps /></TradingManager>}></Route>
-                    <Route path='/tm-emp-detail' element={<TradingManager><TMEmpDetail /></TradingManager>}></Route>
+                    <Route path='/detail-office' element={<CEO><DetailOffice /></CEO>}></Route>
+                    <Route path='/accounts' element={<CEO><Accounts /></CEO>}></Route>
 
                     {/* TradingEmp */}
                     <Route path='/te-create-shipment' element={<TradingEmp><TECreateShipment /></TradingEmp>}></Route>

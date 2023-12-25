@@ -65,14 +65,14 @@ const Sidebar = () => {
                                 Thống kê các văn phòng
                             </button>
                         </Link>
-                        <Link to={'/managers'}>
-                            <button className='sidebar-statistics sidebar-bottom'>
-                                Quản lý các trưởng điểm
-                            </button>
-                        </Link>
                         <Link to={'/create-account'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Tạo tài khoản cho trưởng điểm
+                            </button>
+                        </Link>
+                        <Link to={'/accounts'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý tài khoản trưởng điểm
                             </button>
                         </Link>
                     </>}

@@ -1,9 +1,9 @@
 import toast from 'react-hot-toast'
 import './CreateAccount.scss'
 import { useState, useEffect } from 'react'
-import { isValidEmail, isValidName, isValidPhoneNumber } from '../../logic/verification'
+import { isValidEmail, isValidName, isValidPhoneNumber } from '../../../logic/verification'
 import axios from 'axios'
-import { selectToken } from '../../app/authSlice'
+import { selectToken } from '../../../app/authSlice'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
