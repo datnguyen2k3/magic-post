@@ -24,6 +24,9 @@ const Accounts = () => {
 
     const [maxPage, setMaxPage] = useState();
 
+    const [sortField, setSortField] = useState('');
+    const [direction, setDirection] = useState('');
+
     useEffect(() => {
         const fetchData = async () => {
             const config = {
@@ -45,7 +48,7 @@ const Accounts = () => {
         }
 
         fetchData()
-    }, [filteredData, page])
+    }, [filteredData, page, sortField, direction])
 
     const prev = () => {
         setPage(Math.max(page - 1, 1))
@@ -58,9 +61,24 @@ const Accounts = () => {
     useEffect(() => {
         setFilteredData({
             ...filteredData,
-            page: page - 1
+            page: page - 1,
+            sort: sortField,
+            direction
         })
-    }, [page])
+    }, [page, sortField, direction])
+
+    const handleSort = (field) => {
+        if (field === sortField) {
+            setDirection(direction === 'ASC' ? 'DESC' : 'ASC');
+        } else {
+            setSortField(field);
+            setDirection('ASC');
+        }
+    };
+
+    const handleViewDetail = (username, role) => {
+        navigate(`/detail-account?username=${username}&role=${role}`)
+    }
 
     return <>
         <div className='accounts'>
@@ -68,20 +86,20 @@ const Accounts = () => {
             <Table>
                 <thead>
                     <tr>
-                        <th>Tên</th>
-                        <th>Địa chỉ</th>
-                        <th>Vai trò</th>
-                        <th>Số điện thoại</th>
-                        <th>Địa chỉ</th>
-                        <th>Id Văn phòng</th>
-                        <th>Địa chỉ Văn phòng</th>
-                        <th>Số nhân viên đang quản lý</th>
-                        <th>Số đơn đang ở văn phòng đó</th>
+                        <th className='accounts-sort' onClick={() => handleSort('NAME')}>Tên</th>
+                        <th className='accounts-sort' onClick={() => handleSort('ADDRESS')}>Địa chỉ</th>
+                        <th className='accounts-sort' onClick={() => handleSort('ROLE')}>Vai trò</th>
+                        <th className='accounts-sort' onClick={() => handleSort('PHONE')}>Số điện thoại</th>
+                        <th className='accounts-sort' onClick={() => handleSort('SHOP_ID')}>Id Văn phòng</th>
+                        <th className='accounts-sort' onClick={() => handleSort('COMMUNE_ID')}>Id Địa chỉ Văn phòng</th>
+                        <th className='accounts-sort' onClick={() => handleSort('COMMUNE_NAME')}>Địa chỉ Văn phòng </th>
+                        <th className='accounts-sort' onClick={() => handleSort('EMPLOYEE_NUMBER')}>Số nhân viên</th>
+                        <th className='accounts-sort' onClick={() => handleSort('CURRENT_DELIVERY_NUMBER')}>Số đơn đang tồn</th>
                     </tr>
                 </thead>
                 <tbody>
                     {accounts ? accounts.map(acc => <>
-                        <tr>
+                        <tr onClick={() => handleViewDetail(acc.username, acc.role)}>
                             <td>{acc.name}</td>
                             <td>{acc.address}</td>
                             <td>{acc.role}</td>

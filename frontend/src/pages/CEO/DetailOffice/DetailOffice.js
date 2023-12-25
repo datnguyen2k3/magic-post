@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import './DetailOffice.scss'
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectToken } from '../../../app/authSlice';
 import axios from 'axios';

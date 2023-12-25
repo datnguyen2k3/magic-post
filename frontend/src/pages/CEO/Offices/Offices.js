@@ -20,6 +20,12 @@ const Offices = () => {
 
     const [page, setPage] = useState(1)
 
+    const [maxPage, setMaxPage] = useState();
+
+    const [type, setType] = useState();
+
+    const [communeId, setCommuneId] = useState();
+
     useEffect(() => {
 
         const fetchData = async () => {
@@ -32,6 +38,7 @@ const Offices = () => {
             try {
                 const response = await axios.get(`${backendUrl}/shops`, config)
                 setOffices(response.data.shops)
+                setMaxPage(response.data.totalPages)
                 console.log(response)
             } catch (error) {
                 console.log(error);
@@ -40,25 +47,40 @@ const Offices = () => {
 
         fetchData();
 
-    }, [filteredData, page])
+    }, [filteredData, page, type, communeId])
 
     const prev = () => {
         setPage(Math.max(page - 1, 1))
     }
 
     const next = () => {
-        setPage(page + 1)
+        setPage(Math.min(maxPage, page + 1))
     }
 
     useEffect(() => {
         setFilteredData({
             ...filteredData,
-            page: page - 1
+            page: page - 1,
+            type,
+            communeId
         })
-    }, [page])
+    }, [page, type, communeId])
 
     const handleViewDetail = (id) => {
         navigate(`/detail-office?shopId=${id}`)
+    }
+
+    const handleInputChange = (e) => {
+        switch (e.target.name) {
+            case 'communeId':
+                setCommuneId(e.target.value);
+                break;
+            case 'type':
+                setType(e.target.value);
+                break;
+            default:
+                break;
+        }
     }
 
     return <>
@@ -74,6 +96,21 @@ const Offices = () => {
                         <th>Số đơn đến văn phòng</th>
                         <th>Số đơn đang ở văn phòng</th>
                         <th>Số đơn đã đi từ văn phòng</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th><input name='communeId' placeholder='Tìm kiếm theo id địa chỉ' onChange={handleInputChange}></input></th>
+                        <th>
+                            <select name='type' onChange={handleInputChange}>
+                                <option value={''}>Tất cả</option>
+                                <option value={'POST'}>Văn phòng giao dịch</option>
+                                <option value={'WAREHOUSE'}>Văn phòng tập kết</option>
+                            </select>
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

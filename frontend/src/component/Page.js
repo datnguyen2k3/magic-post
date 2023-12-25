@@ -32,6 +32,7 @@ import TEConfirmShipping from '../pages/TradingEmp/ShippingDeliveries/Detail/TEC
 import TEAfter from '../pages/TradingEmp/AfterShipping/All/TEAfter';
 import DetailOffice from '../pages/CEO/DetailOffice/DetailOffice';
 import Accounts from '../pages/CEO/Accounts/Accounts';
+import DetailAccount from '../pages/CEO/DetailAcc/DetailAccount';
 
 const Page = () => {
     return <>
@@ -51,6 +52,7 @@ const Page = () => {
                     <Route path='/create-account' element={<CEO><CreateAccount /></CEO>}></Route>
                     <Route path='/detail-office' element={<CEO><DetailOffice /></CEO>}></Route>
                     <Route path='/accounts' element={<CEO><Accounts /></CEO>}></Route>
+                    <Route path='/detail-account' element={<CEO><DetailAccount /></CEO>}></Route>
 
                     {/* TradingEmp */}
                     <Route path='/te-create-shipment' element={<TradingEmp><TECreateShipment /></TradingEmp>}></Route>
