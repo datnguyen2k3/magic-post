@@ -1,4 +1,4 @@
-import './PHAccounts.scss'
+import './WHAccounts.scss'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { selectToken, selectAccount } from '../../../app/authSlice'
@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 
-const PHAccounts = () => {
+const WHAccounts = () => {
 
     const token = useSelector(selectToken)
 
@@ -172,4 +172,4 @@ const PHAccounts = () => {
     </>
 }
 
-export default PHAccounts
+export default WHAccounts

@@ -15,7 +15,7 @@ import TEDetail from '../pages/TradingEmp/CreateShipment/Detail/TEDetail';
 import TENext from '../pages/TradingEmp/InShopDeliveries/Detail/TENext'
 import TEReceive from '../pages/TradingEmp/InShopDeliveries/All/TEReceive';
 import TEComing from '../pages/TradingEmp/ComingDeliveries/All/TEComing';
-import WHCreateAccount from '../pages/WarehouseHead/WHCreateAccount';
+import WHCreateAccount from '../pages/WarehouseHead/WHCreateAcc/WHCreateAccount';
 import WarehouseHead from './auth-component/WarehouseHead';
 import TEConfirmReceive from '../pages/TradingEmp/ComingDeliveries/Detail/TEConfirmReceive';
 import TEInShop from '../pages/TradingEmp/GoingToShipping/All/TEInShop';
@@ -71,6 +71,8 @@ const Page = () => {
 
                     {/* WarehouseHead */}
                     <Route path='/wh-create-account' element={<WarehouseHead><WHCreateAccount /></WarehouseHead>}></Route>
+                    <Route path='/wh-accounts' element={<WarehouseHead><PHAccounts /></WarehouseHead>}></Route>
+                    <Route path='/wh-detail-account' element={<WarehouseHead><PHDetailAccount /></WarehouseHead>}></Route>
 
                 </Routes>
                 <Toaster toastOptions={{

@@ -131,6 +131,11 @@ const Sidebar = () => {
                                 Tạo tài khoản nhân viên
                             </button>
                         </Link>
+                        <Link to={'/wh-accounts'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý tài khoản nhân viên
+                            </button>
+                        </Link>
                     </>}
                 </div>
                 <div className='sidebar-2'>

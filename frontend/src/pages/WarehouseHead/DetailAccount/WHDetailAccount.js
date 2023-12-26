@@ -1,11 +1,11 @@
-import './PHDetailAccount.scss'
+import './WHDetailAccount.scss'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectToken } from '../../../app/authSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const PHDetailAccount = () => {
+const WHDetailAccount = () => {
 
     const paramsWeb = new URLSearchParams(window.location.search)
 
@@ -43,7 +43,7 @@ const PHDetailAccount = () => {
     }, [])
 
     const handleViewOffice = (shopId) => {
-        // navigate(`/ph-detail-office?shopId=${shopId}`)
+        // navigate(`/wh-detail-office?shopId=${shopId}`)
     }
 
     return <>
@@ -63,4 +63,4 @@ const PHDetailAccount = () => {
     </>
 }
 
-export default PHDetailAccount
+export default WHDetailAccount
