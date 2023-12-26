@@ -43,7 +43,7 @@ const PHDetailAccount = () => {
     }, [])
 
     const handleViewOffice = (shopId) => {
-        // navigate(`/ph-detail-office?shopId=${shopId}`)
+        navigate(`/ph-detail-office?shopId=${shopId}`)
     }
 
     return <>

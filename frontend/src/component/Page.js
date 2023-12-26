@@ -32,6 +32,10 @@ import Account from '../pages/Account';
 import NeedLogged from '../component/auth-component/NeedLogged'
 import PHAccounts from '../pages/PostHead/Accounts/PHAccounts';
 import PHDetailAccount from '../pages/PostHead/DetailAcc/PHDetailAccount';
+import PHDetailOffice from '../pages/PostHead/DetailOffice/PHDetailOffice';
+import WHDetailOffice from '../pages/WarehouseHead/DetailOffice/WHDetailOffice';
+import WHDetailAccount from '../pages/WarehouseHead/DetailAccount/WHDetailAccount';
+import WHAccounts from '../pages/WarehouseHead/Accounts/WHAccounts';
 
 const Page = () => {
     return <>
@@ -68,11 +72,13 @@ const Page = () => {
                     <Route path='/ph-create-account' element={<PostHead><PHCreateAccount /></PostHead>}></Route>
                     <Route path='/ph-accounts' element={<PostHead><PHAccounts /></PostHead>}></Route>
                     <Route path='/ph-detail-account' element={<PostHead><PHDetailAccount /></PostHead>}></Route>
+                    <Route path='/ph-detail-office' element={<PostHead><PHDetailOffice /></PostHead>}></Route>
 
                     {/* WarehouseHead */}
                     <Route path='/wh-create-account' element={<WarehouseHead><WHCreateAccount /></WarehouseHead>}></Route>
-                    <Route path='/wh-accounts' element={<WarehouseHead><PHAccounts /></WarehouseHead>}></Route>
-                    <Route path='/wh-detail-account' element={<WarehouseHead><PHDetailAccount /></WarehouseHead>}></Route>
+                    <Route path='/wh-accounts' element={<WarehouseHead><WHAccounts /></WarehouseHead>}></Route>
+                    <Route path='/wh-detail-account' element={<WarehouseHead><WHDetailAccount /></WarehouseHead>}></Route>
+                    <Route path='/wh-detail-office' element={<WarehouseHead><WHDetailOffice /></WarehouseHead>}></Route>
 
                 </Routes>
                 <Toaster toastOptions={{

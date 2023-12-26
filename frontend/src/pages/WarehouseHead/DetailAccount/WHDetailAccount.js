@@ -43,7 +43,7 @@ const WHDetailAccount = () => {
     }, [])
 
     const handleViewOffice = (shopId) => {
-        // navigate(`/wh-detail-office?shopId=${shopId}`)
+        navigate(`/wh-detail-office?shopId=${shopId}`)
     }
 
     return <>
