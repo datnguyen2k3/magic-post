@@ -50,24 +50,29 @@ const TEReceive = () => {
     }, [filterData])
 
     const handleInputChange = (e) => {
+        let value = e.target.value;
         switch (e.target.name) {
             case 'productType':
                 setProductType(e.target.value);
                 break;
             case 'fromName':
-                setFromName(e.target.value);
+                value = value.toLowerCase();
+                setFromName(value);
                 break;
             case 'fromAddress':
-                setFromAddress(e.target.value);
+                value = value.toLowerCase();
+                setFromAddress(value);
                 break;
             case 'fromShop':
                 setFromShop(e.target.value);
                 break;
             case 'toName':
-                setToName(e.target.value);
+                value = value.toLowerCase();
+                setToName(value);
                 break;
             case 'toAddress':
-                setToAddress(e.target.value);
+                value = value.toLowerCase();
+                setToAddress(value);
                 break;
             case 'toShop':
                 setToShop(e.target.value);

@@ -17,6 +17,10 @@ const TEAfter = () => {
     const [toName, setToName] = useState();
     const [toAddress, setToAddress] = useState();
     const [toShop, setToShop] = useState();
+    const [type, setType] = useState('');
+
+    const [sort, setSort] = useState('');
+    const [direction, setDirection] = useState('')
 
     const token = useSelector(selectToken);
     const shopId = useSelector(selectAccount).workAt.shopId
@@ -25,61 +29,123 @@ const TEAfter = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const config1 = {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-                params: {
-                    ...filterData,
-                    currentShopId: shopId,
-                    status: 'SENT_TO_CUSTOMER_SUCCESS',
-                }
-            }
+            switch (type) {
+                case '':
+                    const config1 = {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        params: {
+                            ...filterData,
+                            currentShopId: shopId,
+                            statuses: 'SENT_TO_CUSTOMER_SUCCESS',
+                            sort,
+                            direction,
+                        }
+                    }
 
-            const config2 = {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-                params: {
-                    ...filterData,
-                    currentShopId: shopId,
-                    status: 'SENT_TO_CUSTOMER_FAIL',
-                }
-            }
+                    const config2 = {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        params: {
+                            ...filterData,
+                            currentShopId: shopId,
+                            statuses: 'SENT_TO_CUSTOMER_FAIL',
+                            sort,
+                            direction,
+                        }
+                    }
 
-            try {
-                const response1 = await axios.get(`${backendUrl}/deliveryStatuses`, config1)
-                const response2 = await axios.get(`${backendUrl}/deliveryStatuses`, config2)
-                setDeliveries(response1.data.deliveryStatuses)
-                setDeliveries(...deliveries, response2.data.deliveryStatuses)
-            } catch (error) {
-                console.log(error)
+                    try {
+                        const response1 = await axios.get(`${backendUrl}/deliveryStatuses`, config1)
+                        const response2 = await axios.get(`${backendUrl}/deliveryStatuses`, config2)
+                        setDeliveries(response1.data.deliveryStatuses.concat(response2.data.deliveryStatuses))
+                        console.log(response1.data.deliveryStatuses)
+                        console.log(response2.data.deliveryStatuses)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                    break;
+                case 'SENT_TO_CUSTOMER_SUCCESS':
+                    const config3 = {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        params: {
+                            ...filterData,
+                            currentShopId: shopId,
+                            statuses: 'SENT_TO_CUSTOMER_SUCCESS',
+                            sort,
+                            direction,
+                        }
+                    }
+
+                    try {
+                        const response3 = await axios.get(`${backendUrl}/deliveryStatuses`, config3)
+                        setDeliveries(response3.data.deliveryStatuses)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                    break;
+                case 'SENT_TO_CUSTOMER_FAIL':
+                    const config4 = {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        params: {
+                            ...filterData,
+                            currentShopId: shopId,
+                            statuses: 'SENT_TO_CUSTOMER_FAIL',
+                            sort,
+                            direction,
+                        }
+                    }
+
+                    try {
+                        const response4 = await axios.get(`${backendUrl}/deliveryStatuses`, config4)
+                        setDeliveries(response4.data.deliveryStatuses)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                    break;
             }
         }
         fetchData();
-    }, [filterData])
+        console.log(type)
+    }, [filterData, type, sort, direction])
 
     const handleInputChange = (e) => {
+        let value = e.target.value
         switch (e.target.name) {
             case 'productType':
                 setProductType(e.target.value);
                 break;
+            case 'type':
+                setType(e.target.value);
+                break;
             case 'fromName':
-                setFromName(e.target.value);
+                value = value.toLowerCase();
+                setFromName(value);
                 break;
             case 'fromAddress':
-                setFromAddress(e.target.value);
+                value = value.toLowerCase();
+                setFromAddress(value);
                 break;
             case 'fromShop':
                 setFromShop(e.target.value);
                 break;
             case 'toName':
-                setToName(e.target.value);
+                value = value.toLowerCase();
+                setToName(value);
                 break;
             case 'toAddress':
-                setToAddress(e.target.value);
+                value = value.toLowerCase();
+                setToAddress(value);
                 break;
             case 'toShop':
                 setToShop(e.target.value);
@@ -114,12 +180,22 @@ const TEAfter = () => {
         setPage(page + 1)
     }
 
+    const handleSortChange = (field) => {
+        if (field === sort) {
+            setDirection(direction === 'ASC' ? 'DESC' : 'ASC');
+        } else {
+            setSort(field);
+            setDirection('ASC');
+        }
+        console.log('a')
+    }
+
     return <>
         <div className='te-after'>
             <Table>
                 <thead>
                     <tr>
-                        <th>Thời gian nhận</th>
+                        <th className='te-after-sort' onClick={() => handleSortChange('CREATED_AT')}>Thời gian trạng thái</th>
                         <th>Trạng thái</th>
                         <th>Loại hàng</th>
                         <th>Người gửi</th>
@@ -132,7 +208,11 @@ const TEAfter = () => {
                     </tr>
                     <tr>
                         <th></th>
-                        <th></th>
+                        <th><select name='type' onChange={handleInputChange}>
+                            <option value={''}>Tất cả các trạng thái</option>
+                            <option value={'SENT_TO_CUSTOMER_SUCCESS'}>Gửi thành công</option>
+                            <option value={'SENT_TO_CUSTOMER_FAIL'}>Gửi thất bại</option>
+                        </select></th>
                         <th><select name='productType' onChange={handleInputChange}>
                             <option value={''}>Tất cả các loại hàng</option>
                             <option value={'DOCUMENT'}>DOCUMENT</option>
