@@ -11,14 +11,18 @@ import java.util.stream.Collectors;
 public class ElasticsearchQueryUtils {
 
   static public BoolQuery.Builder containsQuery(BoolQuery.Builder query, String field, String value) {
-    return query.must(
-        new Query(
-            new WildcardQuery.Builder()
-                .field(field)
-                .value("*" + value + "*")
-                .build()
-        )
-    );
+    String[] words = value.split("\\s+");
+    for (String word : words) {
+      query = query.must(
+          new Query(
+              new WildcardQuery.Builder()
+                  .field(field)
+                  .value("*" + word + "*")
+                  .build()
+          )
+      );
+    }
+    return query;
   }
 
   static public BoolQuery.Builder matchQuery(BoolQuery.Builder query, String field, String value) {
