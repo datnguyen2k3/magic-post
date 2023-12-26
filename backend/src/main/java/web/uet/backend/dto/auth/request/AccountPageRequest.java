@@ -1,10 +1,7 @@
 package web.uet.backend.dto.auth.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +38,9 @@ public class AccountPageRequest {
   private String emailContains;
   private String phoneContains;
   private String addressContains;
+
+  @Positive
+  private Integer workAtId;
 
   @NotNull
   private List<Role> roles;

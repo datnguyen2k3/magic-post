@@ -1,6 +1,8 @@
 package web.uet.backend.service.auth;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.*;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -19,9 +21,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import web.uet.backend.common.config.auth.SecurityConfig;
 import web.uet.backend.document.AccountDocument;
+import web.uet.backend.dto.auth.request.AccountPageRequest;
 import web.uet.backend.dto.auth.request.AccountPatchRequest;
 import web.uet.backend.dto.auth.response.AccountGeneralResponse;
-import web.uet.backend.dto.auth.request.AccountPageRequest;
 import web.uet.backend.dto.auth.response.AccountPageResponse;
 import web.uet.backend.entity.auth.Account;
 import web.uet.backend.entity.auth.UserAuthentication;
@@ -69,47 +71,8 @@ public class AccountService implements UserDetailsService {
     return accountGeneralMapper.toDto(currentAccount);
   }
 
-  private Query getBy(AccountPageRequest request) {
-    BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
-
-    if (request.getUsernameContains() != null) {
-      boolQueryBuilder = containsQuery(boolQueryBuilder, "username", request.getUsernameContains());
-    }
-
-    if (request.getNameContains() != null) {
-      boolQueryBuilder = containsQuery(boolQueryBuilder, "name", request.getNameContains());
-    }
-
-    if (request.getPhoneContains() != null) {
-      boolQueryBuilder = containsQuery(boolQueryBuilder, "phone", request.getPhoneContains());
-    }
-
-    if (request.getEmailContains() != null) {
-      boolQueryBuilder = containsQuery(boolQueryBuilder, "email", request.getEmailContains());
-    }
-
-    if (request.getAddressContains() != null) {
-      boolQueryBuilder = containsQuery(boolQueryBuilder, "address", request.getAddressContains());
-    }
-
-    if (request.getRoles() != null) {
-      List<String> roles = request.getRoles().stream().map(Enum::name).toList();
-      boolQueryBuilder = inQuery(boolQueryBuilder, "role", roles );
-    }
-
-    return new Query(boolQueryBuilder.build());
-  }
-
   public AccountPageResponse getAll(AccountPageRequest request) {
-    Account currentAccount = AuthenticationService.getCurrentAccount();
-
-    request.getRoles().stream()
-        .filter(role -> !validateRole(role, currentAccount.getRole()))
-        .findAny()
-        .ifPresent(role -> {
-          throw new InvalidAuthorizationException("Permission denied");
-        });
-
+    validateAccountPageRequest(request);
     Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
 
     NativeQueryBuilder nativeQueryBuilder = NativeQuery.builder()
@@ -121,8 +84,10 @@ public class AccountService implements UserDetailsService {
       nativeQueryBuilder.withSort(sort);
     }
 
-    SearchHits<AccountDocument> searchHits = elasticsearchOperations.search(nativeQueryBuilder.build(), AccountDocument.class);
-    SearchPage<AccountDocument> searchPage = SearchHitSupport.searchPageFor(searchHits, nativeQueryBuilder.getPageable());
+    SearchHits<AccountDocument> searchHits = elasticsearchOperations.search(nativeQueryBuilder.build(),
+        AccountDocument.class);
+    SearchPage<AccountDocument> searchPage = SearchHitSupport.searchPageFor(searchHits,
+        nativeQueryBuilder.getPageable());
 
     List<AccountGeneralResponse> accounts =
         searchHits.stream().map(s -> accountGeneralFromDocumentMapper.toDto(s.getContent())).toList();
@@ -168,4 +133,63 @@ public class AccountService implements UserDetailsService {
     return accountGeneralMapper.toDto(account);
   }
 
+
+  private Query getBy(AccountPageRequest request) {
+    BoolQuery.Builder boolQueryBuilder = QueryBuilders.bool();
+
+    if (request.getUsernameContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "username", request.getUsernameContains());
+    }
+
+    if (request.getNameContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "name", request.getNameContains());
+    }
+
+    if (request.getPhoneContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "phone", request.getPhoneContains());
+    }
+
+    if (request.getEmailContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "email", request.getEmailContains());
+    }
+
+    if (request.getAddressContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "address", request.getAddressContains());
+    }
+
+    if (request.getRoles() != null) {
+      List<String> roles = request.getRoles().stream().map(Enum::name).toList();
+      boolQueryBuilder = inQuery(boolQueryBuilder, "role", roles);
+    }
+
+    if (request.getWorkAtId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "workAt.shopId", request.getWorkAtId());
+    }
+
+    return new Query(boolQueryBuilder.build());
+  }
+
+  private void validateAccountPageRequest(AccountPageRequest request) {
+    Account currentAccount = AuthenticationService.getCurrentAccount();
+
+    if (currentAccount.getRole() == Role.EMPLOYEE) {
+      throw new InvalidAuthorizationException("Permission denied");
+    }
+
+    request.getRoles().stream()
+        .filter(role -> !validateRole(role, currentAccount.getRole()))
+        .findAny()
+        .ifPresent(role -> {
+          throw new InvalidAuthorizationException("Permission denied");
+        });
+
+    if (request.getWorkAtId() == null && currentAccount.getRole() != Role.CEO) {
+      throw new InvalidAuthorizationException("You must specify workAtId");
+    }
+
+    if (currentAccount.getRole() != Role.CEO && currentAccount.getWorkAt().getShopId() != request.getWorkAtId()) {
+      throw new InvalidAuthorizationException("You can only get accounts in your shop");
+    }
+
+  }
 }
