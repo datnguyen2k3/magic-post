@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -123,6 +124,11 @@ public class ShopService {
     NativeQueryBuilder nativeQueryBuilder = NativeQuery.builder()
         .withQuery(getQueryBy(request))
         .withPageable(pageable);
+
+    if (request.getSort() != null) {
+      Sort sort = Sort.by(request.getDirection().getValue(), request.getSort().getField());
+      nativeQueryBuilder.withSort(sort);
+    }
 
     SearchHits<ShopDocument> searchHits = elasticsearchOperations.search(
         nativeQueryBuilder.build(),
