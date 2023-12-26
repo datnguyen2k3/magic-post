@@ -497,7 +497,7 @@ const TECreateShipment = () => {
                                 <select name='type' value={type} onChange={handleInputChange}>
                                     <option value={''}>-- Chọn loại --</option>
                                     <option value={'DOCUMENT'}>Tài liệu</option>
-                                    <option value={'GOODS'}>Hàng hóa</option>
+                                    <option value={'PRODUCT'}>Hàng hóa</option>
                                 </select>
                                 <label>Tên đơn vận: </label>
                                 <input type='text' name='name' onChange={handleInputChange}></input>

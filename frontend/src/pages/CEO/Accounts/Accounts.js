@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+
 const Accounts = () => {
 
     const token = useSelector(selectToken)
@@ -24,7 +27,7 @@ const Accounts = () => {
 
     const [maxPage, setMaxPage] = useState();
 
-    const [sortField, setSortField] = useState('');
+    const [sort, setSort] = useState('');
     const [direction, setDirection] = useState('');
 
     useEffect(() => {
@@ -48,7 +51,7 @@ const Accounts = () => {
         }
 
         fetchData()
-    }, [filteredData, page, sortField, direction])
+    }, [filteredData, page, sort, direction])
 
     const prev = () => {
         setPage(Math.max(page - 1, 1))
@@ -58,22 +61,73 @@ const Accounts = () => {
         setPage(Math.min(maxPage, page + 1))
     }
 
+    const [name, setName] = useState()
+    const [username, setUsername] = useState()
+    const [address, setAddress] = useState()
+    const [email, setEmail] = useState()
+    const [phone, setPhone] = useState()
+    const [shopId, setShopId] = useState()
+
     useEffect(() => {
         setFilteredData({
             ...filteredData,
             page: page - 1,
-            sort: sortField,
-            direction
+            sortBy: sort,
+            direction,
+            nameContains: name,
+            usernameContains: username,
+            phoneContains: phone,
+            emailContains: email,
+            addressContains: address,
+            workAtId: shopId
         })
-    }, [page, sortField, direction])
+    }, [page, sort, direction, name, username, phone, email, address, shopId])
+
+    const handleInputChange = (e) => {
+        let value = e.target.value;
+        switch (e.target.name) {
+            case 'name':
+                value = value.toLowerCase()
+                setName(value)
+                break;
+            case 'username':
+                value = value.toLowerCase()
+                setUsername(value)
+                break;
+            case 'address':
+                value = value.toLowerCase()
+                setAddress(value)
+                break;
+            case 'email':
+                value = value.toLowerCase()
+                setEmail(value)
+                break;
+            case 'phone':
+                setPhone(value)
+                break;
+            case 'shopId':
+                setShopId(value)
+                break;
+            default:
+                break
+        }
+    }
 
     const handleSort = (field) => {
-        if (field === sortField) {
+        if (field === sort) {
             setDirection(direction === 'ASC' ? 'DESC' : 'ASC');
         } else {
-            setSortField(field);
+            setSort(field);
             setDirection('ASC');
         }
+    };
+
+    const renderSortIcon = (field) => {
+        if (field !== sort) {
+            console.log(field, sort)
+            return <FontAwesomeIcon icon={faSort} />;
+        }
+        return direction === 'ASC' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />;
     };
 
     const handleViewDetail = (username, role) => {
@@ -86,23 +140,40 @@ const Accounts = () => {
             <Table>
                 <thead>
                     <tr>
-                        <th className='accounts-sort' onClick={() => handleSort('NAME')}>Tên</th>
-                        <th className='accounts-sort' onClick={() => handleSort('ADDRESS')}>Địa chỉ</th>
-                        <th className='accounts-sort' onClick={() => handleSort('ROLE')}>Vai trò</th>
-                        <th className='accounts-sort' onClick={() => handleSort('PHONE')}>Số điện thoại</th>
-                        <th className='accounts-sort' onClick={() => handleSort('SHOP_ID')}>Id Văn phòng</th>
-                        <th className='accounts-sort' onClick={() => handleSort('COMMUNE_ID')}>Id Địa chỉ Văn phòng</th>
-                        <th className='accounts-sort' onClick={() => handleSort('COMMUNE_NAME')}>Địa chỉ Văn phòng </th>
-                        <th className='accounts-sort' onClick={() => handleSort('EMPLOYEE_NUMBER')}>Số nhân viên</th>
-                        <th className='accounts-sort' onClick={() => handleSort('CURRENT_DELIVERY_NUMBER')}>Số đơn đang tồn</th>
+                        <th className='accounts-sort' onClick={() => handleSort('NAME')}>Tên {renderSortIcon('NAME')}</th>
+                        <th className='accounts-sort' onClick={() => handleSort('USERNAME')}>Username {renderSortIcon('USERNAME')}</th>
+                        <th className='accounts-sort' onClick={() => handleSort('ADDRESS')}>Địa chỉ {renderSortIcon('ADDRESS')}</th>
+                        <th>Vai trò</th>
+                        <th className='accounts-sort' onClick={() => handleSort('EMAIL')}>Email {renderSortIcon('EMAIL')}</th>
+                        <th className='accounts-sort' onClick={() => handleSort('PHONE')}>Số điện thoại {renderSortIcon('PHONE')}</th>
+                        <th>Id Văn phòng</th>
+                        <th>Id Địa chỉ Văn phòng</th>
+                        <th>Địa chỉ Văn phòng </th>
+                        <th>Số nhân viên</th>
+                        <th>Số đơn đang tồn</th>
+                    </tr>
+                    <tr>
+                        <th><input type='text' name='name' onChange={handleInputChange}></input></th>
+                        <th><input type='text' name='username' onChange={handleInputChange}></input></th>
+                        <th><input type='text' name='address' onChange={handleInputChange}></input></th>
+                        <th></th>
+                        <th><input type='text' name='email' onChange={handleInputChange}></input></th>
+                        <th><input type='number' name='phone' onChange={handleInputChange}></input></th>
+                        <th><input type='number' name='shopId' onChange={handleInputChange}></input></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {accounts ? accounts.map(acc => <>
                         <tr onClick={() => handleViewDetail(acc.username, acc.role)}>
                             <td>{acc.name}</td>
+                            <td>{acc.username}</td>
                             <td>{acc.address}</td>
                             <td>{acc.role}</td>
+                            <td>{acc.email}</td>
                             <td>{acc.phone}</td>
                             <td>{acc.workAt.shopId}</td>
                             <td>{acc.workAt.commune.communeId}</td>

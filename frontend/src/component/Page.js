@@ -1,7 +1,7 @@
 import './Page.scss'
 import Home from '../pages/Home';
 import { Route, Routes } from 'react-router-dom'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import Login from '../pages/Login';
 import NotLogged from './auth-component/NotLogged';
 import Offices from '../pages/CEO/Offices/Offices';
@@ -37,10 +37,13 @@ import WHDetailOffice from '../pages/WarehouseHead/DetailOffice/WHDetailOffice';
 import WHDetailAccount from '../pages/WarehouseHead/DetailAccount/WHDetailAccount';
 import WHAccounts from '../pages/WarehouseHead/Accounts/WHAccounts';
 import PostEmp from './auth-component/PostEmp';
+import Detail from '../pages/Detail'
 
 import { selectExpiredAt, logout } from '../app/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import DeliveryDetail from '../pages/CEO/DeliveryDetail/DeliveryDetail';
 
 const Page = () => {
 
@@ -50,17 +53,22 @@ const Page = () => {
 
     const expiredAt = useSelector(selectExpiredAt);
 
-    setInterval(() => {
-        if (expiredAt != '') {
-            var expiredTime = new Date()
-            expiredTime.setTime(expiredAt)
-            const currentTime = new Date();
-            if (expiredTime < currentTime) {
-                dispatch(logout({}))
-                navigate('/login')
-            }
+    useEffect(() => {
+        if (expiredAt) {
+            const intervalId = setInterval(() => {
+                var expiredTime = new Date(expiredAt);
+                const currentTime = new Date();
+                if (expiredTime < currentTime) {
+                    dispatch(logout({}))
+                    navigate('/login')
+                    toast.success('Hết thời hạn đăng nhập, mời bạn đăng nhập lại')
+                }
+            }, 10000);
+
+            // Hủy bỏ setInterval khi component unmount
+            return () => clearInterval(intervalId);
         }
-    }, 1000);
+    }, [expiredAt])
 
     return <>
         <div className='page'>
@@ -69,6 +77,7 @@ const Page = () => {
                     <Route path='/' element={<Home />}></Route>
                     <Route path='/login' element={<NotLogged><Login /></NotLogged>}></Route>
                     <Route path='/account' element={<NeedLogged><Account /></NeedLogged>}></Route>
+                    <Route path='/detail' element={<Detail />}></Route>
 
                     {/* CEO */}
                     <Route path='/offices' element={<CEO><Offices /></CEO>}></Route>
@@ -77,6 +86,7 @@ const Page = () => {
                     <Route path='/accounts' element={<CEO><Accounts /></CEO>}></Route>
                     <Route path='/detail-account' element={<CEO><DetailAccount /></CEO>}></Route>
                     <Route path='/deliveries' element={<CEO><Deliveries /></CEO>}></Route>
+                    <Route path='/delivery-detail' element={<CEO><DeliveryDetail /></CEO>}></Route>
 
                     {/* TradingEmp */}
                     <Route path='/te-create-shipment' element={<PostEmp><TECreateShipment /></PostEmp>}></Route>

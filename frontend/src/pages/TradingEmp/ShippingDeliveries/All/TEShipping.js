@@ -127,11 +127,8 @@ const TEShipping = () => {
             <Table>
                 <thead>
                     <tr>
-                        <th onClick={() => handleSort('timeReceived')}>
+                        <th>
                             Thời gian nhận
-                            {sort === 'timeReceived' && (
-                                <FontAwesomeIcon icon={direction === 'ASC' ? faSortUp : faSortDown} />
-                            )}
                         </th>
                         <th>Đơn hàng</th>
                         <th>Loại hàng</th>
@@ -149,7 +146,7 @@ const TEShipping = () => {
                         <th><select name='productType' onChange={handleInputChange}>
                             <option value={''}>Tất cả các loại hàng</option>
                             <option value={'DOCUMENT'}>DOCUMENT</option>
-                            <option value={'GOODS'}>GOODS</option>
+                            <option value={'PRODUCT'}>PRODUCT</option>
                         </select></th>
                         <th><input onChange={handleInputChange} type='text' name='fromName'></input></th>
                         <th><input onChange={handleInputChange} type='text' name='fromAddress'></input></th>

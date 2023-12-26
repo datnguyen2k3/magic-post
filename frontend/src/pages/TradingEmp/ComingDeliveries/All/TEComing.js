@@ -130,7 +130,7 @@ const TEComing = () => {
                         <th><select name='productType' onChange={handleInputChange}>
                             <option value={''}>Tất cả các loại hàng</option>
                             <option value={'DOCUMENT'}>DOCUMENT</option>
-                            <option value={'GOODS'}>GOODS</option>
+                            <option value={'PRODUCT'}>PRODUCT</option>
                         </select></th>
                         <th><input onChange={handleInputChange} type='text' name='fromName'></input></th>
                         <th><input onChange={handleInputChange} type='text' name='fromAddress'></input></th>
