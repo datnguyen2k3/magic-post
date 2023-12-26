@@ -25,28 +25,43 @@ const Deliveries = () => {
     const [sortField, setSortField] = useState('');
     const [direction, setDirection] = useState('');
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const config = {
-    //             headers: { Authorization: `Bearer ${token}` },
-    //             params: {
-    //                 ...filteredData,
-    //                 roles: roles.join(',')
-    //             }
-    //         }
+    const filterLastDeliveryStatus = (deliveryStatuses) => {
+        const uniqueDeliveries = {};
 
-    //         try {
-    //             const response = await axios.get(`${backendUrl}/deliveryStatuses`, config)
-    //             setAccounts(response.data.accounts)
-    //             setMaxPage(response.data.totalPages)
-    //             console.log(response)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
+        deliveryStatuses.forEach((deliveryStatus) => {
+            const { deliveryId, createdAt } = deliveryStatus.delivery;
 
-    //     fetchData()
-    // }, [filteredData, page, sortField, direction])
+            if (!uniqueDeliveries[deliveryId] || createdAt > uniqueDeliveries[deliveryId].createdAt) {
+                uniqueDeliveries[deliveryId] = deliveryStatus;
+            }
+        });
+
+        const lastDeliveryStatuses = Object.values(uniqueDeliveries);
+
+        return lastDeliveryStatuses;
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const config = {
+                headers: { Authorization: `Bearer ${token}` },
+                params: {
+                    ...filteredData,
+                }
+            }
+
+            try {
+                const response = await axios.get(`${backendUrl}/deliveryStatuses`, config)
+                setDeliveries(response.data.deliveryStatuses)
+                setMaxPage(response.data.totalPages)
+                console.log(filterLastDeliveryStatus(response.data.deliveryStatuses))
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        fetchData()
+    }, [filteredData, page, sortField, direction])
 
     return <>
         <div className='deliveries'>Deliveries</div>

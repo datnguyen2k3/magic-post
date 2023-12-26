@@ -10,7 +10,7 @@ import CreateAccount from '../pages/CEO/CreateAcc/CreateAccount';
 import TradingEmp from './auth-component/TradingEmp';
 import TECreateShipment from '../pages/TradingEmp/CreateShipment/Create/TECreateShipment';
 import PostHead from './auth-component/PostHead';
-import PHCreateAccount from '../pages/PostHead/PHCreateAccount';
+import PHCreateAccount from '../pages/PostHead/PHCreateAcc/PHCreateAccount';
 import TEDetail from '../pages/TradingEmp/CreateShipment/Detail/TEDetail';
 import TENext from '../pages/TradingEmp/InShopDeliveries/Detail/TENext'
 import TEReceive from '../pages/TradingEmp/InShopDeliveries/All/TEReceive';
@@ -30,6 +30,8 @@ import Deliveries from '../pages/CEO/Deliveries/Deliveries';
 import TEWNext from '../pages/TradingEmp/GoingToShipping/WarehouseDetail/TEWNext';
 import Account from '../pages/Account';
 import NeedLogged from '../component/auth-component/NeedLogged'
+import PHAccounts from '../pages/PostHead/Accounts/PHAccounts';
+import PHDetailAccount from '../pages/PostHead/DetailAcc/PHDetailAccount';
 
 const Page = () => {
     return <>
@@ -42,8 +44,8 @@ const Page = () => {
 
                     {/* CEO */}
                     <Route path='/offices' element={<CEO><Offices /></CEO>}></Route>
-                    <Route path='/create-account' element={<CEO><CreateAccount /></CEO>}></Route>
                     <Route path='/detail-office' element={<CEO><DetailOffice /></CEO>}></Route>
+                    <Route path='/create-account' element={<CEO><CreateAccount /></CEO>}></Route>
                     <Route path='/accounts' element={<CEO><Accounts /></CEO>}></Route>
                     <Route path='/detail-account' element={<CEO><DetailAccount /></CEO>}></Route>
                     <Route path='/deliveries' element={<CEO><Deliveries /></CEO>}></Route>
@@ -64,6 +66,8 @@ const Page = () => {
 
                     {/* PostHead */}
                     <Route path='/ph-create-account' element={<PostHead><PHCreateAccount /></PostHead>}></Route>
+                    <Route path='/ph-accounts' element={<PostHead><PHAccounts /></PostHead>}></Route>
+                    <Route path='/ph-detail-account' element={<PostHead><PHDetailAccount /></PostHead>}></Route>
 
                     {/* WarehouseHead */}
                     <Route path='/wh-create-account' element={<WarehouseHead><WHCreateAccount /></WarehouseHead>}></Route>

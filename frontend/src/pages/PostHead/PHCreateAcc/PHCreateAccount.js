@@ -1,11 +1,11 @@
 import toast from 'react-hot-toast'
 import './PHCreateAccount.scss'
 import { useState, useEffect } from 'react'
-import { isValidEmail, isValidName, isValidPhoneNumber } from '../../logic/verification'
+import { isValidEmail, isValidName, isValidPhoneNumber } from '../../../logic/verification'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { selectToken, selectAccount } from '../../app/authSlice'
+import { selectToken, selectAccount } from '../../../app/authSlice'
 
 const PHCreateAccount = () => {
 

@@ -119,6 +119,11 @@ const Sidebar = () => {
                                 Tạo tài khoản nhân viên
                             </button>
                         </Link>
+                        <Link to={'/ph-accounts'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý tài khoản nhân viên
+                            </button>
+                        </Link>
                     </>}
                     {isWarehouseHead && <>
                         <Link to={'/wh-create-account'}>
