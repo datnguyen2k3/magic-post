@@ -6,6 +6,9 @@ import { useSelector } from 'react-redux'
 import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { Link } from 'react-router-dom'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+
 const TEShipping = () => {
 
     const [deliveries, setDeliveries] = useState();
@@ -22,6 +25,9 @@ const TEShipping = () => {
     const shopId = useSelector(selectAccount).workAt.shopId
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
+    const [sort, setSort] = useState()
+    const [direction, setDirection] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -107,12 +113,26 @@ const TEShipping = () => {
         setPage(page + 1)
     }
 
+    const handleSort = (fieldName) => {
+        let direction = 'ASC';
+        if (sort === fieldName && direction === 'ASC') {
+            direction = 'DESC';
+        }
+        setSort(fieldName);
+        setDirection(direction);
+    };
+
     return <>
         <div className='te-shipping'>
             <Table>
                 <thead>
                     <tr>
-                        <th>Thời gian nhận</th>
+                        <th onClick={() => handleSort('timeReceived')}>
+                            Thời gian nhận
+                            {sort === 'timeReceived' && (
+                                <FontAwesomeIcon icon={direction === 'ASC' ? faSortUp : faSortDown} />
+                            )}
+                        </th>
                         <th>Đơn hàng</th>
                         <th>Loại hàng</th>
                         <th>Người gửi</th>

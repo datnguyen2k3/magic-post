@@ -50,10 +50,17 @@ const Page = () => {
 
     const expiredAt = useSelector(selectExpiredAt);
 
-    if (expiredAt < new Date().getTime()) {
-        dispatch(logout({}))
-        navigate('/login')
-    }
+    setInterval(() => {
+        if (expiredAt != '') {
+            var expiredTime = new Date()
+            expiredTime.setTime(expiredAt)
+            const currentTime = new Date();
+            if (expiredTime < currentTime) {
+                dispatch(logout({}))
+                navigate('/login')
+            }
+        }
+    }, 1000);
 
     return <>
         <div className='page'>

@@ -13,6 +13,7 @@ export const authSlice = createSlice({
             const { token, expiredAt } = action.payload;
             state.token = token
             state.expiredAt = expiredAt
+            console.log(token, expiredAt)
         },
         login: (state, action) => {
             const { account } = action.payload;

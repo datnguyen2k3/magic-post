@@ -44,8 +44,8 @@ const Login = () => {
                     } else {
                         // Dispatch updateToken action
                         const token = data.token;
-                        console.log('check token: ', token)
-                        dispatch(updateToken({ token }));
+                        const expiredAt = data.expiredAt
+                        dispatch(updateToken({ token, expiredAt }));
 
                         toast.success('Đăng nhập thành công')
                         const account = data.account // account information from the second API
@@ -68,7 +68,7 @@ const Login = () => {
             // Gửi POST request để nhận token
             const tokenResponse = await axios.post(`${url}`, data);
             const token = tokenResponse.data.token;
-            console.log(token)
+            const expiredAt = tokenResponse.data.expiredAt;
 
             // if (!token) {
             //     throw new Error('Không thể nhận token!');
@@ -85,7 +85,8 @@ const Login = () => {
                 return {
                     success: true,
                     account: response.data,
-                    token: tokenResponse.data.token // Trả về tài khoản hợp lệ đầu tiên
+                    token: tokenResponse.data.token,
+                    expiredAt: tokenResponse.data.expiredAt // Trả về tài khoản hợp lệ đầu tiên
                 };
             } else {
                 throw new Error('Không thể nhận thông tin tài khoản!');

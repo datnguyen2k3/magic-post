@@ -1,8 +1,21 @@
 package web.uet.backend.service.business;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.client.elc.NativeQuery;
+import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHitSupport;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.SearchPage;
 import org.springframework.stereotype.Service;
+import web.uet.backend.document.business.DeliveryDocument;
+import web.uet.backend.dto.business.request.DeliveryPageRequest;
+import web.uet.backend.dto.business.response.delivery.DeliveryPageResponse;
 import web.uet.backend.entity.enums.Role;
 import web.uet.backend.entity.enums.ShopType;
 import web.uet.backend.entity.enums.StatusType;
@@ -14,6 +27,7 @@ import web.uet.backend.entity.business.Shop;
 import web.uet.backend.entity.location.Commune;
 import web.uet.backend.exception.type.InvalidAuthorizationException;
 import web.uet.backend.exception.type.NotFoundException;
+import web.uet.backend.mapper.business.document.DeliveryGeneralMapperFromDocument;
 import web.uet.backend.mapper.business.response.DeliveryGeneralMapper;
 import web.uet.backend.repository.business.jpa.DeliveryRepository;
 import web.uet.backend.repository.business.jpa.DeliveryStatusRepository;
@@ -22,7 +36,11 @@ import web.uet.backend.repository.location.jpa.CommuneRepository;
 import web.uet.backend.service.auth.AuthenticationService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static web.uet.backend.service.elasticsearch.search.ElasticsearchQueryUtils.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +52,9 @@ public class DeliveryService {
   private final DeliveryStatusRepository deliveryStatusRepository;
 
   private final DeliveryGeneralMapper deliveryGeneralMapper;
+  private final DeliveryGeneralMapperFromDocument deliveryGeneralMapperFromDocument;
+
+  private final ElasticsearchOperations elasticsearchOperations;
 
   @Transactional
   public DeliveryGeneralResponse createDeliveryByCreateRequest(DeliveryCreateRequest deliveryCreateRequest) {
@@ -99,5 +120,107 @@ public class DeliveryService {
         .orElseThrow(() -> new NotFoundException("Delivery not found"));
 
     return deliveryGeneralMapper.toDto(delivery);
+  }
+
+  public Query getQueryBy(DeliveryPageRequest request) {
+    BoolQuery.Builder boolQueryBuilder = new BoolQuery.Builder();
+
+    if (request.getFromCommuneId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "fromCommune.communeId", request.getFromCommuneId());
+    } else if (request.getFromDistrictId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "fromCommune.district.districtId", request.getFromProvinceId());
+    } else if (request.getFromProvinceId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder,
+          "fromCommune.district.province.provinceId",
+          request.getFromProvinceId()
+      );
+    }
+
+    if (request.getToCommuneId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "toCommune.communeId", request.getToCommuneId());
+    } else if (request.getToDistrictId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "toCommune.district.districtId", request.getToDistrictId());
+    } else if (request.getToProvinceId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder,
+          "toCommune.district.province.provinceId",
+          request.getToProvinceId()
+      );
+    }
+
+    if (request.getFromAddressContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "fromAddress", request.getFromAddressContains());
+    }
+    if (request.getToAddressContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "toAddress", request.getToAddressContains());
+    }
+
+    if (request.getFromPhoneContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "fromPhone", request.getFromPhoneContains());
+    }
+    if (request.getToPhoneContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "toPhone", request.getToPhoneContains());
+    }
+
+    if (request.getFromNameContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "fromName", request.getFromNameContains());
+    }
+    if (request.getToNameContains() != null) {
+      boolQueryBuilder = containsQuery(boolQueryBuilder, "toName", request.getToNameContains());
+    }
+
+    if (request.getFromShopId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "fromShop.shopId", request.getFromShopId());
+    }
+    if (request.getToShopId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "toShop.shopId", request.getToShopId());
+    }
+
+    if (request.getProductType() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "productType", request.getProductType().getValue());
+    }
+
+    if (request.getStatuses() != null) {
+      boolQueryBuilder = inQuery(boolQueryBuilder, "currentStatus", request.getStatuses().stream()
+          .map(Enum::name)
+          .collect(Collectors.toList())
+      );
+    }
+
+    if (request.getCurrentShopId() != null) {
+      boolQueryBuilder = matchQuery(boolQueryBuilder, "currentShop.shopId", request.getCurrentShopId());
+    }
+
+    return new Query(boolQueryBuilder.build());
+  }
+
+  public DeliveryPageResponse getDeliveriesPageBy(DeliveryPageRequest request) {
+    if (AuthenticationService.getCurrentAccount().getRole() != Role.CEO) {
+      throw new InvalidAuthorizationException("Permission denied");
+    }
+
+    Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
+
+    NativeQueryBuilder nativeQueryBuilder = NativeQuery.builder()
+        .withQuery(getQueryBy(request))
+        .withPageable(pageable);
+
+    SearchHits<DeliveryDocument> searchHits = elasticsearchOperations.search(
+        nativeQueryBuilder.build(),
+        DeliveryDocument.class
+    );
+    SearchPage<DeliveryDocument> searchPage = SearchHitSupport.searchPageFor(searchHits, nativeQueryBuilder.getPageable());
+
+    List<DeliveryGeneralResponse> deliveryGeneralResponses = searchHits.stream()
+        .map(searchHit -> deliveryGeneralMapperFromDocument.toDto(searchHit.getContent()))
+        .toList();
+
+    return DeliveryPageResponse.builder()
+        .deliveries(deliveryGeneralResponses)
+        .totalElements(searchPage.getTotalElements())
+        .totalPages(searchPage.getTotalPages())
+        .page(request.getPage())
+        .size(request.getSize())
+        .build();
+
   }
 }
