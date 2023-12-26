@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
+import CryptoJS from 'crypto-js';
+
+const SECRET_KEY = 'my-secret-key';
 
 const saveToLocalStorage = (state) => {
     try {
         const serialisedState = JSON.stringify(state);
-        localStorage.setItem('state', serialisedState);
+        const encryptedState = CryptoJS.AES.encrypt(serialisedState, SECRET_KEY).toString();
+        localStorage.setItem('state', encryptedState);
     } catch (e) {
         console.warn(e);
     }
@@ -12,9 +16,11 @@ const saveToLocalStorage = (state) => {
 
 const loadFromLocalStorage = () => {
     try {
-        const serialisedState = localStorage.getItem('state');
-        if (serialisedState === null) return undefined;
-        return JSON.parse(serialisedState);
+        const encryptedState = localStorage.getItem('state');
+        if (encryptedState === null) return undefined;
+        const bytes = CryptoJS.AES.decrypt(encryptedState, SECRET_KEY);
+        const originalState = bytes.toString(CryptoJS.enc.Utf8);
+        return JSON.parse(originalState);
     } catch (e) {
         console.warn(e);
         return undefined;
