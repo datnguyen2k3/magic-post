@@ -6,11 +6,13 @@ export const authSlice = createSlice({
         account: {},
         role: '',
         token: '',
+        expiredAt: '',
     },
     reducers: {
         updateToken: (state, action) => {
-            const { token } = action.payload;
+            const { token, expiredAt } = action.payload;
             state.token = token
+            state.expiredAt = expiredAt
         },
         login: (state, action) => {
             const { account } = action.payload;
@@ -21,6 +23,7 @@ export const authSlice = createSlice({
             state.account = {};
             state.role = '';
             state.token = ''
+            state.expiredAt = ''
         },
     },
 });
@@ -32,5 +35,7 @@ export const selectRole = (state) => state.auth.role;
 export const selectToken = (state) => state.auth.token;
 
 export const selectAccount = (state) => state.auth.account;
+
+export const selectExpiredAt = (state) => state.auth.expiredAt;
 
 export default authSlice.reducer;

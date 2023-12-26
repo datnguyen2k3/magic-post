@@ -38,7 +38,23 @@ import WHDetailAccount from '../pages/WarehouseHead/DetailAccount/WHDetailAccoun
 import WHAccounts from '../pages/WarehouseHead/Accounts/WHAccounts';
 import PostEmp from './auth-component/PostEmp';
 
+import { selectExpiredAt, logout } from '../app/authSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 const Page = () => {
+
+    const dispatch = useDispatch();
+
+    const navigate = useNavigate();
+
+    const expiredAt = useSelector(selectExpiredAt);
+
+    if (expiredAt < new Date().getTime()) {
+        dispatch(logout({}))
+        navigate('/login')
+    }
+
     return <>
         <div className='page'>
             <div className='page-box'>
