@@ -1,10 +1,13 @@
 package web.uet.backend.controller.business;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import web.uet.backend.dto.business.request.DeliveryPageRequest;
+import web.uet.backend.dto.business.response.delivery.DeliveryPageResponse;
 import web.uet.backend.dto.enums.DirectionSort;
 import web.uet.backend.dto.business.request.DeliveryCreateRequest;
 import web.uet.backend.dto.business.request.DeliveryStatusCreateRequest;
@@ -54,6 +57,13 @@ public class DeliveryController {
       @PathVariable UUID deliveryId
   ) {
     return ResponseEntity.ok(deliveryService.getDeliveryByDeliveryId(deliveryId));
+  }
+
+  @GetMapping("")
+  public ResponseEntity<DeliveryPageResponse> getByDeliveryPageBy(
+      @Valid @ModelAttribute DeliveryPageRequest request
+  ) {
+    return ResponseEntity.ok(deliveryService.getDeliveriesPageBy(request));
   }
 
 }

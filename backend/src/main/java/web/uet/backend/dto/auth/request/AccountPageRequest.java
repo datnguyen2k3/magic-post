@@ -42,6 +42,6 @@ public class AccountPageRequest {
   private String phoneContains;
   private String addressContains;
 
-  @Size(max = 5)
+  @NotNull
   private List<Role> roles;
 }
