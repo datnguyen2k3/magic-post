@@ -30,6 +30,7 @@ const Sidebar = () => {
     const isCEO = (useSelector(selectRole) === 'CEO')
     const isTradingEmp = (useSelector(selectRole) === 'EMPLOYEE')
     const isPostHead = (useSelector(selectRole) === 'POST_HEAD')
+    const isWarehouseHead = (useSelector(selectRole) === 'WAREHOUSE_HEAD')
     const account = useSelector(selectAccount)
 
     const goToLogin = () => {
@@ -58,31 +59,25 @@ const Sidebar = () => {
                             Trang chủ
                         </button>
                     </Link>
-                    {isLoggedIn && <>
-                        <Link to={'/stat'}>
-                            <button className='sidebar-statistics sidebar-bottom'>
-                                Thống kê
-                            </button>
-                        </Link>
-                        <Link to={'/create-form'}>
-                            <button className='sidebar-statistics sidebar-bottom'>
-                                Tạo đơn vận mới
-                            </button>
-                        </Link></>}
                     {isCEO && <>
                         <Link to={'/offices'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Thống kê các văn phòng
                             </button>
                         </Link>
-                        <Link to={'/managers'}>
-                            <button className='sidebar-statistics sidebar-bottom'>
-                                Quản lý các trưởng điểm
-                            </button>
-                        </Link>
                         <Link to={'/create-account'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Tạo tài khoản cho trưởng điểm
+                            </button>
+                        </Link>
+                        <Link to={'/accounts'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý tài khoản trưởng điểm
+                            </button>
+                        </Link>
+                        <Link to={'/deliveries'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý các đơn hàng
                             </button>
                         </Link>
                     </>}
@@ -92,9 +87,29 @@ const Sidebar = () => {
                                 Tạo đơn vận mới cho khách
                             </button>
                         </Link>
+                        <Link to={'/te-receive'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý đơn hàng đang ở văn phòng
+                            </button>
+                        </Link>
                         <Link to={'/te-coming'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đang đến
+                            </button>
+                        </Link>
+                        <Link to={'/te-inshop'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý đơn hàng đã được nhận bởi văn phòng
+                            </button>
+                        </Link>
+                        <Link to={'/te-shipping'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý đơn hàng đang giao cho khách
+                            </button>
+                        </Link>
+                        <Link to={'/te-after'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý đơn hàng đã giao cho khách
                             </button>
                         </Link></>
                     }
@@ -105,9 +120,15 @@ const Sidebar = () => {
                             </button>
                         </Link>
                     </>}
+                    {isWarehouseHead && <>
+                        <Link to={'/wh-create-account'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Tạo tài khoản nhân viên
+                            </button>
+                        </Link>
+                    </>}
                 </div>
                 <div className='sidebar-2'>
-                    <button className='sidebar-setting sidebar-top'>Cài đặt</button>
                     <div className='sidebar-account-box sidebar-top'>
                         {isLoggedIn ? <div>
                             <button className='sidebar-account sidebar-view-account'>{account !== undefined ? account.name : 'Tài khoản'} &nbsp;<FontAwesomeIcon icon={faChevronRight} />
