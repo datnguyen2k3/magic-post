@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import toast from 'react-hot-toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import TradingEmp from './auth-component/TradingEmp';
 
 const Sidebar = () => {
 
@@ -28,10 +27,11 @@ const Sidebar = () => {
 
     const isLoggedIn = (useSelector(selectRole) !== '')
     const isCEO = (useSelector(selectRole) === 'CEO')
-    const isTradingEmp = (useSelector(selectRole) === 'EMPLOYEE')
+    const account = useSelector(selectAccount);
+    const isPEmp = account.role === 'EMPLOYEE' && account.workAt.type === 'POST';
+    const isWEmp = account.role === 'EMPLOYEE' && account.workAt.type === 'WAREHOUSE';
     const isPostHead = (useSelector(selectRole) === 'POST_HEAD')
     const isWarehouseHead = (useSelector(selectRole) === 'WAREHOUSE_HEAD')
-    const account = useSelector(selectAccount)
 
     const goToLogin = () => {
         navigate('/login');;
@@ -81,7 +81,7 @@ const Sidebar = () => {
                             </button>
                         </Link>
                     </>}
-                    {isTradingEmp && <>
+                    {isPEmp && <>
                         <Link to={'/te-create-shipment'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Tạo đơn vận mới cho khách
@@ -89,12 +89,12 @@ const Sidebar = () => {
                         </Link>
                         <Link to={'/te-receive'}>
                             <button className='sidebar-statistics sidebar-bottom'>
-                                Quản lý đơn hàng đang ở văn phòng
+                                Quản lý đơn hàng đã nhận từ khách
                             </button>
                         </Link>
                         <Link to={'/te-coming'}>
                             <button className='sidebar-statistics sidebar-bottom'>
-                                Quản lý đơn hàng đang đến
+                                Quản lý đơn hàng đang được chuyển đến
                             </button>
                         </Link>
                         <Link to={'/te-inshop'}>
@@ -110,6 +110,18 @@ const Sidebar = () => {
                         <Link to={'/te-after'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đã giao cho khách
+                            </button>
+                        </Link></>
+                    }
+                    {isWEmp && <>
+                        <Link to={'/te-coming'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý đơn hàng đang được chuyển đến
+                            </button>
+                        </Link>
+                        <Link to={'/te-inshop'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý đơn hàng đã được nhận bởi văn phòng
                             </button>
                         </Link></>
                     }

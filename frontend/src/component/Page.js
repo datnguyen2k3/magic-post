@@ -36,6 +36,7 @@ import PHDetailOffice from '../pages/PostHead/DetailOffice/PHDetailOffice';
 import WHDetailOffice from '../pages/WarehouseHead/DetailOffice/WHDetailOffice';
 import WHDetailAccount from '../pages/WarehouseHead/DetailAccount/WHDetailAccount';
 import WHAccounts from '../pages/WarehouseHead/Accounts/WHAccounts';
+import PostEmp from './auth-component/PostEmp';
 
 const Page = () => {
     return <>
@@ -55,18 +56,19 @@ const Page = () => {
                     <Route path='/deliveries' element={<CEO><Deliveries /></CEO>}></Route>
 
                     {/* TradingEmp */}
-                    <Route path='/te-create-shipment' element={<TradingEmp><TECreateShipment /></TradingEmp>}></Route>
+                    <Route path='/te-create-shipment' element={<PostEmp><TECreateShipment /></PostEmp>}></Route>
+                    <Route path='/te-detail' element={<PostEmp><TEDetail /></PostEmp>}></Route>
+                    <Route path='/te-shipping' element={<PostEmp><TEShipping /></PostEmp>}></Route>
+                    <Route path='/te-confirm-shipping' element={<PostEmp><TEConfirmShipping /></PostEmp>}></Route>
+                    <Route path='/te-after' element={<PostEmp><TEAfter /></PostEmp>}></Route>
+
                     <Route path='/te-receive' element={<TradingEmp><TEReceive /></TradingEmp>}></Route>
-                    <Route path='/te-detail' element={<TradingEmp><TEDetail /></TradingEmp>}></Route>
                     <Route path='/te-next' element={<TradingEmp><TENext /></TradingEmp>}></Route>
                     <Route path='/te-w-next' element={<TradingEmp><TEWNext /></TradingEmp>}></Route>
                     <Route path='/te-coming' element={<TradingEmp><TEComing /></TradingEmp>}></Route>
                     <Route path='/te-confirm-receive' element={<TradingEmp><TEConfirmReceive /></TradingEmp>}></Route>
                     <Route path='/te-inshop' element={<TradingEmp><TEInShop /></TradingEmp>}></Route>
                     <Route path='/te-shiptocus' element={<TradingEmp><TEShipToCus /></TradingEmp>}></Route>
-                    <Route path='/te-shipping' element={<TradingEmp><TEShipping /></TradingEmp>}></Route>
-                    <Route path='/te-confirm-shipping' element={<TradingEmp><TEConfirmShipping /></TradingEmp>}></Route>
-                    <Route path='/te-after' element={<TradingEmp><TEAfter /></TradingEmp>}></Route>
 
                     {/* PostHead */}
                     <Route path='/ph-create-account' element={<PostHead><PHCreateAccount /></PostHead>}></Route>
