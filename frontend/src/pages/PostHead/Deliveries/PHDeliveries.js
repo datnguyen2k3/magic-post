@@ -1,16 +1,18 @@
-import './Deliveries.scss'
+import './PHDeliveries.scss'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import { selectToken } from '../../../app/authSlice'
+import { selectToken, selectAccount } from '../../../app/authSlice'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 
-const Deliveries = () => {
+const PHDeliveries = () => {
 
     const token = useSelector(selectToken)
 
     const navigate = useNavigate()
+
+    const shopId = useSelector(selectAccount).workAt.shopId
 
     const [deliveries, setDeliveries] = useState()
 
@@ -31,6 +33,7 @@ const Deliveries = () => {
                 headers: { Authorization: `Bearer ${token}` },
                 params: {
                     ...filteredData,
+                    currentShopId: shopId
                 }
             }
 
@@ -133,14 +136,6 @@ const Deliveries = () => {
         navigate(`/delivery-detail?deliveryId=${id}`)
     }
 
-    const prev = () => {
-        setPage(Math.max(page - 1, 1))
-    }
-
-    const next = () => {
-        setPage(Math.min(maxPage, page + 1))
-    }
-
     return <>
         <div className='deliveries'>
             <h1>Thống kê các đơn hàng hiện tại</h1>
@@ -209,12 +204,9 @@ const Deliveries = () => {
                         </tr>
                     )) : <></>}
                 </tbody>
-                <button onClick={prev}>Prev</button>
-                <span>{page}</span>
-                <button onClick={next}>Next</button>
             </Table>
         </div>
     </>
 }
 
-export default Deliveries
+export default PHDeliveries

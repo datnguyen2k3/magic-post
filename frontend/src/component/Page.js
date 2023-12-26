@@ -44,6 +44,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import DeliveryDetail from '../pages/CEO/DeliveryDetail/DeliveryDetail';
+import PHDeliveries from '../pages/PostHead/Deliveries/PHDeliveries';
 
 const Page = () => {
 
@@ -108,6 +109,7 @@ const Page = () => {
                     <Route path='/ph-accounts' element={<PostHead><PHAccounts /></PostHead>}></Route>
                     <Route path='/ph-detail-account' element={<PostHead><PHDetailAccount /></PostHead>}></Route>
                     <Route path='/ph-detail-office' element={<PostHead><PHDetailOffice /></PostHead>}></Route>
+                    <Route path='/ph-deliveries' element={<PostHead><PHDeliveries /></PostHead>}></Route>
 
                     {/* WarehouseHead */}
                     <Route path='/wh-create-account' element={<WarehouseHead><WHCreateAccount /></WarehouseHead>}></Route>

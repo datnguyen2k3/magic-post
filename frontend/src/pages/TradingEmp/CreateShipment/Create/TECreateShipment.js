@@ -19,8 +19,8 @@ const TECreateShipment = () => {
     const token = useSelector(selectToken)
 
     const [name, setName] = useState('')
-    const [des, setDes] = useState('')
-    const [fee, setFee] = useState(0)
+    const [description, setDescription] = useState('')
+    const [shippingFee, setShippingFee] = useState(0)
     const [weight, setWeight] = useState(0)
 
     const [sRCode, setSRCode] = useState()
@@ -295,6 +295,18 @@ const TECreateShipment = () => {
             case 'type':
                 setType(e.target.value);
                 break;
+            case 'name':
+                setName(e.target.value);
+                break;
+            case 'shippingFee':
+                setShippingFee(e.target.value);
+                break;
+            case 'weight':
+                setWeight(e.target.value);
+                break;
+            case 'description':
+                setDescription(e.target.value);
+                break;
             default:
                 break
         }
@@ -377,8 +389,8 @@ const TECreateShipment = () => {
                 toShop: Number(shopCommuneId),
                 productType: type,
                 name,
-                description: des,
-                shippingFee: fee,
+                description: description,
+                shippingFee: shippingFee,
                 weight
             }
             console.log(info, 'check info')
@@ -502,9 +514,9 @@ const TECreateShipment = () => {
                                 <label>Tên đơn vận: </label>
                                 <input type='text' name='name' onChange={handleInputChange}></input>
                                 <label>Mô tả đơn vận: </label>
-                                <input type='textarea' name='des' onChange={handleInputChange}></input>
+                                <input type='textarea' name='description' onChange={handleInputChange}></input>
                                 <label>Phí: </label>
-                                <input type='number' name='fee' onChange={handleInputChange}></input>
+                                <input type='number' name='shippingFee' onChange={handleInputChange}></input>
                                 <label>Cân nặng (kg): </label>
                                 <input type='number' name='weight' onChange={handleInputChange}></input>
                             </div>
