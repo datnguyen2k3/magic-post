@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -17,6 +18,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import static java.lang.Character.toUpperCase;
 
 @Service
 public class PdfService {
@@ -54,7 +57,7 @@ public class PdfService {
             delivery.getToAddress(),
             delivery.getToPhone(),
             delivery.getDescription(),
-            delivery.getWeight().toString() + " kg",
+            delivery.getWeight().toString() ,
             delivery.getShippingFee().toString(),
             delivery.getToShop().getShopId().toString(),
             ""
@@ -82,11 +85,45 @@ public class PdfService {
         PDPage page = document.getPage(0);
 
         PdfService pc = new PdfService();
-        pc.addText(document, page,deliveryId, 500, 498, 20);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < deliveryId.length(); i++) {
+            if (deliveryId.charAt(i) != '-') {
+                sb.append(toUpperCase(deliveryId.charAt(i)));
+            }
+        }
+        pc.addText(document, page,sb.toString(), 500, 498, 12);
         pc.addText(document, page,senderName, 185, 452, 12);
         pc.addText(document, page,receiverName, 560, 452, 12);
-        pc.addText(document, page,senderLocation, 95, 435, 12);
-        pc.addText(document, page,receiverLocation, 455, 435, 12);
+
+        int maxLength = 42;
+        if (senderLocation.length() > maxLength) {
+            int breakPoint = senderLocation.lastIndexOf(" ", maxLength);
+            if (breakPoint == -1) {
+                breakPoint = maxLength;
+            }
+
+            String firstPart = senderLocation.substring(0, breakPoint);
+            String secondPart = senderLocation.substring(breakPoint).trim();
+            pc.addText(document, page, firstPart, 95, 435, 10);
+            pc.addText(document, page, secondPart, 95, 423, 10);
+        } else {
+            pc.addText(document, page, senderLocation, 95, 435, 12);
+        }
+
+        if (receiverLocation.length() > maxLength) {
+            int breakPoint = receiverLocation.lastIndexOf(" ", maxLength);
+            if (breakPoint == -1) {
+                breakPoint = maxLength;
+            }
+
+            String firstPart = receiverLocation.substring(0, breakPoint);
+            String secondPart = receiverLocation.substring(breakPoint).trim();
+            pc.addText(document, page, firstPart, 455, 435, 10);
+            pc.addText(document, page, secondPart, 455, 423, 10);
+        } else {
+            pc.addText(document, page, receiverLocation, 455, 435, 12);
+        }
+
         pc.addText(document, page,senderPhone, 75, 405, 12);
         pc.addText(document, page,receiverPhone, 435, 405, 12);
         if (type.equals("DOCUMENT")) {
@@ -99,19 +136,31 @@ public class PdfService {
         pc.addText(document, page,senderNote, 180, 317, 12);
         pc.addText(document, page,note, 510, 379, 12);
         pc.addText(document, page,weight, 510, 295, 12);
-        pc.addText(document, page,cost, 535, 267, 20);
+        pc.addText(document, page,cost + " đ", 535, 267, 20);
         pc.addText(document, page,shop, 530, 230, 12);
-        pc.addText(document, page,sendDate, 38, 132, 12);
+        StringBuilder sb2 = new StringBuilder();
+        for (int i = 0; i < sendDate.length(); i++) {
+            if (sendDate.charAt(i) != 'T') {
+                if (i <= 18){
+                    sb2.append(toUpperCase(sendDate.charAt(i)));
+                }
+            }
+            else {
+                sb2.append(" ");
+            }
+        }
+        pc.addText(document, page,sb2.toString(), 38, 132, 12);
         pc.addText(document, page,receiveDate, 582, 218, 12);
-
         document.save(DELIVERY_PDF_SOURCE_PATH + "delivery_"+ deliveryId +".pdf");
         document.close();
     }
 
     private void addText(PDDocument document, PDPage page, String value, int pos_x, int pos_y, int fontSize) throws IOException {
+        File fontFile = new File(DELIVERY_PDF_SOURCE_PATH + "bvp.ttf");
+        PDType0Font customFont = PDType0Font.load(document, fontFile);
         PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
         contentStream.beginText();
-        contentStream.setFont(PDType1Font.HELVETICA, fontSize);
+        contentStream.setFont(customFont, fontSize);
         contentStream.setNonStrokingColor(Color.BLACK);
         contentStream.newLineAtOffset(pos_x, pos_y);
         contentStream.showText(value);
