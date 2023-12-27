@@ -50,6 +50,7 @@ import PHModifyAccount from '../pages/PostHead/ModifyAcc/PHModifyAccount';
 import GuestHome from '../pages/Guest/Home/GuestHome';
 import { selectIsGuest } from '../app/guestSlice';
 import GuestSearch from '../pages/Guest/Search/GuestSearch';
+import WHDeliveries from '../pages/WarehouseHead/Deliveries/WHDeliveries';
 
 const Page = () => {
 
@@ -126,7 +127,9 @@ const Page = () => {
                         <Route path='/management/wh-create-account' element={<WarehouseHead><WHCreateAccount /></WarehouseHead>}></Route>
                         <Route path='/management/wh-accounts' element={<WarehouseHead><WHAccounts /></WarehouseHead>}></Route>
                         <Route path='/management/wh-detail-account' element={<WarehouseHead><WHDetailAccount /></WarehouseHead>}></Route>
-                        <Route path='/management/wh-detail-office' element={<WarehouseHead><WHDetailOffice /></WarehouseHead>}></Route></>}
+                        <Route path='/management/wh-detail-office' element={<WarehouseHead><WHDetailOffice /></WarehouseHead>}></Route>
+                        <Route path='/management/wh-deliveries' element={<WarehouseHead><WHDeliveries /></WarehouseHead>}></Route>
+                    </>}
                 </Routes>
                 <Toaster toastOptions={{
                     style: {

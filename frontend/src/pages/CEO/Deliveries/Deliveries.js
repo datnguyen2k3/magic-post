@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+
 const Deliveries = () => {
 
     const token = useSelector(selectToken)
@@ -22,8 +25,8 @@ const Deliveries = () => {
 
     const [maxPage, setMaxPage] = useState();
 
-    const [sort, setSort] = useState('');
-    const [direction, setDirection] = useState('');
+    const [sort, setSort] = useState('UPDATED_AT');
+    const [direction, setDirection] = useState('DESC');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -118,6 +121,8 @@ const Deliveries = () => {
             toAddressContains: toAddress,
             toPhoneContains: toPhone,
             toShopId,
+            sort,
+            direction
         };
 
         if (!statuses || statuses.length === 0) {
@@ -127,7 +132,7 @@ const Deliveries = () => {
 
         setFilteredData(data);
 
-    }, [statuses, currentShopId, productType, fromAddress, fromPhone, fromName, fromShopId, toAddress, toPhone, toName, toShopId])
+    }, [statuses, currentShopId, productType, fromAddress, fromPhone, fromName, fromShopId, toAddress, toPhone, toName, toShopId, sort, direction])
 
     const handleViewDetail = (id) => {
         navigate(`/management/delivery-detail?deliveryId=${id}`)
@@ -141,25 +146,41 @@ const Deliveries = () => {
         setPage(Math.min(maxPage, page + 1))
     }
 
+    const handleSort = (field) => {
+        if (field === sort) {
+            setDirection(direction === 'ASC' ? 'DESC' : 'ASC');
+        } else {
+            setSort(field);
+            setDirection('ASC');
+        }
+    };
+
+    const renderSortIcon = (field) => {
+        if (field !== sort) {
+            return <FontAwesomeIcon icon={faSort} />;
+        }
+        return direction === 'ASC' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />;
+    };
+
     return <>
         <div className='deliveries'>
             <h1>Thống kê các đơn hàng hiện tại</h1>
             <Table>
                 <thead>
                     <tr>
-                        <th>Thời gian tạo</th>
-                        <th>Thời gian cập nhật mới nhất</th>
+                        <th className='deliveries-sort' onClick={() => handleSort('CREATED_AT')}>Thời gian tạo{renderSortIcon('CREATED_AT')}</th>
+                        <th className='deliveries-sort' onClick={() => handleSort('UPDATED_AT')}>Thời gian cập nhật mới nhất{renderSortIcon('UPDATED_AT')}</th>
                         <th>Trạng thái hiện tại</th>
                         <th>Văn phòng hiện tại</th>
                         <th>Loại hàng</th>
-                        <th>Người gửi</th>
-                        <th>Số điện thoại người gửi</th>
+                        <th className='deliveries-sort' onClick={() => handleSort('FROM_NAME')}>Người gửi{renderSortIcon('FROM_NAME')}</th>
+                        <th className='deliveries-sort' onClick={() => handleSort('FROM_PHONE')}>Số điện thoại người gửi{renderSortIcon('FROM_PHONE')}</th>
                         <th>Văn phòng gửi</th>
-                        <th>Địa chỉ gửi</th>
-                        <th>Người nhận</th>
-                        <th>Số điện thoại người nhận</th>
+                        <th className='deliveries-sort' onClick={() => handleSort('FROM_ADDRESS')}>Địa chỉ gửi{renderSortIcon('FROM_ADDRESS')}</th>
+                        <th className='deliveries-sort' onClick={() => handleSort('TO_NAME')}>Người nhận{renderSortIcon('TO_NAME')}</th>
+                        <th className='deliveries-sort' onClick={() => handleSort('TO_PHONE')}>Số điện thoại người nhận{renderSortIcon('TO_PHONE')}</th>
                         <th>Văn phòng nhận</th>
-                        <th>Địa chỉ nhận</th>
+                        <th className='deliveries-sort' onClick={() => handleSort('TO_ADDRESS')}>Địa chỉ nhận{renderSortIcon('TO_ADDRESS')}</th>
                     </tr>
                     <tr>
                         <th></th>

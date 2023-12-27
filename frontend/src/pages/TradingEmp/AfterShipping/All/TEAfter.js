@@ -60,8 +60,8 @@ const TEAfter = () => {
                     }
 
                     try {
-                        const response1 = await axios.get(`${backendUrl}/deliveryStatuses`, config1)
-                        const response2 = await axios.get(`${backendUrl}/deliveryStatuses`, config2)
+                        const response1 = await axios.get(`${backendUrl}/deliveries`, config1)
+                        const response2 = await axios.get(`${backendUrl}/deliveries`, config2)
                         setDeliveries(response1.data.deliveryStatuses.concat(response2.data.deliveryStatuses))
                         console.log(response1.data.deliveryStatuses)
                         console.log(response2.data.deliveryStatuses)
@@ -85,7 +85,7 @@ const TEAfter = () => {
                     }
 
                     try {
-                        const response3 = await axios.get(`${backendUrl}/deliveryStatuses`, config3)
+                        const response3 = await axios.get(`${backendUrl}/deliveries`, config3)
                         setDeliveries(response3.data.deliveryStatuses)
                     } catch (error) {
                         console.log(error)
@@ -107,7 +107,7 @@ const TEAfter = () => {
                     }
 
                     try {
-                        const response4 = await axios.get(`${backendUrl}/deliveryStatuses`, config4)
+                        const response4 = await axios.get(`${backendUrl}/deliveryStatus`, config4)
                         setDeliveries(response4.data.deliveryStatuses)
                     } catch (error) {
                         console.log(error)

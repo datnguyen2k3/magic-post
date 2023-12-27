@@ -124,7 +124,6 @@ const Accounts = () => {
 
     const renderSortIcon = (field) => {
         if (field !== sort) {
-            console.log(field, sort)
             return <FontAwesomeIcon icon={faSort} />;
         }
         return direction === 'ASC' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />;

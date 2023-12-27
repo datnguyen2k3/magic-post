@@ -18,7 +18,7 @@ const Sidebar = () => {
 
     const handleView = (e) => {
         if (e.keyCode === 13) {
-            navigate(`/detail?deliveryId=${code}`)
+            navigate(`/management/detail?deliveryId=${code}`)
         }
     }
 
@@ -44,11 +44,11 @@ const Sidebar = () => {
     const isPEmp = account.role === 'EMPLOYEE' && account.workAt.type === 'POST';
 
     const goToLogin = () => {
-        navigate('/login');;
+        navigate('/management/login');;
     }
 
     const goToLogout = () => {
-        navigate('/');
+        navigate('/management/');
         dispatch(logout({}))
         toast.success('Đăng xuất thành công')
     }
@@ -169,6 +169,11 @@ const Sidebar = () => {
                         <Link to={'/management/wh-accounts'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý tài khoản nhân viên
+                            </button>
+                        </Link>
+                        <Link to={'/management/wh-deliveries'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Quản lý đơn tại văn phòng
                             </button>
                         </Link>
                     </>}
