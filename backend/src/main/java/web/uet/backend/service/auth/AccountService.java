@@ -171,10 +171,7 @@ public class AccountService implements UserDetailsService {
 
   private void validateAccountPageRequest(AccountPageRequest request) {
     Account currentAccount = AuthenticationService.getCurrentAccount();
-
-    if (currentAccount.getRole() == Role.EMPLOYEE) {
-      throw new InvalidAuthorizationException("Permission denied");
-    }
+    validateAccessShopPermission(currentAccount, request.getWorkAtId());
 
     request.getRoles().stream()
         .filter(role -> !validateRole(role, currentAccount.getRole()))
@@ -182,14 +179,23 @@ public class AccountService implements UserDetailsService {
         .ifPresent(role -> {
           throw new InvalidAuthorizationException("Permission denied");
         });
+  }
 
-    if (request.getWorkAtId() == null && currentAccount.getRole() != Role.CEO) {
+  public static void validateAccessShopPermission(Account currentAccount, Integer shopId) {
+    if (currentAccount.getRole() == Role.EMPLOYEE) {
+      throw new InvalidAuthorizationException("Permission denied");
+    }
+
+    if (currentAccount.getRole() == Role.CEO) {
+      return;
+    }
+
+    if (shopId == null) {
       throw new InvalidAuthorizationException("You must specify workAtId");
     }
 
-    if (currentAccount.getRole() != Role.CEO && !currentAccount.getWorkAt().getShopId().equals(request.getWorkAtId())) {
+    if (!currentAccount.getWorkAt().getShopId().equals(shopId)) {
       throw new InvalidAuthorizationException("You can only get accounts in your shop");
     }
-
   }
 }

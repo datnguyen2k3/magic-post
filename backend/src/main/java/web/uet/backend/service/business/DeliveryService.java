@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import web.uet.backend.document.business.DeliveryDocument;
 import web.uet.backend.dto.business.request.DeliveryPageRequest;
 import web.uet.backend.dto.business.response.delivery.DeliveryPageResponse;
+import web.uet.backend.entity.auth.Account;
 import web.uet.backend.entity.enums.Role;
 import web.uet.backend.entity.enums.ShopType;
 import web.uet.backend.entity.enums.StatusType;
@@ -34,6 +35,7 @@ import web.uet.backend.repository.business.jpa.DeliveryRepository;
 import web.uet.backend.repository.business.jpa.DeliveryStatusRepository;
 import web.uet.backend.repository.business.jpa.ShopRepository;
 import web.uet.backend.repository.location.jpa.CommuneRepository;
+import web.uet.backend.service.auth.AccountService;
 import web.uet.backend.service.auth.AuthenticationService;
 
 import java.time.LocalDateTime;
@@ -195,9 +197,8 @@ public class DeliveryService {
   }
 
   public DeliveryPageResponse getDeliveriesPageBy(DeliveryPageRequest request) {
-    if (AuthenticationService.getCurrentAccount().getRole() != Role.CEO) {
-      throw new InvalidAuthorizationException("Permission denied");
-    }
+    Account currentAccount = AuthenticationService.getCurrentAccount();
+    AccountService.validateAccessShopPermission(currentAccount, request.getCurrentShopId());
 
     Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
 
