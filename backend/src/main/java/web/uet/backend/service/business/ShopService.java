@@ -16,6 +16,7 @@ import org.springframework.data.elasticsearch.core.SearchHitSupport;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.SearchPage;
 import org.springframework.data.jpa.repository.Lock;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import web.uet.backend.document.business.ShopDocument;
 import web.uet.backend.dto.business.request.ShopPageRequest;
@@ -25,6 +26,7 @@ import web.uet.backend.entity.auth.Account;
 import web.uet.backend.entity.business.DeliveryStatus;
 import web.uet.backend.entity.business.Shop;
 import web.uet.backend.entity.enums.Role;
+import web.uet.backend.event.AccountCreateEvent;
 import web.uet.backend.event.DeliveryStatusCreateEvent;
 import web.uet.backend.exception.type.InvalidAuthorizationException;
 import web.uet.backend.exception.type.NotFoundException;
@@ -51,6 +53,7 @@ public class ShopService {
   @EventListener
   @Transactional
   @Lock(LockModeType.PESSIMISTIC_WRITE)
+  @Async
   public void updateDeliveryNumber(DeliveryStatusCreateEvent event) {
     DeliveryStatus deliveryStatus = (DeliveryStatus) event.getSource();
     Shop currentShop = deliveryStatus.getCurrentShop();
@@ -81,6 +84,18 @@ public class ShopService {
         break;
     }
     shopRepository.save(currentShop);
+  }
+
+  @EventListener()
+  @Transactional
+  @Lock(LockModeType.PESSIMISTIC_WRITE)
+  @Async
+  public void updateEmployeeNumber(AccountCreateEvent event) {
+    Account account = (Account) event.getSource();
+    Shop currentShop = account.getWorkAt();
+    Integer currentEmployeeNumber = currentShop.getEmployeeNumber();
+    currentShop.setEmployeeNumber(currentEmployeeNumber + 1);
+    shopRepository.saveAndFlush(currentShop);
   }
 
   public ShopDetailResponse getShopGeneralResponseBy(Integer shopId) {

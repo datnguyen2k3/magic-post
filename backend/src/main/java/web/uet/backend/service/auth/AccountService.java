@@ -187,7 +187,7 @@ public class AccountService implements UserDetailsService {
       throw new InvalidAuthorizationException("You must specify workAtId");
     }
 
-    if (currentAccount.getRole() != Role.CEO && currentAccount.getWorkAt().getShopId() != request.getWorkAtId()) {
+    if (currentAccount.getRole() != Role.CEO && !currentAccount.getWorkAt().getShopId().equals(request.getWorkAtId())) {
       throw new InvalidAuthorizationException("You can only get accounts in your shop");
     }
 

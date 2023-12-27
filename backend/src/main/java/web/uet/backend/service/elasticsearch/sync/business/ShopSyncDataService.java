@@ -1,6 +1,7 @@
 package web.uet.backend.service.elasticsearch.sync.business;
 
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import web.uet.backend.document.business.ShopDocument;
 import web.uet.backend.entity.business.Shop;
@@ -17,6 +18,7 @@ public class ShopSyncDataService extends GenericSyncDataService<ShopDocument, Sh
   }
 
   @EventListener
+  @Async
   public void handleShopUpdateEvent(ShopUpdateEvent event) {
     Shop shop = (Shop) event.getSource();
     ShopDocument shopDocument = m.toDto(shop);

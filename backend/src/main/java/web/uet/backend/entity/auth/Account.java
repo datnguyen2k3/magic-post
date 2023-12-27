@@ -10,6 +10,8 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import web.uet.backend.entity.enums.Role;
 import web.uet.backend.entity.business.Shop;
+import web.uet.backend.event.AccountCreateEvent;
+import web.uet.backend.service.PublisherService;
 
 import java.util.UUID;
 
@@ -53,8 +55,14 @@ public class Account {
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private Role role;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {})
     @JoinColumn(name = "work_at")
     private Shop workAt;
+
+    @PostPersist
+
+    public void postPersist() {
+        PublisherService.INSTANCE.publishEvent(new AccountCreateEvent(this));
+    }
 
 }
