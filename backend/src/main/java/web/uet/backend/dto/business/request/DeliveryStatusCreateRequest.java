@@ -1,6 +1,7 @@
 package web.uet.backend.dto.business.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +20,7 @@ public class DeliveryStatusCreateRequest {
 
   @Positive
   private Integer shopId;
+
+  @NotNull
   private StatusType status;
 }

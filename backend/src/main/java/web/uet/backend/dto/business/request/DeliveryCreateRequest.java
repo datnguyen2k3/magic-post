@@ -26,7 +26,7 @@ public class DeliveryCreateRequest {
   @NotNull
   private Integer fromCommuneId;
 
-  @Min(1)
+  @Positive
   @NotNull
   private Integer toCommuneId;
 
@@ -49,9 +49,11 @@ public class DeliveryCreateRequest {
   private String toName;
 
   @Positive
+  @NotNull
   private Integer fromShop;
 
   @Positive
+  @NotNull
   private Integer toShop;
 
   @NotNull
