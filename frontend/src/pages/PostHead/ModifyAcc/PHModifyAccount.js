@@ -203,7 +203,7 @@ const PHModifyAccount = () => {
                 const response = await axios.patch(`${backendUrl}/accounts/profile`, body, config)
                 toast.success('Sửa đổi thành công!')
                 console.log(response)
-                navigate(`/ph-detail-account?username=${username}&role=${role}`)
+                navigate(`/management/ph-detail-account?username=${username}&role=${role}`)
             } catch (error) {
                 console.log(error)
             }

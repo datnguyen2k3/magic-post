@@ -80,7 +80,7 @@ const TEShipToCus = () => {
             const response = await axios.post(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, body, config)
             if (response) {
                 toast.success('Xác nhận bắt đầu ship đến khách!')
-                navigate('/te-inshop')
+                navigate('/management/te-inshop')
             }
         } catch (error) {
             console.log(error)
@@ -88,7 +88,7 @@ const TEShipToCus = () => {
     }
 
     return <>
-        <button><Link to={'/te-inshop'}>Trở về bảng thống kê đơn đang ở văn phòng</Link></button>
+        <button><Link to={'/management/te-inshop'}>Trở về bảng thống kê đơn đang ở văn phòng</Link></button>
         {delivery ? <div className='te-detail'>
             <label>Thứ tự trạng thái:</label>
             <select onChange={handleDirectionChange}>

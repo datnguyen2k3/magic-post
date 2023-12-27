@@ -52,7 +52,7 @@ const Login = () => {
 
                         // Dispatch login action
                         dispatch(login({ account }))
-                        navigate('/')
+                        navigate('/management/')
                     }
                 });
         }

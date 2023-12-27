@@ -209,7 +209,7 @@ const TEWNext = () => {
 
                 if (response) {
                     toast.success('Chọn điểm đến thành công!')
-                    navigate('/te-inshop')
+                    navigate('/management/te-inshop')
                 }
             }
         } catch (error) {
@@ -222,7 +222,7 @@ const TEWNext = () => {
     }
 
     return <>
-        <button><Link to={'/te-inshop'}>Trở về bảng thống kê đơn đang ở văn phòng</Link></button>
+        <button><Link to={'/management/te-inshop'}>Trở về bảng thống kê đơn đang ở văn phòng</Link></button>
         {delivery ? <div className='te-next'>
             <label>Thứ tự trạng thái:</label>
             <select onChange={handleDirectionChange}>

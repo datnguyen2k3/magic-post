@@ -47,6 +47,8 @@ import DeliveryDetail from '../pages/CEO/DeliveryDetail/DeliveryDetail';
 import PHDeliveries from '../pages/PostHead/Deliveries/PHDeliveries';
 import ModifyAccount from '../pages/CEO/ModifyAcc/ModifyAccount';
 import PHModifyAccount from '../pages/PostHead/ModifyAcc/PHModifyAccount';
+import GuestHome from '../pages/Guest/Home/GuestHome';
+import { selectIsGuest } from '../app/guestSlice';
 
 const Page = () => {
 
@@ -63,7 +65,7 @@ const Page = () => {
                 const currentTime = new Date();
                 if (expiredTime < currentTime) {
                     dispatch(logout({}))
-                    navigate('/login')
+                    navigate('/managment/login')
                     toast.success('Hết thời hạn đăng nhập, mời bạn đăng nhập lại')
                 }
             }, 10000);
@@ -73,54 +75,56 @@ const Page = () => {
         }
     }, [expiredAt])
 
+    const isGuest = useSelector(selectIsGuest)
+
     return <>
         <div className='page'>
             <div className='page-box'>
                 <Routes>
-                    <Route path='/' element={<Home />}></Route>
-                    <Route path='/login' element={<NotLogged><Login /></NotLogged>}></Route>
-                    <Route path='/account' element={<NeedLogged><Account /></NeedLogged>}></Route>
-                    <Route path='/detail' element={<Detail />}></Route>
+                    {isGuest && <><Route path='/' element={<GuestHome />}></Route></>}
+                    {!isGuest && <><Route path='/management/' element={<Home />}></Route>
+                        <Route path='/management/login' element={<NotLogged><Login /></NotLogged>}></Route>
+                        <Route path='/management/account' element={<NeedLogged><Account /></NeedLogged>}></Route>
+                        <Route path='/management/detail' element={<Detail />}></Route>
 
-                    {/* CEO */}
-                    <Route path='/offices' element={<CEO><Offices /></CEO>}></Route>
-                    <Route path='/detail-office' element={<CEO><DetailOffice /></CEO>}></Route>
-                    <Route path='/create-account' element={<CEO><CreateAccount /></CEO>}></Route>
-                    <Route path='/accounts' element={<CEO><Accounts /></CEO>}></Route>
-                    <Route path='/detail-account' element={<CEO><DetailAccount /></CEO>}></Route>
-                    <Route path='/deliveries' element={<CEO><Deliveries /></CEO>}></Route>
-                    <Route path='/delivery-detail' element={<CEO><DeliveryDetail /></CEO>}></Route>
-                    <Route path='/modify-account' element={<CEO><ModifyAccount /></CEO>}></Route>
+                        {/* CEO */}
+                        <Route path='/management/offices' element={<CEO><Offices /></CEO>}></Route>
+                        <Route path='/management/detail-office' element={<CEO><DetailOffice /></CEO>}></Route>
+                        <Route path='/management/create-account' element={<CEO><CreateAccount /></CEO>}></Route>
+                        <Route path='/management/accounts' element={<CEO><Accounts /></CEO>}></Route>
+                        <Route path='/management/detail-account' element={<CEO><DetailAccount /></CEO>}></Route>
+                        <Route path='/management/deliveries' element={<CEO><Deliveries /></CEO>}></Route>
+                        <Route path='/management/delivery-detail' element={<CEO><DeliveryDetail /></CEO>}></Route>
+                        <Route path='/management/modify-account' element={<CEO><ModifyAccount /></CEO>}></Route>
 
-                    {/* TradingEmp */}
-                    <Route path='/te-create-shipment' element={<PostEmp><TECreateShipment /></PostEmp>}></Route>
-                    <Route path='/te-detail' element={<PostEmp><TEDetail /></PostEmp>}></Route>
-                    <Route path='/te-shipping' element={<PostEmp><TEShipping /></PostEmp>}></Route>
-                    <Route path='/te-confirm-shipping' element={<PostEmp><TEConfirmShipping /></PostEmp>}></Route>
-                    <Route path='/te-after' element={<PostEmp><TEAfter /></PostEmp>}></Route>
+                        {/* TradingEmp */}
+                        <Route path='/management/te-create-shipment' element={<PostEmp><TECreateShipment /></PostEmp>}></Route>
+                        <Route path='/management/te-detail' element={<PostEmp><TEDetail /></PostEmp>}></Route>
+                        <Route path='/management/te-shipping' element={<PostEmp><TEShipping /></PostEmp>}></Route>
+                        <Route path='/management/te-confirm-shipping' element={<PostEmp><TEConfirmShipping /></PostEmp>}></Route>
+                        <Route path='/management/te-after' element={<PostEmp><TEAfter /></PostEmp>}></Route>
 
-                    <Route path='/te-receive' element={<TradingEmp><TEReceive /></TradingEmp>}></Route>
-                    <Route path='/te-next' element={<TradingEmp><TENext /></TradingEmp>}></Route>
-                    <Route path='/te-w-next' element={<TradingEmp><TEWNext /></TradingEmp>}></Route>
-                    <Route path='/te-coming' element={<TradingEmp><TEComing /></TradingEmp>}></Route>
-                    <Route path='/te-confirm-receive' element={<TradingEmp><TEConfirmReceive /></TradingEmp>}></Route>
-                    <Route path='/te-inshop' element={<TradingEmp><TEInShop /></TradingEmp>}></Route>
-                    <Route path='/te-shiptocus' element={<TradingEmp><TEShipToCus /></TradingEmp>}></Route>
+                        <Route path='/management/te-receive' element={<TradingEmp><TEReceive /></TradingEmp>}></Route>
+                        <Route path='/management/te-next' element={<TradingEmp><TENext /></TradingEmp>}></Route>
+                        <Route path='/management/te-w-next' element={<TradingEmp><TEWNext /></TradingEmp>}></Route>
+                        <Route path='/management/te-coming' element={<TradingEmp><TEComing /></TradingEmp>}></Route>
+                        <Route path='/management/te-confirm-receive' element={<TradingEmp><TEConfirmReceive /></TradingEmp>}></Route>
+                        <Route path='/management/te-inshop' element={<TradingEmp><TEInShop /></TradingEmp>}></Route>
+                        <Route path='/management/te-shiptocus' element={<TradingEmp><TEShipToCus /></TradingEmp>}></Route>
 
-                    {/* PostHead */}
-                    <Route path='/ph-create-account' element={<PostHead><PHCreateAccount /></PostHead>}></Route>
-                    <Route path='/ph-accounts' element={<PostHead><PHAccounts /></PostHead>}></Route>
-                    <Route path='/ph-detail-account' element={<PostHead><PHDetailAccount /></PostHead>}></Route>
-                    <Route path='/ph-detail-office' element={<PostHead><PHDetailOffice /></PostHead>}></Route>
-                    <Route path='/ph-deliveries' element={<PostHead><PHDeliveries /></PostHead>}></Route>
-                    <Route path='/ph-modify-account' element={<PostHead><PHModifyAccount /></PostHead>}></Route>
+                        {/* PostHead */}
+                        <Route path='/management/ph-create-account' element={<PostHead><PHCreateAccount /></PostHead>}></Route>
+                        <Route path='/management/ph-accounts' element={<PostHead><PHAccounts /></PostHead>}></Route>
+                        <Route path='/management/ph-detail-account' element={<PostHead><PHDetailAccount /></PostHead>}></Route>
+                        <Route path='/management/ph-detail-office' element={<PostHead><PHDetailOffice /></PostHead>}></Route>
+                        <Route path='/management/ph-deliveries' element={<PostHead><PHDeliveries /></PostHead>}></Route>
+                        <Route path='/management/ph-modify-account' element={<PostHead><PHModifyAccount /></PostHead>}></Route>
 
-                    {/* WarehouseHead */}
-                    <Route path='/wh-create-account' element={<WarehouseHead><WHCreateAccount /></WarehouseHead>}></Route>
-                    <Route path='/wh-accounts' element={<WarehouseHead><WHAccounts /></WarehouseHead>}></Route>
-                    <Route path='/wh-detail-account' element={<WarehouseHead><WHDetailAccount /></WarehouseHead>}></Route>
-                    <Route path='/wh-detail-office' element={<WarehouseHead><WHDetailOffice /></WarehouseHead>}></Route>
-
+                        {/* WarehouseHead */}
+                        <Route path='/management/wh-create-account' element={<WarehouseHead><WHCreateAccount /></WarehouseHead>}></Route>
+                        <Route path='/management/wh-accounts' element={<WarehouseHead><WHAccounts /></WarehouseHead>}></Route>
+                        <Route path='/management/wh-detail-account' element={<WarehouseHead><WHDetailAccount /></WarehouseHead>}></Route>
+                        <Route path='/management/wh-detail-office' element={<WarehouseHead><WHDetailOffice /></WarehouseHead>}></Route></>}
                 </Routes>
                 <Toaster toastOptions={{
                     style: {

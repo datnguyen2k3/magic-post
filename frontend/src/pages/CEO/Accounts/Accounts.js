@@ -131,7 +131,7 @@ const Accounts = () => {
     };
 
     const handleViewDetail = (username, role) => {
-        navigate(`/detail-account?username=${username}&role=${role}`)
+        navigate(`/management/detail-account?username=${username}&role=${role}`)
     }
 
     return <>

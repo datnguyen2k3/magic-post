@@ -133,7 +133,7 @@ const PHDeliveries = () => {
     }, [statuses, currentShopId, productType, fromAddress, fromPhone, fromName, fromShopId, toAddress, toPhone, toName, toShopId])
 
     const handleViewDetail = (id) => {
-        navigate(`/detail?deliveryId=${id}`)
+        navigate(`/management/detail?deliveryId=${id}`)
     }
 
     return <>

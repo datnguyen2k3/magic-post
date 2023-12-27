@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import toast from 'react-hot-toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { selectIsGuest, trueGuest } from '../app/guestSlice';
 
 const Sidebar = () => {
 
@@ -52,6 +53,12 @@ const Sidebar = () => {
         toast.success('Đăng xuất thành công')
     }
 
+    const handleToCustomer = (e) => {
+        e.preventDefault()
+        dispatch(trueGuest())
+        navigate('/')
+    }
+
     return <>
         <div className='sidebar'>
             <div className='sidebar-box'>
@@ -59,101 +66,107 @@ const Sidebar = () => {
                     <img className='sidebar-logo' src={Logo}></img>
                     <input className='sidebar-search' type='text' placeholder='Search by code' onKeyDown={(e) => handleView(e)}
                         onChange={(e) => handleInputChange(e)}></input>
-                    <Link to={'/'}>
+                    <Link to={'/management/'}>
                         <button className='sidebar-statistics sidebar-bottom'>
                             Trang chủ
                         </button>
                     </Link>
+                    {!isLoggedIn &&
+                        <Link to={'/'}>
+                            <button className='sidebar-statistics sidebar-bottom' onClick={handleToCustomer}>
+                                Quay trở lại trang của khách
+                            </button>
+                        </Link>}
                     {isCEO && <>
-                        <Link to={'/offices'}>
+                        <Link to={'/management/offices'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Thống kê các văn phòng
                             </button>
                         </Link>
-                        <Link to={'/create-account'}>
+                        <Link to={'/management/create-account'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Tạo tài khoản cho trưởng điểm
                             </button>
                         </Link>
-                        <Link to={'/accounts'}>
+                        <Link to={'/management/accounts'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý tài khoản trưởng điểm
                             </button>
                         </Link>
-                        <Link to={'/deliveries'}>
+                        <Link to={'/management/deliveries'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý các đơn hàng
                             </button>
                         </Link>
                     </>}
                     {isPEmp && <>
-                        <Link to={'/te-create-shipment'}>
+                        <Link to={'/management/te-create-shipment'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Tạo đơn vận mới cho khách
                             </button>
                         </Link>
-                        <Link to={'/te-receive'}>
+                        <Link to={'/management/te-receive'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đã nhận từ khách
                             </button>
                         </Link>
-                        <Link to={'/te-coming'}>
+                        <Link to={'/management/te-coming'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đang được chuyển đến
                             </button>
                         </Link>
-                        <Link to={'/te-inshop'}>
+                        <Link to={'/management/te-inshop'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đã được nhận bởi văn phòng
                             </button>
                         </Link>
-                        <Link to={'/te-shipping'}>
+                        <Link to={'/management/te-shipping'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đang giao cho khách
                             </button>
                         </Link>
-                        <Link to={'/te-after'}>
+                        <Link to={'/management/te-after'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đã giao cho khách
                             </button>
                         </Link></>
                     }
                     {isWEmp && <>
-                        <Link to={'/te-coming'}>
+                        <Link to={'/management/te-coming'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đang được chuyển đến
                             </button>
                         </Link>
-                        <Link to={'/te-inshop'}>
+                        <Link to={'/management/te-inshop'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đã được nhận bởi văn phòng
                             </button>
                         </Link></>
                     }
                     {isPostHead && <>
-                        <Link to={'/ph-create-account'}>
+                        <Link to={'/management/ph-create-account'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Tạo tài khoản nhân viên
                             </button>
                         </Link>
-                        <Link to={'/ph-accounts'}>
+                        <Link to={'/management/ph-accounts'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý tài khoản nhân viên
                             </button>
                         </Link>
-                        <Link to={'/ph-deliveries'}>
+                        <Link to={'/management/ph-deliveries'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn tại văn phòng
                             </button>
                         </Link>
                     </>}
                     {isWarehouseHead && <>
-                        <Link to={'/wh-create-account'}>
+                        <Link to={'/management/wh-create-account'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Tạo tài khoản nhân viên
                             </button>
                         </Link>
-                        <Link to={'/wh-accounts'}>
+                        <Link to={'/management/wh-accounts'}>
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý tài khoản nhân viên
                             </button>
@@ -166,9 +179,9 @@ const Sidebar = () => {
                             <button className='sidebar-account sidebar-view-account'>{account !== undefined ? account.name : 'Tài khoản'} &nbsp;<FontAwesomeIcon icon={faChevronRight} />
                                 <div className='sidebar-account-dropdown'>
                                     <button className='sidebar-account sidebar-account-dropdown-item' style={{ fontSize: '20px' }}><b>{account.role}</b></button>
-                                    <button className='sidebar-account sidebar-account-dropdown-item'><Link to={'/account'}>Tài khoản</Link></button>
-                                    {isWHead && <button className='sidebar-account sidebar-account-dropdown-item'><Link to={`/wh-detail-office?shopId=${shopId}`}>Xem thông tin văn phòng</Link></button>}
-                                    {isPHead && <button className='sidebar-account sidebar-account-dropdown-item'><Link to={`/ph-detail-office?shopId=${shopId}`}>Xem thông tin văn phòng</Link></button>}
+                                    <button className='sidebar-account sidebar-account-dropdown-item'><Link to={'/management/account'}>Tài khoản</Link></button>
+                                    {isWHead && <button className='sidebar-account sidebar-account-dropdown-item'><Link to={`/management/wh-detail-office?shopId=${shopId}`}>Xem thông tin văn phòng</Link></button>}
+                                    {isPHead && <button className='sidebar-account sidebar-account-dropdown-item'><Link to={`/management/ph-detail-office?shopId=${shopId}`}>Xem thông tin văn phòng</Link></button>}
                                     <button className='sidebar-account sidebar-account-dropdown-item' onClick={() => goToLogout()}>Đăng xuất</button>
                                 </div>
                             </button>

@@ -68,7 +68,7 @@ const PHCreateAccount = () => {
 
                 const data = response.data;
                 // Process data here
-                navigate('/')
+                navigate('/management/')
                 console.log(data)
                 toast.success('Tạo tài khoản thành công!')
             } catch (error) {

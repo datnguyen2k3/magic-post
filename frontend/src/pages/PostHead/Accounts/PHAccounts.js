@@ -83,7 +83,7 @@ const PHAccounts = () => {
     };
 
     const handleViewDetail = (username, role) => {
-        navigate(`/ph-detail-account?username=${username}&role=${role}`)
+        navigate(`/management/ph-detail-account?username=${username}&role=${role}`)
     }
 
     const handleInputChange = (e) => {

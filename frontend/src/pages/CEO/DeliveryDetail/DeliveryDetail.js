@@ -32,10 +32,6 @@ const DeliveryDetail = () => {
         console.log('ok')
     }, [])
 
-    const viewOffice = (id) => {
-        navigate(`/detail-office?shopId=${id}`)
-    }
-
     return <>
         <div className='delivery-detail'>
             {delivery ? <>
@@ -72,7 +68,7 @@ const DeliveryDetail = () => {
                             <td>{delivery.fromName}</td>
                             <td>{delivery.fromPhone}</td>
                             <td>{delivery.fromAddress}</td>
-                            <td><Link to={`/detail-office?shopId=${delivery.fromShop.shopId}`}>{delivery.fromShop.commune.name}({delivery.fromShop.shopId})</Link></td>
+                            <td><Link to={`/management/detail-office?shopId=${delivery.fromShop.shopId}`}>{delivery.fromShop.commune.name}({delivery.fromShop.shopId})</Link></td>
                         </tr>
                     </tbody>
                     <b>Thông tin phía nhận:</b>
@@ -89,7 +85,7 @@ const DeliveryDetail = () => {
                             <td>{delivery.toName}</td>
                             <td>{delivery.toPhone}</td>
                             <td>{delivery.toAddress}</td>
-                            <td><Link to={`/detail-office?shopId=${delivery.toShop.shopId}`}>{delivery.toShop.commune.name}({delivery.toShop.shopId})</Link></td>
+                            <td><Link to={`management//detail-office?shopId=${delivery.toShop.shopId}`}>{delivery.toShop.commune.name}({delivery.toShop.shopId})</Link></td>
                         </tr>
                     </tbody>
                     <b>Trạng thái đơn hàng</b>
@@ -102,7 +98,7 @@ const DeliveryDetail = () => {
                     <tbody>
                         <tr>
                             <td>{delivery.currentStatus}</td>
-                            <td><Link to={`/detail-office?shopId=${delivery.currentShop.shopId}`}>{delivery.currentShop.commune.name}({delivery.currentShop.shopId})</Link></td>
+                            <td><Link to={`/management/detail-office?shopId=${delivery.currentShop.shopId}`}>{delivery.currentShop.commune.name}({delivery.currentShop.shopId})</Link></td>
                             <td>{delivery.createdAt}</td>
                             <td>{delivery.updatedAt}</td>
                         </tr>

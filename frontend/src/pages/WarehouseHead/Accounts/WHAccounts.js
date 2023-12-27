@@ -83,7 +83,7 @@ const WHAccounts = () => {
     };
 
     const handleViewDetail = (username, role) => {
-        navigate(`/wh-detail-account?username=${username}&role=${role}`)
+        navigate(`/management/wh-detail-account?username=${username}&role=${role}`)
     }
 
     const handleInputChange = (e) => {

@@ -168,7 +168,7 @@ const TEShipping = () => {
                             <td>{del.delivery.toName}</td>
                             <td>{del.delivery.toAddress}</td>
                             <td>{del.delivery.toShop.commune.name} ({del.delivery.toShop.commune.communeId})</td>
-                            <td><Link to={`/te-confirm-shipping?deliveryId=${del.delivery.deliveryId}`}>Chọn</Link></td>
+                            <td><Link to={`/management/te-confirm-shipping?deliveryId=${del.delivery.deliveryId}`}>Chọn</Link></td>
                         </tr>
                     )) : <></>}
                 </tbody>

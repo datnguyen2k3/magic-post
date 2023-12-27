@@ -133,7 +133,7 @@ const WHDeliveries = () => {
     }, [statuses, currentShopId, productType, fromAddress, fromPhone, fromName, fromShopId, toAddress, toPhone, toName, toShopId])
 
     const handleViewDetail = (id) => {
-        navigate(`/delivery-detail?deliveryId=${id}`)
+        navigate(`/management/delivery-detail?deliveryId=${id}`)
     }
 
     const prev = () => {

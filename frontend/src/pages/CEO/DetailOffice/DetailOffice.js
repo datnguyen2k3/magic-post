@@ -79,7 +79,7 @@ const DetailOffice = () => {
             </> : <></>}
             <b>Các đơn hàng gần đây ở văn phòng này:</b><br></br>
             {deliveries ? deliveries.map(del => <>
-                <span><b>Id đơn hàng: </b><Link to={`/delivery-detail?deliveryId=${del.deliveryId}`}>{beautifyId(del.deliveryId)}</Link></span><br></br>
+                <span><b>Id đơn hàng: </b><Link to={`/management/delivery-detail?deliveryId=${del.deliveryId}`}>{beautifyId(del.deliveryId)}</Link></span><br></br>
                 <span><b>Thời gian cập nhật gần nhất: </b>{del.updatedAt}</span><br></br>
                 <span><b>Người gửi: </b>{del.fromName} - {del.fromPhone}</span> <br></br>
                 <span><b>Người nhận: </b>{del.toName} - {del.toPhone}</span> <br></br>

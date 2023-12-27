@@ -43,11 +43,11 @@ const DetailAccount = () => {
     }, [])
 
     const handleViewOffice = (shopId) => {
-        navigate(`/detail-office?shopId=${shopId}`)
+        navigate(`/management/detail-office?shopId=${shopId}`)
     }
 
     const handleModifyAccount = (username, role) => {
-        navigate(`/modify-account?username=${username}&role=${role}`)
+        navigate(`/management/modify-account?username=${username}&role=${role}`)
     }
 
     return <>

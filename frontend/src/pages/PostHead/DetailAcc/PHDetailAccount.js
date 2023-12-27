@@ -46,11 +46,11 @@ const PHDetailAccount = () => {
     }, [])
 
     const handleViewOffice = (shopId) => {
-        navigate(`/ph-detail-office?shopId=${shopId}`)
+        navigate(`/management/ph-detail-office?shopId=${shopId}`)
     }
 
     const handleModifyAccount = (username, role) => {
-        navigate(`/ph-modify-account?username=${username}&role=${role}`)
+        navigate(`/management/ph-modify-account?username=${username}&role=${role}`)
     }
 
     return <>

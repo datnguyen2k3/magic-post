@@ -86,7 +86,7 @@ const TEConfirmReceive = () => {
             const response = await axios.post(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, body, config)
             if (response) {
                 toast.success('Xác nhận thành công!')
-                navigate('/te-coming')
+                navigate('/management/te-coming')
             }
         } catch (error) {
             console.log(error)
@@ -94,7 +94,7 @@ const TEConfirmReceive = () => {
     }
 
     return <>
-        <button><Link to={'/te-coming'}>Trở về bảng thống kê đơn đang đến</Link></button>
+        <button><Link to={'/management/te-coming'}>Trở về bảng thống kê đơn đang đến</Link></button>
         {delivery ? <div className='te-confirm-receive'>
             <label>Thứ tự trạng thái:</label>
             <select onChange={handleDirectionChange}>

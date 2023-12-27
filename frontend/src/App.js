@@ -1,15 +1,20 @@
 import './App.scss';
 import Sidebar from './component/Sidebar';
 import Page from './component/Page'
+import { useSelector } from 'react-redux';
+import { selectIsGuest } from './app/guestSlice';
 
 function App() {
+
+  const isGuest = useSelector(selectIsGuest)
+
   return (
     <div className="App">
       <div className='app-box'>
-        <div className="app-sidebar">
+        {!isGuest && <div className="app-sidebar">
           <Sidebar />
-        </div>
-        <div className='app-page'>
+        </div>}
+        <div className={isGuest ? 'app-page-full' : 'app-page'}>
           <Page />
         </div>
       </div>

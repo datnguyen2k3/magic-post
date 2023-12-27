@@ -200,7 +200,7 @@ const ModifyAccount = () => {
                 const response = await axios.patch(`${backendUrl}/accounts/profile`, body, config)
                 toast.success('Sửa đổi thành công!')
                 console.log(response)
-                navigate(`/detail-account?username=${username}&role=${role}`)
+                navigate(`/management/detail-account?username=${username}&role=${role}`)
             } catch (error) {
                 console.log(error)
             }
@@ -210,7 +210,7 @@ const ModifyAccount = () => {
 
     const handleCancel = (e) => {
         e.preventDefault()
-        navigate(`/detail-account?username=${username}&role=${role}`)
+        navigate(`/management/detail-account?username=${username}&role=${role}`)
     }
 
     return <>

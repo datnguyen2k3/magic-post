@@ -67,7 +67,7 @@ const Offices = () => {
     }, [page, type, communeId])
 
     const handleViewDetail = (id) => {
-        navigate(`/detail-office?shopId=${id}`)
+        navigate(`/management/detail-office?shopId=${id}`)
     }
 
     const handleInputChange = (e) => {

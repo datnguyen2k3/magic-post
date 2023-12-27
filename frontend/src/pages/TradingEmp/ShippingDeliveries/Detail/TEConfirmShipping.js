@@ -87,7 +87,7 @@ const TEConfirmShipping = () => {
             const response = await axios.post(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, body, config)
             if (response) {
                 toast.success('Xác nhận bắt đầu ship đến khách!')
-                navigate('/te-shipping')
+                navigate('/management/te-shipping')
             }
         } catch (error) {
             console.log(error)
@@ -99,7 +99,7 @@ const TEConfirmShipping = () => {
     }
 
     return <>
-        <button><Link to={'/te-shipping'}>Trở về bảng thống kê đơn đang được ship</Link></button>
+        <button><Link to={'/management/te-shipping'}>Trở về bảng thống kê đơn đang được ship</Link></button>
         {delivery ? <div className='te-detail'>
             <label>Thứ tự trạng thái:</label>
             <select onChange={handleDirectionChange}>
@@ -124,12 +124,9 @@ const TEConfirmShipping = () => {
             </div>
         </div> : <></>}
         {(fixedHistory && fixedHistory[fixedHistory.length - 1].statusType === 'SHIPPING_TO_CUSTOMER' && fixedHistory[fixedHistory.length - 1].shop.shopId === Number(shopId)) ? <>
-            <div className=''>
-                <select onChange={handleResultChange}>
-                    <option value={''}>---</option>
-                    <option value={'SENT_TO_CUSTOMER_SUCCESS'}>Gửi hàng thành công</option>
-                    <option value={'SENT_TO_CUSTOMER_FAIL'}>Gửi hàng thất bại</option>
-                </select>
+            <div onChange={handleResultChange}>
+                <input type="radio" value="SENT_TO_CUSTOMER_SUCCESS" name="result" /> Gửi hàng thành công
+                <input type="radio" value="SENT_TO_CUSTOMER_FAIL" name="result" /> Gửi hàng thất bại
             </div>
             <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận</button>
         </> : <></>}

@@ -78,7 +78,7 @@ const CreateAccount = () => {
                 // Process data here
                 toast.success('Tạo tài khoản thành công!')
                 console.log(data);
-                navigate('/')
+                navigate('/management/')
             } catch (error) {
                 toast.error('Tạo tài khoản không thành công!')
                 console.error('Error fetching data:', error);
