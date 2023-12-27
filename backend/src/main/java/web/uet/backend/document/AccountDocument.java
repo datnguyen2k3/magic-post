@@ -24,12 +24,16 @@ public class AccountDocument {
   @Field(type = FieldType.Text, fielddata = true)
   private String username;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String name;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String phone;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String email;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String address;
 
   @Field(type = FieldType.Keyword)

@@ -39,10 +39,13 @@ public class DeliveryDocument {
   @Field(type = FieldType.Text, fielddata = true)
   private String fromPhone;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String toPhone;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String fromName;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String toName;
 
   @Field(type = FieldType.Nested, includeInParent = true)
@@ -54,6 +57,7 @@ public class DeliveryDocument {
   @Field(type = FieldType.Text, fielddata = true)
   private ProductType productType;
 
+  @Field(type = FieldType.Text, fielddata = true)
   private String name;
 
   private String description;
