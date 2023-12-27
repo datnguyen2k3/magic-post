@@ -14,7 +14,8 @@ const GuestHome = () => {
 
     return <>
         <div className='guess-home'>
-            <span>Tới trang của <button onClick={handleManagement}><Link to={'/management'}>các nhân viên quản lý</Link></button></span>
+            <span>Tới trang của <button onClick={handleManagement}><Link to={'/management'}>các nhân viên quản lý</Link></button></span><br></br>
+            <Link to={'/search'}>Chuyển sang trang tìm kiếm đơn vận</Link>
         </div>
     </>
 

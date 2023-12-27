@@ -49,6 +49,7 @@ import ModifyAccount from '../pages/CEO/ModifyAcc/ModifyAccount';
 import PHModifyAccount from '../pages/PostHead/ModifyAcc/PHModifyAccount';
 import GuestHome from '../pages/Guest/Home/GuestHome';
 import { selectIsGuest } from '../app/guestSlice';
+import GuestSearch from '../pages/Guest/Search/GuestSearch';
 
 const Page = () => {
 
@@ -81,7 +82,8 @@ const Page = () => {
         <div className='page'>
             <div className='page-box'>
                 <Routes>
-                    {isGuest && <><Route path='/' element={<GuestHome />}></Route></>}
+                    {isGuest && <><Route path='/' element={<GuestHome />}></Route>
+                        <Route path='/search' element={<GuestSearch />}></Route></>}
                     {!isGuest && <><Route path='/management/' element={<Home />}></Route>
                         <Route path='/management/login' element={<NotLogged><Login /></NotLogged>}></Route>
                         <Route path='/management/account' element={<NeedLogged><Account /></NeedLogged>}></Route>
