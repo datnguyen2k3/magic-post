@@ -2,6 +2,7 @@ import './Detail.scss'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
+import { beautifyId } from '../service/service';
 
 const Detail = () => {
 
@@ -43,7 +44,7 @@ const Detail = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{delivery.deliveryId}</td>
+                            <td>{beautifyId(delivery.deliveryId)}</td>
                             <td>{delivery.name}</td>
                             <td>{delivery.description}</td>
                             <td>{delivery.weight}kg/{delivery.shippingFee}VND</td>

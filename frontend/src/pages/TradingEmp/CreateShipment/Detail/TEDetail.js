@@ -3,6 +3,7 @@ import './TEDetail.scss'
 import { useSelector } from 'react-redux';
 import { selectToken } from '../../../../app/authSlice';
 import axios from 'axios';
+import { beautifyId } from '../../../../service/service';
 
 const TEDetail = () => {
 
@@ -61,7 +62,7 @@ const TEDetail = () => {
             </select>
             <div className=''>
                 <h3><b>Thông tin đơn hàng</b></h3>
-                <span><b>Id: </b>{delivery.deliveryId}</span><br></br>
+                <span><b>Id: </b>{beautifyId(delivery.deliveryId)}</span><br></br>
                 <span><b>Được gửi từ cửa hàng: </b>{delivery.fromCommune.name} <b>đến cửa hàng</b> {delivery.toCommune.name}</span><br></br>
                 <span><b>Người gửi: </b>{delivery.fromName} <b>gửi từ</b> {delivery.fromAddress}</span><br></br>
                 <span><b>Người nhận: </b>{delivery.toName} <b>nhận ở</b> {delivery.toAddress}</span><br></br>
