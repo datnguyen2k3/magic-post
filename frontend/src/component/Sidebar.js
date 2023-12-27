@@ -17,7 +17,7 @@ const Sidebar = () => {
 
     const handleView = (e) => {
         if (e.keyCode === 13) {
-            navigate(`/detail?shipmentCode=${code}`)
+            navigate(`/detail?deliveryId=${code}`)
         }
     }
 
@@ -41,10 +41,6 @@ const Sidebar = () => {
         navigate('/');
         dispatch(logout({}))
         toast.success('Đăng xuất thành công')
-    }
-
-    const goToRegister = () => {
-        navigate('/register')
     }
 
     return <>
@@ -168,7 +164,7 @@ const Sidebar = () => {
                         </div>
                             : <div>
                                 <button className='sidebar-account' onClick={() => goToLogin()}>Đăng nhập</button>
-                                <button className='sidebar-account' onClick={() => goToRegister()}>Đăng ký</button></div>}
+                            </div>}
                     </div>
                 </div>
             </div>

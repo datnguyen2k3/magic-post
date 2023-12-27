@@ -45,6 +45,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import DeliveryDetail from '../pages/CEO/DeliveryDetail/DeliveryDetail';
 import PHDeliveries from '../pages/PostHead/Deliveries/PHDeliveries';
+import ModifyAccount from '../pages/CEO/ModifyAcc/ModifyAccount';
+import PHModifyAccount from '../pages/PostHead/ModifyAcc/PHModifyAccount';
 
 const Page = () => {
 
@@ -88,6 +90,7 @@ const Page = () => {
                     <Route path='/detail-account' element={<CEO><DetailAccount /></CEO>}></Route>
                     <Route path='/deliveries' element={<CEO><Deliveries /></CEO>}></Route>
                     <Route path='/delivery-detail' element={<CEO><DeliveryDetail /></CEO>}></Route>
+                    <Route path='/modify-account' element={<CEO><ModifyAccount /></CEO>}></Route>
 
                     {/* TradingEmp */}
                     <Route path='/te-create-shipment' element={<PostEmp><TECreateShipment /></PostEmp>}></Route>
@@ -110,6 +113,7 @@ const Page = () => {
                     <Route path='/ph-detail-account' element={<PostHead><PHDetailAccount /></PostHead>}></Route>
                     <Route path='/ph-detail-office' element={<PostHead><PHDetailOffice /></PostHead>}></Route>
                     <Route path='/ph-deliveries' element={<PostHead><PHDeliveries /></PostHead>}></Route>
+                    <Route path='/ph-modify-account' element={<PostHead><PHModifyAccount /></PostHead>}></Route>
 
                     {/* WarehouseHead */}
                     <Route path='/wh-create-account' element={<WarehouseHead><WHCreateAccount /></WarehouseHead>}></Route>

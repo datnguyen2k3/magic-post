@@ -39,7 +39,7 @@ const WHAccounts = () => {
                 params: {
                     ...filteredData,
                     roles: 'EMPLOYEE',
-                    shopId
+                    workAtId: shopId
                 }
             }
 

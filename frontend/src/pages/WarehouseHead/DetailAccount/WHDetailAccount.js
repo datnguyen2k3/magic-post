@@ -1,7 +1,7 @@
 import './WHDetailAccount.scss'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectToken } from '../../../app/authSlice';
+import { selectToken, selectAccount } from '../../../app/authSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +11,8 @@ const WHDetailAccount = () => {
 
     const username = paramsWeb.get("username");
     const role = paramsWeb.get("role");
+
+    const shopId = useSelector(selectAccount).workAt.shopId;
 
     const [detail, setDetail] = useState(null)
 
@@ -26,7 +28,8 @@ const WHDetailAccount = () => {
                 headers: { Authorization: `Bearer ${token}` },
                 params: {
                     usernameContains: username.toLowerCase(),
-                    roles: role
+                    roles: role,
+                    workAtId: shopId
                 }
             }
 

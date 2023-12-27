@@ -99,17 +99,17 @@ const TEConfirmShipping = () => {
             </select>
             <div className=''>
                 <h3><b>Thông tin đơn hàng</b></h3>
-                <span><b>Id: </b>{delivery.deliveryId}</span>
-                <span><b>Được gửi từ cửa hàng: </b>{delivery.fromCommune.name} <b>đến cửa hàng</b> {delivery.toCommune.name}</span>
-                <span><b>Người gửi: </b>{delivery.fromName} <b>gửi từ</b> {delivery.fromAddress}</span>
-                <span><b>Người nhận: </b>{delivery.toName} <b>nhận ở</b> {delivery.toAddress}</span>
+                <span><b>Id: </b>{delivery.deliveryId}</span><br></br>
+                <span><b>Được gửi từ cửa hàng: </b>{delivery.fromCommune.name} <b>đến cửa hàng</b> {delivery.toCommune.name}</span><br></br>
+                <span><b>Người gửi: </b>{delivery.fromName} <b>gửi từ</b> {delivery.fromAddress}</span><br></br>
+                <span><b>Người nhận: </b>{delivery.toName} <b>nhận ở</b> {delivery.toAddress}</span><br></br>
             </div>
             <div className=''>
                 <h3><b>Lịch sử chuyển hàng</b></h3>
                 {history !== null ? history.map(his => <>
-                    <span><b>Thời gian: </b>{his.createdAt}</span>
-                    <span><b>Địa điểm: </b>{his.shop.commune.name}</span>
-                    <span><b>Loại văn phòng: </b>{his.shop.type === 'POST' ? 'Điểm giao dịch' : 'Điểm tập kết'}</span>
+                    <span><b>Thời gian: </b>{his.createdAt}</span><br></br>
+                    <span><b>Địa điểm: </b>{his.shop.commune.name}</span><br></br>
+                    <span><b>Loại văn phòng: </b>{his.shop.type === 'POST' ? 'Điểm giao dịch' : 'Điểm tập kết'}</span><br></br>
                 </>
                 ) : <>Loading...</>}
             </div>

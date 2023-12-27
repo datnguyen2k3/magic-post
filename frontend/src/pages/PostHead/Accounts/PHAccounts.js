@@ -39,7 +39,7 @@ const PHAccounts = () => {
                 params: {
                     ...filteredData,
                     roles: 'EMPLOYEE',
-                    shopId
+                    workAtId: shopId
                 }
             }
 
