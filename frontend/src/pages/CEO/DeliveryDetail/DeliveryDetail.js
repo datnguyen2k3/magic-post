@@ -2,7 +2,8 @@ import './DeliveryDetail.scss'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { beautifyId } from '../../../service/service';
 
 const DeliveryDetail = () => {
 
@@ -51,7 +52,7 @@ const DeliveryDetail = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{delivery.deliveryId}</td>
+                            <td>{beautifyId(delivery.deliveryId)}</td>
                             <td>{delivery.name}</td>
                             <td>{delivery.description}</td>
                             <td>{delivery.weight}kg/{delivery.shippingFee}VND</td>
@@ -71,7 +72,7 @@ const DeliveryDetail = () => {
                             <td>{delivery.fromName}</td>
                             <td>{delivery.fromPhone}</td>
                             <td>{delivery.fromAddress}</td>
-                            <td>{delivery.fromShop.commune.name}({delivery.fromShop.shopId}) <button onClick={() => viewOffice(delivery.fromShop.shopId)}>Xem văn phòng này</button></td>
+                            <td><Link to={`/detail-office?shopId=${delivery.fromShop.shopId}`}>{delivery.fromShop.commune.name}({delivery.fromShop.shopId})</Link></td>
                         </tr>
                     </tbody>
                     <b>Thông tin phía nhận:</b>
@@ -88,7 +89,7 @@ const DeliveryDetail = () => {
                             <td>{delivery.toName}</td>
                             <td>{delivery.toPhone}</td>
                             <td>{delivery.toAddress}</td>
-                            <td>{delivery.toShop.commune.name}({delivery.toShop.shopId}) <button onClick={() => viewOffice(delivery.toShop.shopId)}>Xem văn phòng này</button></td>
+                            <td><Link to={`/detail-office?shopId=${delivery.toShop.shopId}`}>{delivery.toShop.commune.name}({delivery.toShop.shopId})</Link></td>
                         </tr>
                     </tbody>
                     <b>Trạng thái đơn hàng</b>
@@ -101,7 +102,7 @@ const DeliveryDetail = () => {
                     <tbody>
                         <tr>
                             <td>{delivery.currentStatus}</td>
-                            <td>{delivery.currentShop.commune.name} - {delivery.currentShop.type}({delivery.currentShop.shopId}) <button onClick={() => viewOffice(delivery.currentShop.shopId)}>Xem văn phòng này</button></td>
+                            <td><Link to={`/detail-office?shopId=${delivery.currentShop.shopId}`}>{delivery.currentShop.commune.name}({delivery.currentShop.shopId})</Link></td>
                             <td>{delivery.createdAt}</td>
                             <td>{delivery.updatedAt}</td>
                         </tr>

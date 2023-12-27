@@ -378,20 +378,20 @@ const TECreateShipment = () => {
             toast.success(message)
             let info = {
                 fromCommuneId: Number(sWCode),
-                fromName: senderName,
-                fromPhone: senderPhone,
-                fromAddress: sAddress,
                 toCommuneId: Number(rWCode),
-                toName: receiverName,
-                toPhone: receiverPhone,
+                fromAddress: sAddress,
                 toAddress: rAddress,
+                fromPhone: senderPhone,
+                toPhone: receiverPhone,
+                fromName: senderName,
+                toName: receiverName,
                 fromShop: Number(shopId),
                 toShop: Number(shopCommuneId),
                 productType: type,
                 name,
                 description: description,
                 shippingFee: shippingFee,
-                weight
+                weight,
             }
             console.log(info, 'check info')
             try {
