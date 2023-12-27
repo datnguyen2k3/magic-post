@@ -32,7 +32,8 @@ public class SecurityConfig {
     http.csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(request -> request.requestMatchers(
                 new AntPathRequestMatcher("/accounts/token"),
-                new AntPathRequestMatcher("/deliveries/{deliveryId}"),
+                new AntPathRequestMatcher("/deliveries/{deliveryId}", "GET"),
+                new AntPathRequestMatcher("/deliveries/{deliveryId}/deliveryStatuses", "GET"),
                 new AntPathRequestMatcher("/swagger-ui/**"),
                 new AntPathRequestMatcher("/v3/api-docs/**"),
                 new AntPathRequestMatcher("/swagger-resources/**"),

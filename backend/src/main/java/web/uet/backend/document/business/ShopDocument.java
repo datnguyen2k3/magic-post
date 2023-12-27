@@ -27,12 +27,9 @@ public class ShopDocument {
 
   private Integer employeeNumber;
 
-  @Field(type = FieldType.Text, fielddata = true)
   private Integer comingDeliveryNumber;
 
-  @Field(type = FieldType.Text, fielddata = true)
   private Integer currentDeliveryNumber;
 
-  @Field(type = FieldType.Text, fielddata = true)
   private Integer goneDeliveryNumber;
 }

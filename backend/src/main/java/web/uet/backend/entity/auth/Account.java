@@ -5,12 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import web.uet.backend.entity.enums.Role;
 import web.uet.backend.entity.business.Shop;
+import web.uet.backend.event.AccountCreateEvent;
+import web.uet.backend.service.PublisherService;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 
@@ -53,8 +57,21 @@ public class Account {
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private Role role;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {})
     @JoinColumn(name = "work_at")
     private Shop workAt;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @CreationTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PostPersist
+    public void postPersist() {
+        PublisherService.INSTANCE.publishEvent(new AccountCreateEvent(this));
+    }
 
 }
