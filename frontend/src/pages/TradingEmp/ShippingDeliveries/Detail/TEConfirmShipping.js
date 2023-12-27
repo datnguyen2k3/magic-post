@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { beautifyId } from '../../../../service/service';
+import { Link } from 'react-router-dom';
 
 const TEConfirmShipping = () => {
 
@@ -23,6 +24,8 @@ const TEConfirmShipping = () => {
     const [delivery, setDelivery] = useState(null)
     const [history, setHistory] = useState(null)
     const [result, setResult] = useState(null)
+    const [fixedHistory, setFixedHistory] = useState(null)
+    const [isFixed, setIsFixed] = useState(false)
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL
 
@@ -51,6 +54,10 @@ const TEConfirmShipping = () => {
                 const response = await axios.get(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, config)
                 setDelivery(response.data.deliveryStatusDetailHistory[0].delivery)
                 setHistory(response.data.deliveryStatusDetailHistory)
+                if (!isFixed) {
+                    setFixedHistory(response.data.deliveryStatusDetailHistory)
+                }
+                setIsFixed(true)
                 console.log(response)
             } catch (error) {
                 console.log(error)
@@ -80,7 +87,7 @@ const TEConfirmShipping = () => {
             const response = await axios.post(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, body, config)
             if (response) {
                 toast.success('Xác nhận bắt đầu ship đến khách!')
-                navigate('/')
+                navigate('/te-shipping')
             }
         } catch (error) {
             console.log(error)
@@ -92,6 +99,7 @@ const TEConfirmShipping = () => {
     }
 
     return <>
+        <button><Link to={'/te-shipping'}>Trở về bảng thống kê đơn đang được ship</Link></button>
         {delivery ? <div className='te-detail'>
             <label>Thứ tự trạng thái:</label>
             <select onChange={handleDirectionChange}>
@@ -115,7 +123,7 @@ const TEConfirmShipping = () => {
                 ) : <>Loading...</>}
             </div>
         </div> : <></>}
-        {(history && history[history.length - 1].statusType === 'SHIPPING_TO_CUSTOMER' && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
+        {(fixedHistory && fixedHistory[fixedHistory.length - 1].statusType === 'SHIPPING_TO_CUSTOMER' && fixedHistory[fixedHistory.length - 1].shop.shopId === Number(shopId)) ? <>
             <div className=''>
                 <select onChange={handleResultChange}>
                     <option value={''}>---</option>

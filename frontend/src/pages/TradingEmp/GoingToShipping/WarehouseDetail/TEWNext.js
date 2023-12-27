@@ -6,6 +6,7 @@ import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { beautifyId } from '../../../../service/service'
+import { Link } from 'react-router-dom'
 
 const TEWNext = () => {
 
@@ -22,6 +23,8 @@ const TEWNext = () => {
     const [direction, setDirection] = useState('ASC')
     const [delivery, setDelivery] = useState(null)
     const [history, setHistory] = useState(null)
+    const [fixedHistory, setFixedHistory] = useState(null)
+    const [isFixed, setIsFixed] = useState(false)
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL
 
@@ -50,6 +53,10 @@ const TEWNext = () => {
                 const response = await axios.get(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, config)
                 setDelivery(response.data.deliveryStatusDetailHistory[0].delivery)
                 setHistory(response.data.deliveryStatusDetailHistory)
+                if (!isFixed) {
+                    setFixedHistory(response.data.deliveryStatusDetailHistory)
+                }
+                setIsFixed(true)
             } catch (error) {
                 console.log(error)
             }
@@ -202,7 +209,7 @@ const TEWNext = () => {
 
                 if (response) {
                     toast.success('Chọn điểm đến thành công!')
-                    navigate('/')
+                    navigate('/te-inshop')
                 }
             }
         } catch (error) {
@@ -215,6 +222,7 @@ const TEWNext = () => {
     }
 
     return <>
+        <button><Link to={'/te-inshop'}>Trở về bảng thống kê đơn đang ở văn phòng</Link></button>
         {delivery ? <div className='te-next'>
             <label>Thứ tự trạng thái:</label>
             <select onChange={handleDirectionChange}>
@@ -237,7 +245,7 @@ const TEWNext = () => {
                 </>) : <></>}
             </div>
         </div> : <></>}
-        {(history && history[history.length - 1].statusType === 'RECEIVED_FROM_SHOP' && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
+        {(fixedHistory && fixedHistory[fixedHistory.length - 1].statusType === 'RECEIVED_FROM_SHOP' && fixedHistory[fixedHistory.length - 1].shop.shopId === Number(shopId)) ? <>
             <div className='te-next-place'>
                 <label>Miền</label>
                 <select onChange={(e) => handleShopRegionChange(e)}>

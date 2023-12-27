@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux'
 import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { beautifyId } from '../../../../service/service'
+import { Link } from 'react-router-dom'
 
 const TENext = () => {
 
@@ -201,7 +203,7 @@ const TENext = () => {
 
                 if (response) {
                     toast.success('Chọn điểm đến thành công!')
-                    navigate('/')
+                    navigate('/te-receive')
                 }
             }
         } catch (error) {
@@ -214,6 +216,7 @@ const TENext = () => {
     }
 
     return <>
+        <button><Link to={'/te-receive'}>Trở về bảng thống kê đơn đã nhận</Link></button>
         {delivery ? <div className='te-next'>
             <label>Thứ tự trạng thái:</label>
             <select onChange={handleDirectionChange}>
@@ -222,7 +225,7 @@ const TENext = () => {
             </select>
             <div className=''>
                 <h3><b>Thông tin đơn hàng</b></h3>
-                <span><b>Id: </b>{delivery.deliveryId}</span><br></br>
+                <span><b>Id: </b>{beautifyId(delivery.deliveryId)}</span><br></br>
                 <span><b>Được gửi từ cửa hàng: </b>{delivery.fromCommune.name} <b>đến cửa hàng</b> {delivery.toCommune.name}</span><br></br>
                 <span><b>Người gửi: </b>{delivery.fromName} <b>gửi từ</b> {delivery.fromAddress}</span><br></br>
                 <span><b>Người nhận: </b>{delivery.toName} <b>nhận ở</b> {delivery.toAddress}</span><br></br>
@@ -236,7 +239,7 @@ const TENext = () => {
                 </>) : <></>}
             </div>
         </div> : <></>}
-        {(history && history[history.length - 1].statusType === 'RECEIVED_FROM_CUSTOMER' && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
+        {(history && history.length === 1 && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
             <div className='te-next-place'>
                 <label>Miền</label>
                 <select onChange={(e) => handleShopRegionChange(e)}>

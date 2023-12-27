@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { beautifyId } from '../../../../service/service';
+import { Link } from 'react-router-dom';
 
 const TEShipToCus = () => {
 
@@ -79,7 +80,7 @@ const TEShipToCus = () => {
             const response = await axios.post(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, body, config)
             if (response) {
                 toast.success('Xác nhận bắt đầu ship đến khách!')
-                navigate('/')
+                navigate('/te-inshop')
             }
         } catch (error) {
             console.log(error)
@@ -87,6 +88,7 @@ const TEShipToCus = () => {
     }
 
     return <>
+        <button><Link to={'/te-inshop'}>Trở về bảng thống kê đơn đang ở văn phòng</Link></button>
         {delivery ? <div className='te-detail'>
             <label>Thứ tự trạng thái:</label>
             <select onChange={handleDirectionChange}>

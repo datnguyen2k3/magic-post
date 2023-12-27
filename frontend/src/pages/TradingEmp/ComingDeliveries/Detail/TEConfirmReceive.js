@@ -6,6 +6,7 @@ import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { beautifyId } from '../../../../service/service'
+import { Link } from 'react-router-dom'
 
 const TEConfirmReceive = () => {
 
@@ -22,6 +23,8 @@ const TEConfirmReceive = () => {
     const [direction, setDirection] = useState('ASC')
     const [delivery, setDelivery] = useState(null)
     const [history, setHistory] = useState(null)
+    const [fixedHistory, setFixedHistory] = useState(null)
+    const [isFixed, setIsFixed] = useState(false)
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL
 
@@ -50,6 +53,10 @@ const TEConfirmReceive = () => {
                 const response = await axios.get(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, config)
                 setDelivery(response.data.deliveryStatusDetailHistory[0].delivery)
                 setHistory(response.data.deliveryStatusDetailHistory)
+                if (!isFixed) {
+                    setFixedHistory(response.data.deliveryStatusDetailHistory)
+                }
+                setIsFixed(true)
                 console.log(response)
             } catch (error) {
                 console.log(error)
@@ -79,7 +86,7 @@ const TEConfirmReceive = () => {
             const response = await axios.post(`${backendUrl}/deliveries/${deliveryId}/deliveryStatuses`, body, config)
             if (response) {
                 toast.success('Xác nhận thành công!')
-                navigate('/')
+                navigate('/te-coming')
             }
         } catch (error) {
             console.log(error)
@@ -87,6 +94,7 @@ const TEConfirmReceive = () => {
     }
 
     return <>
+        <button><Link to={'/te-coming'}>Trở về bảng thống kê đơn đang đến</Link></button>
         {delivery ? <div className='te-confirm-receive'>
             <label>Thứ tự trạng thái:</label>
             <select onChange={handleDirectionChange}>
@@ -109,7 +117,7 @@ const TEConfirmReceive = () => {
                 </>) : <></>}
             </div>
         </div> : <></>}
-        {(history && history[history.length - 1].statusType === 'COMING_TO_SHOP' && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
+        {(fixedHistory && fixedHistory[fixedHistory.length - 1].statusType === 'COMING_TO_SHOP' && fixedHistory[fixedHistory.length - 1].shop.shopId === Number(shopId)) ? <>
             <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận nhận đơn</button>
         </> : <></>}
     </>
