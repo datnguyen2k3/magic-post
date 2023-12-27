@@ -45,10 +45,6 @@ const WHDetailAccount = () => {
         fetchData()
     }, [])
 
-    const handleViewOffice = (shopId) => {
-        navigate(`/wh-detail-office?shopId=${shopId}`)
-    }
-
     return <>
         <div className='detail-account'>
             {detail ? <>
@@ -60,7 +56,6 @@ const WHDetailAccount = () => {
                 <span><b>Id Văn phòng: </b>{detail.workAt.shopId}</span><br />
                 <span><b>Địa chỉ Văn phòng: </b>{detail.workAt.commune.name} - ({detail.workAt.commune.communeId})</span><br />
                 <span><b>Số nhân viên đang quản lý: </b>{detail.employeeNumber}</span><br />
-                <button onClick={() => handleViewOffice(detail.workAt.shopId)}>Xem thông tin về văn phòng</button>
             </> : <>Loading...</>}
         </div>
     </>

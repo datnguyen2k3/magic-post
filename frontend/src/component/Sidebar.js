@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Logo from '../assets/images/logo.png';
 import './Sidebar.scss'
 import { Link, useNavigate } from 'react-router-dom';
@@ -28,10 +28,19 @@ const Sidebar = () => {
     const isLoggedIn = (useSelector(selectRole) !== '')
     const isCEO = (useSelector(selectRole) === 'CEO')
     const account = useSelector(selectAccount);
-    const isPEmp = account.role === 'EMPLOYEE' && account.workAt.type === 'POST';
+    const [shopId, setShopId] = useState()
+    const isWHead = account.role === 'WAREHOUSE_HEAD'
+    const isPHead = account.role === 'POST_HEAD'
     const isWEmp = account.role === 'EMPLOYEE' && account.workAt.type === 'WAREHOUSE';
     const isPostHead = (useSelector(selectRole) === 'POST_HEAD')
     const isWarehouseHead = (useSelector(selectRole) === 'WAREHOUSE_HEAD')
+
+    useEffect(() => {
+        if (isWHead || isPHead) {
+            setShopId(account.workAt.shopId)
+        }
+    }, [account.role])
+    const isPEmp = account.role === 'EMPLOYEE' && account.workAt.type === 'POST';
 
     const goToLogin = () => {
         navigate('/login');;
@@ -158,6 +167,8 @@ const Sidebar = () => {
                                 <div className='sidebar-account-dropdown'>
                                     <button className='sidebar-account sidebar-account-dropdown-item' style={{ fontSize: '20px' }}><b>{account.role}</b></button>
                                     <button className='sidebar-account sidebar-account-dropdown-item'><Link to={'/account'}>Tài khoản</Link></button>
+                                    {isWHead && <button className='sidebar-account sidebar-account-dropdown-item'><Link to={`/wh-detail-office?shopId=${shopId}`}>Xem thông tin văn phòng</Link></button>}
+                                    {isPHead && <button className='sidebar-account sidebar-account-dropdown-item'><Link to={`/ph-detail-office?shopId=${shopId}`}>Xem thông tin văn phòng</Link></button>}
                                     <button className='sidebar-account sidebar-account-dropdown-item' onClick={() => goToLogout()}>Đăng xuất</button>
                                 </div>
                             </button>
