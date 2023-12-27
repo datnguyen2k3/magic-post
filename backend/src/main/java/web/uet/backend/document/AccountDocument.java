@@ -8,6 +8,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import web.uet.backend.entity.enums.Role;
 import web.uet.backend.document.business.ShopDocument;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Document(indexName = "account")
@@ -38,6 +39,12 @@ public class AccountDocument {
 
   @Field(type = FieldType.Keyword)
   private Role role;
+
+//  @Field(fielddata = true)
+  private Date createdAt;
+
+//  @Field(fielddata = true)
+  private Date updatedAt;
 
   @Field(type = FieldType.Nested, includeInParent = true)
   private ShopDocument workAt;

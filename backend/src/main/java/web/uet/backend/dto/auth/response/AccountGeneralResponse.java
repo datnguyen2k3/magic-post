@@ -1,12 +1,17 @@
 package web.uet.backend.dto.auth.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import web.uet.backend.dto.business.response.ShopDetailResponse;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuperBuilder
@@ -22,4 +27,10 @@ public class AccountGeneralResponse {
   private String address;
   private String role;
   private ShopDetailResponse workAt;
+
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private Date createdAt;
+
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private Date updatedAt;
 }

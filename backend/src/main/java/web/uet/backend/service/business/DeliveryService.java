@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -203,6 +204,11 @@ public class DeliveryService {
     NativeQueryBuilder nativeQueryBuilder = NativeQuery.builder()
         .withQuery(getQueryBy(request))
         .withPageable(pageable);
+
+    if (request.getSort() != null) {
+      Sort sort = Sort.by(request.getDirection().getValue(), request.getSort().getValue());
+      nativeQueryBuilder = nativeQueryBuilder.withSort(sort);
+    }
 
     SearchHits<DeliveryDocument> searchHits = elasticsearchOperations.search(
         nativeQueryBuilder.build(),

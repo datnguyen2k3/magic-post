@@ -12,6 +12,9 @@ CREATE TABLE account (
     role user_role NOT NULL,
     work_at INT NOT NULL,
 
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
     CONSTRAINT account_pk PRIMARY KEY (account_id),
     CONSTRAINT account_shop_fk FOREIGN KEY (work_at) REFERENCES shop (shop_id)
 );

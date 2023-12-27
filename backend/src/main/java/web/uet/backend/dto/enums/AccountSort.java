@@ -8,7 +8,8 @@ public enum AccountSort {
   NAME("name"),
   EMAIL("email"),
   PHONE("phone"),
-  ADDRESS("address");
+  ADDRESS("address"),
+  CREATED_AT("createdAt");
 
   private final String value;
 
