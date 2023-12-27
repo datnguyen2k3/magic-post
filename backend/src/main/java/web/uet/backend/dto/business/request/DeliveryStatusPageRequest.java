@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import web.uet.backend.dto.enums.DeliveryStatusSort;
 import web.uet.backend.entity.enums.ProductType;
 import web.uet.backend.entity.enums.StatusType;
 import web.uet.backend.dto.enums.DeliverySort;
@@ -30,7 +31,7 @@ public class DeliveryStatusPageRequest {
   @Positive
   private Integer size = 10;
 
-  private DeliverySort sort;
+  private DeliveryStatusSort sort;
 
   private DirectionSort direction;
 

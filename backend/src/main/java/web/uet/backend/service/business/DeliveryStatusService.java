@@ -169,6 +169,11 @@ public class DeliveryStatusService {
     NativeQueryBuilder nativeQueryBuilder = NativeQuery.builder()
         .withQuery(getQueryBy(request))
         .withPageable(pageable);
+    
+    if (request.getSort() != null) {
+      Sort sort = Sort.by(request.getDirection().getValue(), request.getSort().getValue());
+      nativeQueryBuilder.withSort(sort);
+    }
 
     SearchHits<DeliveryStatusDocument> searchHits = elasticsearchOperations.search(
         nativeQueryBuilder.build(),
