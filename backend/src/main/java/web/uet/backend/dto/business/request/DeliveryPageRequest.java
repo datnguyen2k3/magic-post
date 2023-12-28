@@ -29,29 +29,29 @@ public class DeliveryPageRequest {
   private Integer page = 0;
 
   @NotNull
-  @Positive
+  @Min(1)
   private Integer size = 10;
 
   private DeliverySort sort;
 
   private DirectionSort direction;
 
-  @Positive
+  @Min(1)
   private Integer fromProvinceId;
 
-  @Positive
+  @Min(1)
   private Integer fromDistrictId;
 
-  @Positive
+  @Min(1)
   private Integer fromCommuneId;
 
-  @Positive
+  @Min(1)
   private Integer toProvinceId;
 
-  @Positive
+  @Min(1)
   private Integer toDistrictId;
 
-  @Positive
+  @Min(1)
   private Integer toCommuneId;
 
 
@@ -62,16 +62,16 @@ public class DeliveryPageRequest {
   private String fromNameContains;
   private String toNameContains;
 
-  @Positive
+  @Min(1)
   private Integer fromShopId;
 
-  @Positive
+  @Min(1)
   private Integer toShopId;
   private ProductType productType;
 
   // TODO: need to check if this is correct
   private List<StatusType> statuses;
 
-  @Positive
+  @Min(1)
   private Integer currentShopId;
 }

@@ -60,7 +60,9 @@ public class DeliveryDocument {
   @Field(type = FieldType.Text, fielddata = true)
   private String name;
 
-  private String description;
+  private String fromDescription;
+
+  private String toDescription;
 
   private BigDecimal shippingFee;
 

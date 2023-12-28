@@ -38,12 +38,12 @@ public class ShopPageRequest {
 
   private ShopType type;
 
-  @Positive
+  @Min(1)
   private Integer communeId;
 
-  @Positive
+  @Min(1)
   private Integer districtId;
 
-  @Positive
+  @Min(1)
   private Integer provinceId;
 }

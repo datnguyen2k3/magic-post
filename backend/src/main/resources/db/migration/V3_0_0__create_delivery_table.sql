@@ -26,7 +26,8 @@ CREATE TABLE delivery (
 
     product product_type NOT NULL,
     name VARCHAR(255) NOT NULL,
-    description VARCHAR(255),
+    from_description VARCHAR(1000),
+    to_description VARCHAR(1000),
     weight DECIMAL(10, 2) NOT NULL,
     shipping_fee DECIMAL(10, 2) NOT NULL,
 
