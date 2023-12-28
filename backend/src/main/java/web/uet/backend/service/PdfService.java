@@ -43,12 +43,9 @@ public class PdfService {
 
     @EventListener
     @Async("asyncExecutor")
-    @Transactional
     public void handleDeliveryCreatedEvent(DeliveryCreateEvent event) throws IOException {
         Delivery delivery = (Delivery) event.getSource();
         savePdf(delivery);
-        delivery.
-
     }
 
     public byte[] getDeliveryPdfByteBy(String deliveryPdfName) throws IOException {
