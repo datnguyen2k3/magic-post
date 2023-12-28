@@ -8,6 +8,7 @@ import { Table } from 'react-bootstrap'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+
 import { convertText } from '../../../service/service'
 
 const Accounts = () => {

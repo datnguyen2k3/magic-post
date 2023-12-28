@@ -7,6 +7,9 @@ import { Table } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { convertText } from '../../../service/service'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+
 const Offices = () => {
 
     const navigate = useNavigate()
@@ -27,12 +30,20 @@ const Offices = () => {
 
     const [communeId, setCommuneId] = useState();
 
+    const [sort, setSort] = useState('SHOP_')
+
+    const [direction, setDirection] = useState();
+
     useEffect(() => {
 
         const fetchData = async () => {
             const config = {
                 headers: { Authorization: `Bearer ${token}` },
-                params: { ...filteredData }
+                params: {
+                    ...filteredData,
+                    sort,
+                    direction
+                }
             }
             console.log('config: ', config.params)
 
@@ -48,7 +59,7 @@ const Offices = () => {
 
         fetchData();
 
-    }, [filteredData, page, type, communeId])
+    }, [filteredData, page, type, communeId, sort, direction])
 
     const prev = () => {
         setPage(Math.max(page - 1, 1))
@@ -84,19 +95,36 @@ const Offices = () => {
         }
     }
 
+    const handleSort = (field) => {
+        if (field === sort) {
+            setDirection(direction === 'ASC' ? 'DESC' : 'ASC');
+        } else {
+            setSort(field);
+            setDirection('ASC');
+        }
+    };
+
+    const renderSortIcon = (field) => {
+        if (field !== sort) {
+            return <FontAwesomeIcon icon={faSort} />;
+        }
+        return direction === 'ASC' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />;
+    };
+
     return <>
         <div className='offices'>
             <h2>Quản lý các văn phòng</h2>
             <Table>
                 <thead>
                     <tr>
-                        <th>ID Văn phòng</th>
-                        <th>Địa chỉ (ID)</th>
+                        <th className='accounts-sort' onClick={() => handleSort('EMPLOYEE_NUMBER')}>ID Văn phòng {renderSortIcon('EMPLOYEE_NUMBER')}</th>
+                        <th className='accounts-sort' onClick={() => handleSort('COMING_DELIVERY_NUMBER')}>Địa chỉ (ID) {renderSortIcon('COMING_DELIVERY_NUMBER')}</th>
                         <th>Loại văn phòng</th>
-                        <th>Số nhân viên</th>
-                        <th>Số đơn đến văn phòng</th>
-                        <th>Số đơn đang ở văn phòng</th>
-                        <th>Số đơn đã đi từ văn phòng</th>
+                        <th className='accounts-sort' onClick={() => handleSort('EMPLOYEE_NUMBER')}>Số nhân viên {renderSortIcon('CURRENT_DELIVERY_NUMBER')}</th>
+                        <th className='accounts-sort' onClick={() => handleSort('COMING_DELIVERY_NUMBER')}>Số đơn đang đến {renderSortIcon('COMING_DELIVERY_NUMBER')}</th>
+                        <th className='accounts-sort' onClick={() => handleSort('CURRENT_DELIVERY_NUMBER')}>Số đơn nhập kho {renderSortIcon('CURRENT_DELIVERY_NUMBER')}</th>
+                        <th className='accounts-sort' onClick={() => handleSort('GONE_DELIVERY_NUMBER')}>Số đơn xuất kho {renderSortIcon('GONE_DELIVERY_NUMBER')}</th>
+
                     </tr>
                     <tr>
                         <th></th>
