@@ -1,6 +1,9 @@
 package web.uet.backend.service;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -11,6 +14,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import web.uet.backend.entity.business.Delivery;
 import web.uet.backend.event.DeliveryCreateEvent;
+import web.uet.backend.exception.type.NotFoundException;
+import web.uet.backend.repository.business.jpa.DeliveryRepository;
 
 import java.awt.*;
 import java.io.File;
@@ -18,28 +23,40 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import static java.lang.Character.toUpperCase;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class PdfService {
 
     public static File INVOICE;
     public static String DELIVERY_PDF_SOURCE_PATH = "src/main/resources/deliveries/pdfs/";
+    private final DeliveryRepository deliveryRepository;
 
     @PostConstruct
-    public void setInvoiceFile() throws IOException {
+    public void loadSourceFile() throws IOException {
         PdfService.INVOICE = new File(DELIVERY_PDF_SOURCE_PATH + "invoice.pdf");
     }
 
     @EventListener
-    @Async
+    @Async("asyncExecutor")
+    @Transactional
     public void handleDeliveryCreatedEvent(DeliveryCreateEvent event) throws IOException {
         Delivery delivery = (Delivery) event.getSource();
         savePdf(delivery);
+        delivery.
+
     }
 
     public byte[] getDeliveryPdfByteBy(String deliveryPdfName) throws IOException {
+        UUID deliveryId = UUID.fromString(deliveryPdfName.substring(9, 45));
+        if (!deliveryRepository.existsById(deliveryId)) {
+            throw new NotFoundException("Delivery not found");
+        }
+
         Path path = Paths.get(DELIVERY_PDF_SOURCE_PATH + deliveryPdfName);
         return Files.readAllBytes(path);
     }
@@ -84,16 +101,15 @@ public class PdfService {
         PDDocument document = PDDocument.load(INVOICE);
         PDPage page = document.getPage(0);
 
-        PdfService pc = new PdfService();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < deliveryId.length(); i++) {
             if (deliveryId.charAt(i) != '-') {
                 sb.append(toUpperCase(deliveryId.charAt(i)));
             }
         }
-        pc.addText(document, page,sb.toString(), 500, 498, 12);
-        pc.addText(document, page,senderName, 185, 452, 12);
-        pc.addText(document, page,receiverName, 560, 452, 12);
+        addText(document, page,sb.toString(), 500, 498, 12);
+        addText(document, page,senderName, 185, 452, 12);
+        addText(document, page,receiverName, 560, 452, 12);
 
         int maxLength = 42;
         if (senderLocation.length() > maxLength) {
@@ -104,10 +120,10 @@ public class PdfService {
 
             String firstPart = senderLocation.substring(0, breakPoint);
             String secondPart = senderLocation.substring(breakPoint).trim();
-            pc.addText(document, page, firstPart, 95, 435, 10);
-            pc.addText(document, page, secondPart, 95, 423, 10);
+            addText(document, page, firstPart, 95, 435, 10);
+            addText(document, page, secondPart, 95, 423, 10);
         } else {
-            pc.addText(document, page, senderLocation, 95, 435, 12);
+            addText(document, page, senderLocation, 95, 435, 12);
         }
 
         if (receiverLocation.length() > maxLength) {
@@ -118,26 +134,26 @@ public class PdfService {
 
             String firstPart = receiverLocation.substring(0, breakPoint);
             String secondPart = receiverLocation.substring(breakPoint).trim();
-            pc.addText(document, page, firstPart, 455, 435, 10);
-            pc.addText(document, page, secondPart, 455, 423, 10);
+            addText(document, page, firstPart, 455, 435, 10);
+            addText(document, page, secondPart, 455, 423, 10);
         } else {
-            pc.addText(document, page, receiverLocation, 455, 435, 12);
+            addText(document, page, receiverLocation, 455, 435, 12);
         }
 
-        pc.addText(document, page,senderPhone, 75, 405, 12);
-        pc.addText(document, page,receiverPhone, 435, 405, 12);
+        addText(document, page,senderPhone, 75, 405, 12);
+        addText(document, page,receiverPhone, 435, 405, 12);
         if (type.equals("DOCUMENT")) {
-            pc.addText(document, page,"x", 117, 370, 15);
+            addText(document, page,"x", 117, 370, 15);
         }
         else {
-            pc.addText(document, page,"x", 207, 370, 15);
+            addText(document, page,"x", 207, 370, 15);
         }
-        pc.addText(document, page,name, 105, 330, 12);
-        pc.addText(document, page,senderNote, 180, 317, 12);
-        pc.addText(document, page,note, 510, 379, 12);
-        pc.addText(document, page,weight, 510, 295, 12);
-        pc.addText(document, page,cost + " đ", 535, 267, 20);
-        pc.addText(document, page,shop, 530, 230, 12);
+        addText(document, page,name, 105, 330, 12);
+        addText(document, page,senderNote, 180, 317, 12);
+        addText(document, page,note, 510, 379, 12);
+        addText(document, page,weight, 510, 295, 12);
+        addText(document, page,cost + " đ", 535, 267, 20);
+        addText(document, page,shop, 530, 230, 12);
         StringBuilder sb2 = new StringBuilder();
         for (int i = 0; i < sendDate.length(); i++) {
             if (sendDate.charAt(i) != 'T') {
@@ -149,13 +165,13 @@ public class PdfService {
                 sb2.append(" ");
             }
         }
-        pc.addText(document, page,sb2.toString(), 38, 132, 12);
-        pc.addText(document, page,receiveDate, 582, 218, 12);
+        addText(document, page,sb2.toString(), 38, 132, 12);
+        addText(document, page,receiveDate, 582, 218, 12);
         document.save(DELIVERY_PDF_SOURCE_PATH + "delivery_"+ deliveryId +".pdf");
         document.close();
     }
 
-    private void addText(PDDocument document, PDPage page, String value, int pos_x, int pos_y, int fontSize) throws IOException {
+    private static void addText(PDDocument document, PDPage page, String value, int pos_x, int pos_y, int fontSize) throws IOException {
         File fontFile = new File(DELIVERY_PDF_SOURCE_PATH + "bvp.ttf");
         PDType0Font customFont = PDType0Font.load(document, fontFile);
         PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
