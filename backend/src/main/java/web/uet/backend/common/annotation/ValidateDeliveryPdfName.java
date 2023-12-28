@@ -1,8 +1,8 @@
-package web.uet.backend.controller.annotation;
+package web.uet.backend.common.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import web.uet.backend.controller.annotation.impl.DeliveryPdfNameValidator;
+import web.uet.backend.common.annotation.impl.DeliveryPdfNameValidator;
 
 import java.lang.annotation.*;
 
