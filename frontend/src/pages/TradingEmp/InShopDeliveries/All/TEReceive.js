@@ -2,10 +2,11 @@ import './TEReceive.scss'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Table } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { Link } from 'react-router-dom'
 import { convertText } from '../../../../service/service'
+import { updateDeliveryId } from '../../../../app/urlSlice'
 
 const TEReceive = () => {
 
@@ -108,6 +109,12 @@ const TEReceive = () => {
         setPage(page + 1)
     }
 
+    const dispatch = useDispatch()
+
+    const handleViewDetail = (deliveryId) => {
+        dispatch(updateDeliveryId({ deliveryId }))
+    }
+
     return <>
         <div className='te-receive'>
             <Table>
@@ -152,7 +159,7 @@ const TEReceive = () => {
                             <td>{del.toName}</td>
                             <td>{del.toAddress}</td>
                             <td>{del.toShop.commune.name} ({del.toShop.commune.communeId})</td>
-                            <td><Link to={`/management/te-next?deliveryId=${del.deliveryId}`}>Chọn</Link></td>
+                            <td><button onClick={() => handleViewDetail(del.deliveryId)}><Link to={`/management/te-next`}>Chọn</Link></button></td>
                         </tr>
                     )) : <></>}
                 </tbody>

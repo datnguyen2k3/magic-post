@@ -1,11 +1,12 @@
 import './PHAccounts.scss'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectToken, selectAccount } from '../../../app/authSlice'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 import { convertText } from '../../../service/service'
+import { updateRole, updateUsername } from '../../../app/urlSlice'
 
 const PHAccounts = () => {
 
@@ -83,8 +84,12 @@ const PHAccounts = () => {
         }
     };
 
+    const dispatch = useDispatch()
+
     const handleViewDetail = (username, role) => {
-        navigate(`/management/ph-detail-account?username=${username}&role=${role}`)
+        navigate(`/management/ph-detail-account`)
+        dispatch(updateUsername({ username }))
+        dispatch(updateRole({ role }))
     }
 
     const handleInputChange = (e) => {

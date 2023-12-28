@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { isValidEmail, isValidName, isValidPhoneNumber } from '../../../../logic/verification'
 import { toast } from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectToken, selectAccount } from '../../../../app/authSlice'
 import { useNavigate } from 'react-router-dom'
+import { updateDeliveryId } from '../../../../app/urlSlice'
 
 const TECreateShipment = () => {
 
@@ -348,6 +349,7 @@ const TECreateShipment = () => {
         }
     };
 
+    const dispatch = useDispatch()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -405,8 +407,9 @@ const TECreateShipment = () => {
                 };
                 const response = await axios.post(`${backendUrl}/deliveries`, info, config);
 
-                const id = response.data.deliveryId;
-                navigate(`/management/te-detail?deliveryId=${id}`)
+                const deliveryId = response.data.deliveryId;
+                navigate(`/management/te-detail`)
+                dispatch(updateDeliveryId({ deliveryId }))
             } catch (error) {
                 console.error('Lỗi khi gửi thông tin đơn hàng:', error);
             }

@@ -4,12 +4,12 @@ import axios from 'axios';
 import { Table } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { beautifyId, convertText } from '../../../service/service';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectDeliveryId, updateShopId } from '../../../app/urlSlice';
 
 const DeliveryDetail = () => {
 
-    const params = new URLSearchParams(window.location.search);
-
-    const deliveryId = params.get('deliveryId')
+    const deliveryId = useSelector(selectDeliveryId)
 
     const [delivery, setDelivery] = useState()
 
@@ -29,8 +29,13 @@ const DeliveryDetail = () => {
             setDelivery(response.data)
         }
         fetchData()
-        console.log('ok')
     }, [])
+
+    const dispatch = useDispatch()
+
+    const handleViewShop = (shopId) => {
+        dispatch(updateShopId({ shopId }))
+    }
 
     return <>
         <div className='delivery-detail'>
@@ -68,7 +73,7 @@ const DeliveryDetail = () => {
                             <td>{delivery.fromName}</td>
                             <td>{delivery.fromPhone}</td>
                             <td>{delivery.fromAddress}</td>
-                            <td><Link to={`/management/detail-office?shopId=${delivery.fromShop.shopId}`}>{delivery.fromShop.commune.name}({delivery.fromShop.shopId})</Link></td>
+                            <td><button onClick={() => handleViewShop(delivery.fromShop.shopId)}><Link to={`/management/detail-office`}>{delivery.fromShop.commune.name}({delivery.fromShop.shopId})</Link></button></td>
                         </tr>
                     </tbody>
                     <b>Thông tin phía nhận:</b>
@@ -85,7 +90,7 @@ const DeliveryDetail = () => {
                             <td>{delivery.toName}</td>
                             <td>{delivery.toPhone}</td>
                             <td>{delivery.toAddress}</td>
-                            <td><Link to={`management//detail-office?shopId=${delivery.toShop.shopId}`}>{delivery.toShop.commune.name}({delivery.toShop.shopId})</Link></td>
+                            <td><button onClick={() => handleViewShop(delivery.toShop.shopId)}><Link to={`/management/detail-office`}>{delivery.toShop.commune.name}({delivery.toShop.shopId})</Link></button></td>
                         </tr>
                     </tbody>
                     <b>Trạng thái đơn hàng</b>
@@ -98,7 +103,7 @@ const DeliveryDetail = () => {
                     <tbody>
                         <tr>
                             <td>{convertText(delivery.currentStatus)}</td>
-                            <td><Link to={`/management/detail-office?shopId=${delivery.currentShop.shopId}`}>{delivery.currentShop.commune.name}({delivery.currentShop.shopId})</Link></td>
+                            <td><button onClick={() => handleViewShop(delivery.currentShop.shopId)}><Link to={`/management/detail-office`}>{delivery.currentShop.commune.name}({delivery.currentShop.shopId})</Link></button></td>
                             <td>{delivery.createdAt}</td>
                             <td>{delivery.updatedAt}</td>
                         </tr>

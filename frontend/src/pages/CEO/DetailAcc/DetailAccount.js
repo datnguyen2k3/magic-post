@@ -1,17 +1,20 @@
 import './DetailAccount.scss'
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectToken } from '../../../app/authSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { convertText } from '../../../service/service';
+import { deleteAll, selectRole, selectUsername, updateRole, updateShopId, updateUsername } from '../../../app/urlSlice';
 
 const DetailAccount = () => {
 
-    const paramsWeb = new URLSearchParams(window.location.search)
+    console.log('ok')
 
-    const username = paramsWeb.get("username");
-    const role = paramsWeb.get("role");
+    const username = useSelector(selectUsername);
+    const role = useSelector(selectRole);
+
+    const dispatch = useDispatch()
 
     const [detail, setDetail] = useState(null)
 
@@ -23,6 +26,7 @@ const DetailAccount = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log(username, 'u')
             const config = {
                 headers: { Authorization: `Bearer ${token}` },
                 params: {
@@ -30,6 +34,7 @@ const DetailAccount = () => {
                     roles: role
                 }
             }
+
 
             try {
                 const response = await axios.get(`${backendUrl}/accounts`, config)
@@ -44,11 +49,14 @@ const DetailAccount = () => {
     }, [])
 
     const handleViewOffice = (shopId) => {
-        navigate(`/management/detail-office?shopId=${shopId}`)
+        navigate(`/management/detail-office`)
+        dispatch(updateShopId({ shopId }))
     }
 
     const handleModifyAccount = (username, role) => {
-        navigate(`/management/modify-account?username=${username}&role=${role}`)
+        navigate(`/management/modify-account`)
+        dispatch(updateUsername({ username }))
+        dispatch(updateRole({ role }))
     }
 
     return <>
@@ -63,7 +71,6 @@ const DetailAccount = () => {
                 <span><b>Id Văn phòng: </b>{detail.workAt.shopId}</span><br />
                 <span><b>Địa chỉ Văn phòng: </b>{detail.workAt.commune.name} - ({detail.workAt.commune.communeId})</span><br />
                 <span><b>Số nhân viên đang quản lý: </b>{detail.employeeNumber}</span><br />
-                <button onClick={() => handleViewOffice(detail.workAt.shopId)}>Xem thông tin về văn phòng của trưởng điểm này</button>
                 <button onClick={() => handleModifyAccount(detail.username, detail.role)}>Sửa thông tin của trưởng điểm này</button>
             </> : <>Loading...</>}
         </div>

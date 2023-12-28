@@ -8,23 +8,12 @@ import toast from 'react-hot-toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { selectIsGuest, trueGuest } from '../app/guestSlice';
+import { updateDeliveryId, updateShopId } from '../app/urlSlice';
 
 const Sidebar = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const [code, setCode] = useState('')
-
-    const handleView = (e) => {
-        if (e.keyCode === 13) {
-            navigate(`/management/detail?deliveryId=${code}`)
-        }
-    }
-
-    const handleInputChange = (e) => {
-        setCode(e.target.value)
-    }
 
     const isLoggedIn = (useSelector(selectRole) !== '')
     const isCEO = (useSelector(selectRole) === 'CEO')
@@ -35,6 +24,10 @@ const Sidebar = () => {
     const isWEmp = account.role === 'EMPLOYEE' && account.workAt.type === 'WAREHOUSE';
     const isPostHead = (useSelector(selectRole) === 'POST_HEAD')
     const isWarehouseHead = (useSelector(selectRole) === 'WAREHOUSE_HEAD')
+
+    const handleViewOffice = () => {
+        dispatch(updateShopId({ shopId }))
+    }
 
     useEffect(() => {
         if (isWHead || isPHead) {
@@ -64,8 +57,6 @@ const Sidebar = () => {
             <div className='sidebar-box'>
                 <div className='sidebar-1'>
                     <img className='sidebar-logo' src={Logo}></img>
-                    <input className='sidebar-search' type='text' placeholder='Search by code' onKeyDown={(e) => handleView(e)}
-                        onChange={(e) => handleInputChange(e)}></input>
                     <Link to={'/management/'}>
                         <button className='sidebar-statistics sidebar-bottom'>
                             Trang chủ
@@ -190,8 +181,8 @@ const Sidebar = () => {
                                 <div className='sidebar-account-dropdown'>
                                     <button className='sidebar-account sidebar-account-dropdown-item' style={{ fontSize: '20px' }}><b>{account.role}</b></button>
                                     <button className='sidebar-account sidebar-account-dropdown-item'><Link to={'/management/account'}>Tài khoản</Link></button>
-                                    {isWHead && <button className='sidebar-account sidebar-account-dropdown-item'><Link to={`/management/wh-detail-office?shopId=${shopId}`}>Xem thông tin văn phòng</Link></button>}
-                                    {isPHead && <button className='sidebar-account sidebar-account-dropdown-item'><Link to={`/management/ph-detail-office?shopId=${shopId}`}>Xem thông tin văn phòng</Link></button>}
+                                    {isWHead && <button className='sidebar-account sidebar-account-dropdown-item' onClick={handleViewOffice}><Link to={`/management/wh-detail-office`}>Xem thông tin văn phòng</Link></button>}
+                                    {isPHead && <button className='sidebar-account sidebar-account-dropdown-item' onClick={handleViewOffice}><Link to={`/management/ph-detail-office`}>Xem thông tin văn phòng</Link></button>}
                                     <button className='sidebar-account sidebar-account-dropdown-item' onClick={() => goToLogout()}>Đăng xuất</button>
                                 </div>
                             </button>

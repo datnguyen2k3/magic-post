@@ -1,19 +1,18 @@
 import './PHDetailAccount.scss'
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectToken, selectAccount } from '../../../app/authSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { convertText } from '../../../service/service';
+import { selectRole, selectUsername, updateRole, updateShopId, updateUsername } from '../../../app/urlSlice';
 
 const PHDetailAccount = () => {
 
-    const paramsWeb = new URLSearchParams(window.location.search)
-
     const shopId = useSelector(selectAccount).workAt.shopId;
 
-    const username = paramsWeb.get("username");
-    const role = paramsWeb.get("role");
+    const username = useSelector(selectUsername);
+    const role = useSelector(selectRole);
 
     const [detail, setDetail] = useState(null)
 
@@ -46,12 +45,17 @@ const PHDetailAccount = () => {
         fetchData()
     }, [])
 
+    const dispatch = useDispatch()
+
     const handleViewOffice = (shopId) => {
-        navigate(`/management/ph-detail-office?shopId=${shopId}`)
+        navigate(`/management/ph-detail-office`)
+        dispatch(updateShopId({ shopId }))
     }
 
     const handleModifyAccount = (username, role) => {
-        navigate(`/management/ph-modify-account?username=${username}&role=${role}`)
+        navigate(`/management/ph-modify-account`)
+        dispatch(updateUsername({ username }))
+        dispatch(updateRole(role))
     }
 
     return <>
@@ -65,7 +69,6 @@ const PHDetailAccount = () => {
                 <span><b>Id Văn phòng: </b>{detail.workAt.shopId}</span><br />
                 <span><b>Địa chỉ Văn phòng: </b>{detail.workAt.commune.name} - ({detail.workAt.commune.communeId})</span><br />
                 <span><b>Số nhân viên đang quản lý: </b>{detail.employeeNumber}</span><br />
-                <button onClick={() => handleViewOffice(detail.workAt.shopId)}>Xem thông tin về văn phòng</button>
                 <button onClick={() => handleModifyAccount(detail.username, detail.role)}>Sửa thông tin của nhân viên này</button>
             </> : <>Loading...</>}
         </div>

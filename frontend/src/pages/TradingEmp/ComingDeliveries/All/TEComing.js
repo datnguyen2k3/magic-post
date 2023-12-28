@@ -2,9 +2,10 @@ import './TEComing.scss'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Table } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { Link } from 'react-router-dom'
+import { updateDeliveryId } from '../../../../app/urlSlice'
 
 const TEComing = () => {
 
@@ -106,6 +107,12 @@ const TEComing = () => {
         setPage(page + 1)
     }
 
+    const dispatch = useDispatch();
+
+    const handleViewDetail = (deliveryId) => {
+        dispatch(updateDeliveryId({ deliveryId }))
+    }
+
     return <>
         <div className='te-receive'>
             <Table>
@@ -150,7 +157,7 @@ const TEComing = () => {
                             <td>{del.toName}</td>
                             <td>{del.toAddress}</td>
                             <td>{del.toShop.commune.name} ({del.toShop.commune.communeId})</td>
-                            <td><Link to={`/management/te-confirm-receive?deliveryId=${del.deliveryId}`}>Chọn</Link></td>
+                            <td><button onClick={() => handleViewDetail(del.deliveryId)}><Link to={`/management/te-confirm-receive`}>Chọn</Link></button></td>
                         </tr>
                     )) : <></>}
                 </tbody>

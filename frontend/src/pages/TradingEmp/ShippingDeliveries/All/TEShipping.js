@@ -2,13 +2,14 @@ import './TEShipping.scss'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Table } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { Link } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
 import { convertText } from '../../../../service/service'
+import { updateDeliveryId } from '../../../../app/urlSlice'
 
 const TEShipping = () => {
 
@@ -123,6 +124,12 @@ const TEShipping = () => {
         setDirection(direction);
     };
 
+    const dispatch = useDispatch()
+
+    const handleViewDetail = (deliveryId) => {
+        dispatch(updateDeliveryId({ deliveryId }))
+    }
+
     return <>
         <div className='te-shipping'>
             <Table>
@@ -169,7 +176,7 @@ const TEShipping = () => {
                             <td>{del.delivery.toName}</td>
                             <td>{del.delivery.toAddress}</td>
                             <td>{del.delivery.toShop.commune.name} ({del.delivery.toShop.commune.communeId})</td>
-                            <td><Link to={`/management/te-confirm-shipping?deliveryId=${del.delivery.deliveryId}`}>Chọn</Link></td>
+                            <td><button onClick={() => handleViewDetail(del.delivery.deliveryId)}><Link to={`/management/te-confirm-shipping`}>Chọn</Link></button></td>
                         </tr>
                     )) : <></>}
                 </tbody>

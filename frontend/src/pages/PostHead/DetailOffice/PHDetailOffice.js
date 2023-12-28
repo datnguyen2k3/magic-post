@@ -1,15 +1,16 @@
 import './PHDetailOffice.scss'
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectToken } from '../../../app/authSlice';
 import axios from 'axios';
 import { convertText } from '../../../service/service';
+import { deleteAll, selectShopId } from '../../../app/urlSlice';
 
 const PHDetailOffice = () => {
 
-    const paramsWeb = new URLSearchParams(window.location.search)
+    const shopId = useSelector(selectShopId);
 
-    const shopId = paramsWeb.get("shopId");
+    const dispatch = useDispatch();
 
     const [detail, setDetail] = useState(null)
 

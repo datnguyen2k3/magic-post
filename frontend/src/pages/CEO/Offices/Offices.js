@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './Offices.scss'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectToken, selectAccount } from '../../../app/authSlice'
 import axios from 'axios'
 import { Table } from 'react-bootstrap'
@@ -9,6 +9,7 @@ import { convertText } from '../../../service/service'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import { updateShopId } from '../../../app/urlSlice'
 
 const Offices = () => {
 
@@ -30,7 +31,7 @@ const Offices = () => {
 
     const [communeId, setCommuneId] = useState();
 
-    const [sort, setSort] = useState('SHOP_')
+    const [sort, setSort] = useState()
 
     const [direction, setDirection] = useState();
 
@@ -78,8 +79,11 @@ const Offices = () => {
         })
     }, [page, type, communeId])
 
-    const handleViewDetail = (id) => {
-        navigate(`/management/detail-office?shopId=${id}`)
+    const dispatch = useDispatch()
+
+    const handleViewDetail = (deliveryId) => {
+        navigate(`/management/detail-office`)
+        dispatch(updateShopId({ deliveryId }))
     }
 
     const handleInputChange = (e) => {

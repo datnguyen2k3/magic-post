@@ -5,6 +5,8 @@ import { selectToken } from '../../../app/authSlice'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
+import { selectUsername, selectRole, updateUsername, updateRole } from '../../../app/urlSlice'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
@@ -134,8 +136,13 @@ const Accounts = () => {
         return direction === 'ASC' ? <FontAwesomeIcon icon={faSortUp} /> : <FontAwesomeIcon icon={faSortDown} />;
     };
 
+    const dispatch = useDispatch()
+
     const handleViewDetail = (username, role) => {
-        navigate(`/management/detail-account?username=${username}&role=${role}`)
+        console.log(username, 'uu')
+        dispatch(updateUsername({ username }))
+        dispatch(updateRole({ role }))
+        navigate(`/management/detail-account`)
     }
 
     return <>

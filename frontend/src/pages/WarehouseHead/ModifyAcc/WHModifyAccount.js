@@ -1,20 +1,19 @@
 import './WHModifyAccount.scss'
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectToken, selectAccount } from '../../../app/authSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { convertText } from '../../../service/service';
+import { selectRole, selectUsername, updateRole, updateUsername } from '../../../app/urlSlice';
 
 const WHModifyAccount = () => {
 
-    const paramsWeb = new URLSearchParams(window.location.search)
-
     const shopId = useSelector(selectAccount).workAt.shopId;
 
-    const username = paramsWeb.get("username");
-    const role = paramsWeb.get("role");
+    const username = useSelector(selectUsername);
+    const role = useSelector(selectRole);
 
     const [detail, setDetail] = useState(null)
 
@@ -176,6 +175,8 @@ const WHModifyAccount = () => {
         fetchData();
     }, [dCode]);
 
+    const dispatch = useDispatch()
+
     const handleSubmit = (e) => {
         e.preventDefault()
         const fetchData = async () => {
@@ -204,7 +205,9 @@ const WHModifyAccount = () => {
                 const response = await axios.patch(`${backendUrl}/accounts/profile`, body, config)
                 toast.success('Sửa đổi thành công!')
                 console.log(response)
-                navigate(`/management/ph-detail-account?username=${username}&role=${role}`)
+                navigate(`/management/ph-detail-account`)
+                dispatch(updateUsername({ username }))
+                dispatch(updateRole({ role }))
             } catch (error) {
                 console.log(error)
             }
@@ -214,7 +217,9 @@ const WHModifyAccount = () => {
 
     const handleCancel = (e) => {
         e.preventDefault()
-        navigate(`/management/ph-detail-account?username=${username}&role=${role}`)
+        navigate(`/management/ph-detail-account`)
+        dispatch(updateUsername({ username }))
+        dispatch(updateRole({ role }))
     }
 
     return <>

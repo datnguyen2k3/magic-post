@@ -2,10 +2,11 @@ import './TEInShop.scss'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Table } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { Link } from 'react-router-dom'
 import { convertText } from '../../../../service/service'
+import { updateDeliveryId } from '../../../../app/urlSlice'
 
 const TEInShop = () => {
 
@@ -109,6 +110,12 @@ const TEInShop = () => {
         setPage(page + 1)
     }
 
+    const dispatch = useDispatch()
+
+    const handleViewDetail = (deliveryId) => {
+        dispatch(updateDeliveryId({ deliveryId }))
+    }
+
     return <>
         <div className='te-receive'>
             <Table>
@@ -153,8 +160,8 @@ const TEInShop = () => {
                             <td>{del.delivery.toName}</td>
                             <td>{del.delivery.toAddress}</td>
                             <td>{del.delivery.toShop.commune.name} ({del.delivery.toShop.commune.communeId})</td>
-                            <td>{role === 'POST' ? <Link to={`/management/te-shiptocus?deliveryId=${del.delivery.deliveryId}`}>Chọn</Link> :
-                                <Link to={`/management/te-w-next?deliveryId=${del.delivery.deliveryId}`}>Chọn</Link>} </td>
+                            <td>{role === 'POST' ? <button onClick={() => handleViewDetail(del.delivery.deliveryId)}><Link to={`/management/te-shiptocus`}>Chọn</Link></button> :
+                                <button onClick={() => handleViewDetail(del.delivery.deliveryId)}><Link to={`/management/te-w-next`}>Chọn</Link></button>} </td>
                         </tr>
                     )) : <></>}
                 </tbody>

@@ -1,11 +1,12 @@
 import './WHAccounts.scss'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectToken, selectAccount } from '../../../app/authSlice'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 import { convertText } from '../../../service/service'
+import { updateRole, updateUsername } from '../../../app/urlSlice'
 
 const WHAccounts = () => {
 
@@ -84,8 +85,12 @@ const WHAccounts = () => {
         }
     };
 
+    const dispatch = useDispatch()
+
     const handleViewDetail = (username, role) => {
-        navigate(`/management/wh-detail-account?username=${username}&role=${role}`)
+        navigate(`/management/wh-detail-account`)
+        dispatch(updateUsername({ username }))
+        dispatch(updateRole(role))
     }
 
     const handleInputChange = (e) => {

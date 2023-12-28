@@ -1,11 +1,12 @@
 import './PHDeliveries.scss'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectToken, selectAccount } from '../../../app/authSlice'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 import { convertText } from '../../../service/service'
+import { updateDeliveryId } from '../../../app/urlSlice'
 
 const PHDeliveries = () => {
 
@@ -133,8 +134,11 @@ const PHDeliveries = () => {
 
     }, [statuses, currentShopId, productType, fromAddress, fromPhone, fromName, fromShopId, toAddress, toPhone, toName, toShopId])
 
-    const handleViewDetail = (id) => {
-        navigate(`/management/detail?deliveryId=${id}`)
+    const dispatch = useDispatch()
+
+    const handleViewDetail = (deliveryId) => {
+        navigate(`/management/detail`)
+        dispatch(updateDeliveryId({ deliveryId }))
     }
 
     return <>

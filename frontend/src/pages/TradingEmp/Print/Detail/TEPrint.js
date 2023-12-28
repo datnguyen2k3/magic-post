@@ -4,14 +4,13 @@ import { useSelector } from 'react-redux';
 import { selectToken } from '../../../../app/authSlice';
 import axios from 'axios';
 import { beautifyId } from '../../../../service/service';
+import { selectDeliveryId } from '../../../../app/urlSlice';
 
 const TEPrint = () => {
 
     const token = useSelector(selectToken)
 
-    const params = new URLSearchParams(window.location.search);
-
-    const deliveryId = params.get('deliveryId')
+    const deliveryId = useSelector(selectDeliveryId)
 
     const [direction, setDirection] = useState('ASC')
     const [delivery, setDelivery] = useState(null)

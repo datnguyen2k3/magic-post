@@ -5,13 +5,12 @@ import { selectToken, selectAccount } from '../../../app/authSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { convertText } from '../../../service/service';
+import { selectRole, selectUsername } from '../../../app/urlSlice';
 
 const WHDetailAccount = () => {
 
-    const paramsWeb = new URLSearchParams(window.location.search)
-
-    const username = paramsWeb.get("username");
-    const role = paramsWeb.get("role");
+    const username = useSelector(selectUsername);
+    const role = useSelector(selectRole);
 
     const shopId = useSelector(selectAccount).workAt.shopId;
 

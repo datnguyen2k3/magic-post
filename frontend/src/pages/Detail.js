@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
 import { beautifyId, convertText } from '../service/service';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteAll, selectDeliveryId } from '../app/urlSlice';
 
 const Detail = () => {
 
-    const params = new URLSearchParams(window.location.search);
+    const dispatch = useDispatch();
 
-    const deliveryId = params.get('deliveryId')
+    const deliveryId = useSelector(selectDeliveryId)
 
     const [delivery, setDelivery] = useState()
 
@@ -22,8 +24,12 @@ const Detail = () => {
                 }
             }
 
-            const response = await axios.get(`${backendUrl}/deliveries/${deliveryId}`, config);
-            setDelivery(response.data)
+            try {
+                const response = await axios.get(`${backendUrl}/deliveries/${deliveryId}`, config);
+                setDelivery(response.data)
+            } catch (error) {
+                console.log(error)
+            }
         }
         fetchData()
     }, [])
@@ -100,7 +106,7 @@ const Detail = () => {
                         </tr>
                     </tbody>
                 </Table>
-            </> : <></>}
+            </> : <>Đơn hàng không tồn tại hoặc chưa được tải thông tin xong</>}
         </div>
     </>
 }
