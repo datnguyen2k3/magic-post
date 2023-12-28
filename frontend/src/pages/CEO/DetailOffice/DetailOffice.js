@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectToken } from '../../../app/authSlice';
 import axios from 'axios';
-import { beautifyId } from '../../../service/service';
+import { beautifyId, convertText } from '../../../service/service';
 import { Link } from 'react-router-dom';
 
 const DetailOffice = () => {
@@ -72,7 +72,7 @@ const DetailOffice = () => {
                 <span><b>Shop Id: </b>{detail.shopId}</span><br></br>
                 <span><b>Địa chỉ: </b>{detail.commune.name} ({detail.commune.communeId})</span><br></br>
                 <span><b>Số nhân viên: </b>{detail.employeeNumber}</span><br></br>
-                <span><b>Loại văn phòng: </b>{detail.type}</span><br></br>
+                <span><b>Loại văn phòng: </b>{convertText(detail.type)}</span><br></br>
                 <span><b>Số đơn đang tới văn phòng: </b>{detail.comingDeliveryNumber}</span><br></br>
                 <span><b>Số đơn đang ở văn phòng: </b>{detail.currentDeliveryNumber}</span><br></br>
                 <span><b>Số đơn đã đi khỏi văn phòng: </b>{detail.goneDeliveryNumber}</span><br></br>

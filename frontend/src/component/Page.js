@@ -67,7 +67,7 @@ const Page = () => {
                 const currentTime = new Date();
                 if (expiredTime < currentTime) {
                     dispatch(logout({}))
-                    navigate('/managment/login')
+                    navigate('/management/login')
                     toast.success('Hết thời hạn đăng nhập, mời bạn đăng nhập lại')
                 }
             }, 10000);

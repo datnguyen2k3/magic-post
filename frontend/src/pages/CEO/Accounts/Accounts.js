@@ -8,6 +8,7 @@ import { Table } from 'react-bootstrap'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import { convertText } from '../../../service/service'
 
 const Accounts = () => {
 
@@ -17,7 +18,7 @@ const Accounts = () => {
 
     const [accounts, setAccounts] = useState()
 
-    const [roles, setRoles] = useState(['POST_HEAD', 'WAREHOUSE_HEAD'])
+    const [roles, setRoles] = useState('POST_HEAD, WAREHOUSE_HEAD')
 
     const [filteredData, setFilteredData] = useState({})
 
@@ -36,7 +37,6 @@ const Accounts = () => {
                 headers: { Authorization: `Bearer ${token}` },
                 params: {
                     ...filteredData,
-                    roles: roles.join(',')
                 }
             }
 
@@ -79,9 +79,10 @@ const Accounts = () => {
             phoneContains: phone,
             emailContains: email,
             addressContains: address,
-            workAtId: shopId
+            workAtId: shopId,
+            roles
         })
-    }, [page, sort, direction, name, username, phone, email, address, shopId])
+    }, [page, sort, direction, name, username, phone, email, address, shopId, roles])
 
     const handleInputChange = (e) => {
         let value = e.target.value;
@@ -107,6 +108,9 @@ const Accounts = () => {
                 break;
             case 'shopId':
                 setShopId(value)
+                break;
+            case 'roles':
+                setRoles(value)
                 break;
             default:
                 break
@@ -155,7 +159,11 @@ const Accounts = () => {
                         <th><input type='text' name='name' onChange={handleInputChange}></input></th>
                         <th><input type='text' name='username' onChange={handleInputChange}></input></th>
                         <th><input type='text' name='address' onChange={handleInputChange}></input></th>
-                        <th></th>
+                        <th><select name='roles' onChange={handleInputChange}>
+                            <option value={['POST_HEAD', 'WAREHOUSE_HEAD']}>Tất cả</option>
+                            <option value={['POST_HEAD']}>Trưởng điểm giao dịch</option>
+                            <option value={['WAREHOUSE_HEAD']}>Trưởng điểm tập kết</option>
+                        </select></th>
                         <th><input type='text' name='email' onChange={handleInputChange}></input></th>
                         <th><input type='number' name='phone' onChange={handleInputChange}></input></th>
                         <th><input type='number' name='shopId' onChange={handleInputChange}></input></th>
@@ -171,7 +179,7 @@ const Accounts = () => {
                             <td>{acc.name}</td>
                             <td>{acc.username}</td>
                             <td>{acc.address}</td>
-                            <td>{acc.role}</td>
+                            <td>{convertText(acc.role)}</td>
                             <td>{acc.email}</td>
                             <td>{acc.phone}</td>
                             <td>{acc.workAt.shopId}</td>
@@ -182,9 +190,9 @@ const Accounts = () => {
                         </tr>
                     </>) : <>Loading ...</>}
                 </tbody>
-                <button onClick={prev}>Prev</button>
-                <span>{page}</span>
-                <button onClick={next}>Next</button>
+                <button onClick={prev}>Trang trước</button>
+                <span>{page}/{maxPage}</span>
+                <button onClick={next}>Trang sau</button>
             </Table>
         </div>
     </>

@@ -5,6 +5,7 @@ import { Table } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { Link } from 'react-router-dom'
+import { convertText } from '../../../../service/service'
 
 const TEReceive = () => {
 
@@ -144,7 +145,7 @@ const TEReceive = () => {
                         <tr>
                             <td>{del.createdAt}</td>
                             <td>{del.delivery.name}</td>
-                            <td>{del.delivery.productType}</td>
+                            <td>{convertText(del.delivery.productType)}</td>
                             <td>{del.delivery.fromName}</td>
                             <td>{del.delivery.fromAddress}</td>
                             <td>{del.delivery.fromShop.commune.name} ({del.delivery.fromShop.commune.communeId})</td>

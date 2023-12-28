@@ -8,6 +8,7 @@ import { Table } from 'react-bootstrap'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import { convertText } from '../../../service/service'
 
 const Deliveries = () => {
 
@@ -187,13 +188,13 @@ const Deliveries = () => {
                         <th></th>
                         <th><select name='statuses' onChange={handleInputChange}>
                             <option value={''}>Tất cả</option>
-                            <option value={'RECEIVED_FROM_CUSTOMER'}>Đã nhận từ khách</option>
-                            <option value={'GONE_FROM_SHOP'}>Đã đi khỏi văn phòng</option>
-                            <option value={'COMING_TO_SHOP'}>Đang tới văn phòng khác</option>
-                            <option value={'RECEIVED_FROM_SHOP'}>Đã được nhận bởi văn phòng</option>
-                            <option value={'SHIPPING_TO_CUSTOMER'}>Đang ship tới khách</option>
-                            <option value={'SENT_TO_CUSTOMER_SUCCESS'}>Hàng gửi thành công</option>
-                            <option value={'SENT_TO_CUSTOMER_FAIL'}>Hàng gửi không thành công</option>
+                            <option value={'RECEIVED_FROM_CUSTOMER'}>Đã nhận hàng từ khách</option>
+                            <option value={'RECEIVED_FROM_SHOP'}>Hàng đã nhập kho</option>
+                            <option value={'GONE_FROM_SHOP'}>Hàng đã xuất kho</option>
+                            <option value={'COMING_TO_SHOP'}>Đang trên đường đến</option>
+                            <option value={'SHIPPING_TO_CUSTOMER'}>Đang chuyển tới khách</option>
+                            <option value={'SENT_TO_CUSTOMER_SUCCESS'}>Giao hàng thành công</option>
+                            <option value={'SENT_TO_CUSTOMER_FAIL'}>Giao hàng thất bại</option>
                         </select></th>
                         <th><input type='number' name='currentShopId' onChange={handleInputChange}></input></th>
                         <th><select name='productType' onChange={handleInputChange}>
@@ -216,16 +217,16 @@ const Deliveries = () => {
                         <tr onClick={() => handleViewDetail(del.deliveryId)}>
                             <td>{del.createdAt}</td>
                             <td>{del.updatedAt}</td>
-                            <td>{del.currentStatus}</td>
-                            <td>{del.currentShop.commune.name} - {del.currentShop.type}({del.currentShop.shopId})</td>
-                            <td>{del.productType}</td>
+                            <td>{convertText(del.currentStatus)}</td>
+                            <td>{del.currentShop.commune.name} - {convertText(del.currentShop.type)}({del.currentShop.shopId})</td>
+                            <td>{convertText(del.productType)}</td>
                             <td>{del.fromName}</td>
                             <td>{del.fromPhone}</td>
-                            <td>{del.fromShop.commune.name} - {del.fromShop.type}({del.fromShop.shopId})</td>
+                            <td>{del.fromShop.commune.name} - {convertText(del.fromShop.type)}({del.fromShop.shopId})</td>
                             <td>{del.fromAddress}</td>
                             <td>{del.toName}</td>
                             <td>{del.toPhone}</td>
-                            <td>{del.toShop.commune.name} - {del.toShop.type}({del.toShop.shopId})</td>
+                            <td>{del.toShop.commune.name} - {convertText(del.toShop.type)}({del.toShop.shopId})</td>
                             <td>{del.toAddress}</td>
                         </tr>
                     )) : <></>}

@@ -5,6 +5,7 @@ import { selectToken, selectAccount } from '../../../app/authSlice'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
+import { convertText } from '../../../service/service'
 
 const WHAccounts = () => {
 
@@ -153,7 +154,7 @@ const WHAccounts = () => {
                         <tr onClick={() => handleViewDetail(acc.username, acc.role)}>
                             <td>{acc.name}</td>
                             <td>{acc.address}</td>
-                            <td>{acc.role}</td>
+                            <td>{convertText(acc.role)}</td>
                             <td>{acc.phone}</td>
                             <td>{acc.email}</td>
                             <td>{acc.workAt.shopId}</td>
@@ -164,9 +165,9 @@ const WHAccounts = () => {
                         </tr>
                     </>) : <>Loading ...</>}
                 </tbody>
-                <button onClick={prev}>Prev</button>
+                <button onClick={prev}>Trang trước</button>
                 <span>{page}</span>
-                <button onClick={next}>Next</button>
+                <button onClick={next}>Trang sau</button>
             </Table>
         </div>
     </>

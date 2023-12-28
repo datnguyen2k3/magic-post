@@ -2,7 +2,7 @@ import './Detail.scss'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
-import { beautifyId } from '../service/service';
+import { beautifyId, convertText } from '../service/service';
 
 const Detail = () => {
 
@@ -81,7 +81,7 @@ const Detail = () => {
                             <td>{delivery.toName}</td>
                             <td>{delivery.toPhone}</td>
                             <td>{delivery.toAddress}</td>
-                            <td>{delivery.toShop.commune.name}({delivery.toShop.shopId})</td>
+                            <td>{delivery.toShop.commune.name}({convertText(delivery.toShop.shopId)})</td>
                         </tr>
                     </tbody>
                     <b>Trạng thái đơn hàng</b>
@@ -94,7 +94,7 @@ const Detail = () => {
                     <tbody>
                         <tr>
                             <td>{delivery.currentStatus}</td>
-                            <td>{delivery.currentShop.commune.name} - {delivery.currentShop.type}({delivery.currentShop.shopId})</td>
+                            <td>{delivery.currentShop.commune.name} - {convertText(delivery.currentShop.type)}({delivery.currentShop.shopId})</td>
                             <td>{delivery.createdAt}</td>
                             <td>{delivery.updatedAt}</td>
                         </tr>

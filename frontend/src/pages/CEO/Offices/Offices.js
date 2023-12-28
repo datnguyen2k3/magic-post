@@ -5,6 +5,7 @@ import { selectToken, selectAccount } from '../../../app/authSlice'
 import axios from 'axios'
 import { Table } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { convertText } from '../../../service/service'
 
 const Offices = () => {
 
@@ -118,7 +119,7 @@ const Offices = () => {
                         <tr onClick={() => handleViewDetail(off.shopId)}>
                             <td>{off.shopId}</td>
                             <td>{off.commune.name} ({off.commune.communeId})</td>
-                            <td>{off.type}</td>
+                            <td>{convertText(off.type)}</td>
                             <td>{off.employeeNumber}</td>
                             <td>{off.comingDeliveryNumber}</td>
                             <td>{off.currentDeliveryNumber}</td>
@@ -127,9 +128,9 @@ const Offices = () => {
                     )) : <></>}
                 </tbody>
             </Table>
-            <button onClick={prev}>Prev</button>
-            <span>{page}</span>
-            <button onClick={next}>Next</button>
+            <button onClick={prev}>Trang trước</button>
+            <span>{page}/{maxPage}</span>
+            <button onClick={next}>Trang sau</button>
         </div>
     </>
 }

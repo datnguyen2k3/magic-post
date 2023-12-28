@@ -5,6 +5,7 @@ import { selectToken, selectAccount } from '../../../app/authSlice'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
+import { convertText } from '../../../service/service'
 
 const PHAccounts = () => {
 
@@ -153,7 +154,7 @@ const PHAccounts = () => {
                         <tr onClick={() => handleViewDetail(acc.username, acc.role)}>
                             <td>{acc.name}</td>
                             <td>{acc.address}</td>
-                            <td>{acc.role}</td>
+                            <td>{convertText(acc.role)}</td>
                             <td>{acc.phone}</td>
                             <td>{acc.email}</td>
                             <td>{acc.workAt.shopId}</td>

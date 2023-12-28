@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import { convertText } from '../../../../service/service'
 
 const TEShipping = () => {
 
@@ -161,7 +162,7 @@ const TEShipping = () => {
                         <tr>
                             <td>{del.createdAt}</td>
                             <td>{del.delivery.name}</td>
-                            <td>{del.delivery.productType}</td>
+                            <td>{convertText(del.delivery.productType)}</td>
                             <td>{del.delivery.fromName}</td>
                             <td>{del.delivery.fromAddress}</td>
                             <td>{del.delivery.fromShop.commune.name} ({del.delivery.fromShop.commune.communeId})</td>

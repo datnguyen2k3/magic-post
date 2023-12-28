@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { beautifyId } from '../../../service/service';
+import { beautifyId, convertText } from '../../../service/service';
 
 const DeliveryDetail = () => {
 
@@ -97,7 +97,7 @@ const DeliveryDetail = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{delivery.currentStatus}</td>
+                            <td>{convertText(delivery.currentStatus)}</td>
                             <td><Link to={`/management/detail-office?shopId=${delivery.currentShop.shopId}`}>{delivery.currentShop.commune.name}({delivery.currentShop.shopId})</Link></td>
                             <td>{delivery.createdAt}</td>
                             <td>{delivery.updatedAt}</td>

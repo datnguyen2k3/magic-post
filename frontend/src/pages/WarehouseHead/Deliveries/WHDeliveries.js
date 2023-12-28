@@ -5,6 +5,7 @@ import { selectToken, selectAccount } from '../../../app/authSlice'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
+import { convertText } from '../../../service/service'
 
 const WHDeliveries = () => {
 
@@ -198,24 +199,24 @@ const WHDeliveries = () => {
                         <tr onClick={() => handleViewDetail(del.deliveryId)}>
                             <td>{del.createdAt}</td>
                             <td>{del.updatedAt}</td>
-                            <td>{del.currentStatus}</td>
-                            <td>{del.currentShop.commune.name} - {del.currentShop.type}({del.currentShop.shopId})</td>
-                            <td>{del.productType}</td>
+                            <td>{convertText(del.currentStatus)}</td>
+                            <td>{del.currentShop.commune.name} - {convertText(del.currentShop.type)}({del.currentShop.shopId})</td>
+                            <td>{convertText(del.productType)}</td>
                             <td>{del.fromName}</td>
                             <td>{del.fromPhone}</td>
-                            <td>{del.fromShop.commune.name} - {del.fromShop.type}({del.fromShop.shopId})</td>
+                            <td>{del.fromShop.commune.name} - {convertText(del.fromShop.type)}({del.fromShop.shopId})</td>
                             <td>{del.fromAddress}</td>
                             <td>{del.toName}</td>
                             <td>{del.toPhone}</td>
-                            <td>{del.toShop.commune.name} - {del.toShop.type}({del.toShop.shopId})</td>
+                            <td>{del.toShop.commune.name} - {convertText(del.toShop.type)}({del.toShop.shopId})</td>
                             <td>{del.toAddress}</td>
                         </tr>
                     )) : <></>}
                 </tbody>
             </Table>
-            <button onClick={prev}>Prev</button>
+            <button onClick={prev}>Trang trước</button>
             <span>{page}</span>
-            <button onClick={next}>Next</button>
+            <button onClick={next}>Trang sau</button>
         </div>
     </>
 }

@@ -5,6 +5,7 @@ import { selectToken, selectAccount } from '../../../app/authSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { convertText } from '../../../service/service';
 
 const PHModifyAccount = () => {
 
@@ -220,7 +221,7 @@ const PHModifyAccount = () => {
         <div className='modify-account'>
             {detail ? (
                 <>
-                    <h3>{detail.name} - {detail.role}</h3>
+                    <h3>{detail.name} - {convertText(detail.role)}</h3>
                     <span><b>Username: </b>{detail.username}</span><br />
                     <label><b>Mật khẩu: </b></label>&nbsp;
                     <input type="password" onChange={e => setPassword(e.target.value)} /><br />

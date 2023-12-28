@@ -145,7 +145,7 @@ const TEComing = () => {
                         <tr>
                             <td>{del.createdAt}</td>
                             <td>{del.delivery.name}</td>
-                            <td>{del.delivery.productType}</td>
+                            <td>{(del.delivery.productType)}</td>
                             <td>{del.delivery.fromName}</td>
                             <td>{del.delivery.fromAddress}</td>
                             <td>{del.delivery.fromShop.commune.name} ({del.delivery.fromShop.commune.communeId})</td>
