@@ -150,31 +150,31 @@ public class PdfService {
             addText(document, page,"x", 207, 370, 15);
         }
         addText(document, page,name, 105, 330, 12);
-        if (senderNote.length() > 37) {
-            int breakPoint = senderNote.lastIndexOf(" ", 37);
+        if (senderNote.length() > 65) {
+            int breakPoint = senderNote.lastIndexOf(" ", 65);
             if (breakPoint == -1) {
-                breakPoint = 37;
+                breakPoint = 65;
             }
 
             String firstPart = senderNote.substring(0, breakPoint);
             String secondPart = senderNote.substring(breakPoint).trim();
-            addText(document, page,firstPart, 180, 317, 10);
-            addText(document, page,secondPart, 180, 305, 10);
+            addText(document, page,firstPart, 38, 305, 10);
+            addText(document, page,secondPart, 38, 293, 10);
         } else {
-            addText(document, page,senderNote, 180, 317, 12);
+            addText(document, page,senderNote, 38, 305, 10);
         }
-        if (receiverNote.length() > 42) {
-            int breakPoint = receiverNote.lastIndexOf(" ", 42);
+        if (receiverNote.length() > 65) {
+            int breakPoint = receiverNote.lastIndexOf(" ", 65);
             if (breakPoint == -1) {
-                breakPoint = 42;
+                breakPoint = 65;
             }
 
             String firstPart = receiverNote.substring(0, breakPoint);
             String secondPart = receiverNote.substring(breakPoint).trim();
-            addText(document, page,firstPart, 510, 379, 10);
-            addText(document, page,secondPart, 510, 367, 10);
+            addText(document, page,firstPart, 400, 367, 10);
+            addText(document, page,secondPart, 400, 355, 10);
         } else {
-            addText(document, page,receiverNote, 510, 379, 12);
+            addText(document, page,receiverNote, 400, 367, 10);
         }
 
         addText(document, page,weight, 510, 295, 12);
