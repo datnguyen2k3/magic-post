@@ -93,7 +93,7 @@ public class PdfService {
                              String receiverName,
                              String receiverLocation,
                              String receiverPhone,
-                             String note,
+                             String receiverNote,
                              String weight,
                              String cost,
                              String shop,
@@ -150,8 +150,33 @@ public class PdfService {
             addText(document, page,"x", 207, 370, 15);
         }
         addText(document, page,name, 105, 330, 12);
-        addText(document, page,senderNote, 180, 317, 12);
-        addText(document, page,note, 510, 379, 12);
+        if (senderNote.length() > 37) {
+            int breakPoint = senderNote.lastIndexOf(" ", 37);
+            if (breakPoint == -1) {
+                breakPoint = 37;
+            }
+
+            String firstPart = senderNote.substring(0, breakPoint);
+            String secondPart = senderNote.substring(breakPoint).trim();
+            addText(document, page,firstPart, 180, 317, 10);
+            addText(document, page,secondPart, 180, 305, 10);
+        } else {
+            addText(document, page,senderNote, 180, 317, 12);
+        }
+        if (receiverNote.length() > 42) {
+            int breakPoint = receiverNote.lastIndexOf(" ", 42);
+            if (breakPoint == -1) {
+                breakPoint = 42;
+            }
+
+            String firstPart = receiverNote.substring(0, breakPoint);
+            String secondPart = receiverNote.substring(breakPoint).trim();
+            addText(document, page,firstPart, 510, 379, 10);
+            addText(document, page,secondPart, 510, 367, 10);
+        } else {
+            addText(document, page,receiverNote, 510, 379, 12);
+        }
+
         addText(document, page,weight, 510, 295, 12);
         addText(document, page,cost + " đ", 535, 267, 20);
         addText(document, page,shop, 530, 230, 12);
