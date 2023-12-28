@@ -77,8 +77,11 @@ public class Delivery {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "from_description")
+    private String fromDescription;
+
+    @Column(name = "to_description")
+    private String toDescription;
 
     @Column(name = "weight")
     private BigDecimal weight;

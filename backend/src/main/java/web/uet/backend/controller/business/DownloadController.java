@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import web.uet.backend.controller.annotation.ValidateDeliveryPdfName;
+import web.uet.backend.common.annotation.ValidateDeliveryPdfName;
 import web.uet.backend.service.PdfService;
 
 import java.io.IOException;

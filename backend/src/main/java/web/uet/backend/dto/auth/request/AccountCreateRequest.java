@@ -43,6 +43,6 @@ public class AccountCreateRequest {
   private String cccd;
 
   @NotNull
-  @Positive
+  @Min(1)
   private Integer workAt;
 }

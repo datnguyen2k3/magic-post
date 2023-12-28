@@ -46,12 +46,10 @@ import static web.uet.backend.service.elasticsearch.search.ElasticsearchQueryUti
 public class AccountService implements UserDetailsService {
 
   private final AccountRepository accountRepository;
-  private final AccountDocumentRepository accountDocumentRepository;
   private final AccountGeneralMapper accountGeneralMapper;
   private final AccountGeneralFromDocumentMapper accountGeneralFromDocumentMapper;
 
   private final ElasticsearchOperations elasticsearchOperations;
-  private final ElasticsearchTemplate elasticsearchTemplate;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -171,6 +169,10 @@ public class AccountService implements UserDetailsService {
 
   private void validateAccountPageRequest(AccountPageRequest request) {
     Account currentAccount = AuthenticationService.getCurrentAccount();
+    if (currentAccount.getRole() == Role.EMPLOYEE) {
+      throw new InvalidAuthorizationException("Permission denied");
+    }
+
     validateAccessShopPermission(currentAccount, request.getWorkAtId());
 
     request.getRoles().stream()
@@ -182,10 +184,6 @@ public class AccountService implements UserDetailsService {
   }
 
   public static void validateAccessShopPermission(Account currentAccount, Integer shopId) {
-    if (currentAccount.getRole() == Role.EMPLOYEE) {
-      throw new InvalidAuthorizationException("Permission denied");
-    }
-
     if (currentAccount.getRole() == Role.CEO) {
       return;
     }

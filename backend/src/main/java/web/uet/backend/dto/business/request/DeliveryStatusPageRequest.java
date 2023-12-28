@@ -28,29 +28,29 @@ public class DeliveryStatusPageRequest {
   private Integer page = 0;
 
   @NotNull
-  @Positive
+  @Min(1)
   private Integer size = 10;
 
   private DeliveryStatusSort sort;
 
   private DirectionSort direction;
 
-  @Positive
+  @Min(1)
   private Integer fromProvinceId;
 
-  @Positive
+  @Min(1)
   private Integer fromDistrictId;
 
-  @Positive
+  @Min(1)
   private Integer fromCommuneId;
 
-  @Positive
+  @Min(1)
   private Integer toProvinceId;
 
-  @Positive
+  @Min(1)
   private Integer toDistrictId;
 
-  @Positive
+  @Min(1)
   private Integer toCommuneId;
 
 
@@ -61,14 +61,14 @@ public class DeliveryStatusPageRequest {
   private String fromNameContains;
   private String toNameContains;
 
-  @Positive
+  @Min(1)
   private Integer fromShopId;
 
-  @Positive
+  @Min(1)
   private Integer toShopId;
   private ProductType productType;
   private List<StatusType> statuses;
 
-  @Positive
+  @Min(1)
   private Integer currentShopId;
 }
