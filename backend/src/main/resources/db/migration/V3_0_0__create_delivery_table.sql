@@ -30,7 +30,6 @@ CREATE TABLE delivery (
     to_description VARCHAR(1000),
     weight DECIMAL(10, 2) NOT NULL,
     shipping_fee DECIMAL(10, 2) NOT NULL,
-    has_pdf BOOLEAN NOT NULL DEFAULT FALSE,
 
     current_status delivery_status_type NOT NULL,
     current_shop_id INT NOT NULL,
