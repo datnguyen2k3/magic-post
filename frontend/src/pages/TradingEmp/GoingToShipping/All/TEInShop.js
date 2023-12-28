@@ -41,10 +41,8 @@ const TEInShop = () => {
             }
 
             try {
-                const response = await axios.get(`${backendUrl}/deliveryStatuses`, config)
-                console.log(config.params)
-                setDeliveries(response.data.deliveryStatuses)
-                console.log(response.data.deliveryStatuses)
+                const response = await axios.get(`${backendUrl}/deliveries`, config)
+                setDeliveries(response.data.deliveries)
             } catch (error) {
                 console.log(error)
             }

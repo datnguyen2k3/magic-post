@@ -235,9 +235,9 @@ const Deliveries = () => {
                         </tr>
                     )) : <></>}
                 </tbody>
-                <button onClick={prev}>Prev</button>
+                <button onClick={prev}>Trang truớc</button>
                 <span>{page}</span>
-                <button onClick={next}>Next</button>
+                <button onClick={next}>Trang sau</button>
             </Table>
         </div>
     </>

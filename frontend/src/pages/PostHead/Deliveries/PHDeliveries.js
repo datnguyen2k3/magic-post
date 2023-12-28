@@ -123,6 +123,7 @@ const PHDeliveries = () => {
             toAddressContains: toAddress,
             toPhoneContains: toPhone,
             toShopId,
+            page: page - 1,
         };
 
         if (!statuses || statuses.length === 0) {
@@ -132,13 +133,21 @@ const PHDeliveries = () => {
 
         setFilteredData(data);
 
-    }, [statuses, currentShopId, productType, fromAddress, fromPhone, fromName, fromShopId, toAddress, toPhone, toName, toShopId])
+    }, [statuses, currentShopId, productType, fromAddress, fromPhone, fromName, fromShopId, toAddress, toPhone, toName, toShopId, page])
 
     const dispatch = useDispatch()
 
     const handleViewDetail = (deliveryId) => {
         navigate(`/management/detail`)
         dispatch(updateDeliveryId({ deliveryId }))
+    }
+
+    const prev = () => {
+        setPage(Math.max(page - 1, 1))
+    }
+
+    const next = () => {
+        setPage(Math.min(maxPage, page + 1))
     }
 
     return <>
@@ -210,6 +219,9 @@ const PHDeliveries = () => {
                     )) : <></>}
                 </tbody>
             </Table>
+            <button onClick={prev}>Prev</button>
+            <span>{page}</span>
+            <button onClick={next}>Next</button>
         </div>
     </>
 }

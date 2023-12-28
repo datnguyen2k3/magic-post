@@ -170,10 +170,10 @@ const PHAccounts = () => {
                         </tr>
                     </>) : <>Loading ...</>}
                 </tbody>
-                <button onClick={prev}>Prev</button>
-                <span>{page}</span>
-                <button onClick={next}>Next</button>
             </Table>
+            <button onClick={prev}>Prev</button>
+            <span>{page}</span>
+            <button onClick={next}>Next</button>
         </div>
     </>
 }
