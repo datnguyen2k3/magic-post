@@ -54,6 +54,10 @@ public class PdfService {
             throw new NotFoundException("Delivery not found");
         }
 
+        if (!Files.exists(Paths.get(DELIVERY_PDF_SOURCE_PATH + deliveryPdfName))) {
+            throw new NotFoundException("Delivery pdf not found");
+        }
+
         Path path = Paths.get(DELIVERY_PDF_SOURCE_PATH + deliveryPdfName);
         return Files.readAllBytes(path);
     }
