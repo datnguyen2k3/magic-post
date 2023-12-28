@@ -129,6 +129,11 @@ const Sidebar = () => {
                             <button className='sidebar-statistics sidebar-bottom'>
                                 Quản lý đơn hàng đã giao cho khách
                             </button>
+                        </Link>
+                        <Link to={'/management/te-all-print'}>
+                            <button className='sidebar-statistics sidebar-bottom'>
+                                Xem lại các đơn đã nhận từ khách
+                            </button>
                         </Link></>
                     }
                     {isWEmp && <>

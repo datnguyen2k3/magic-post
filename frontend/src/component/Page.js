@@ -51,6 +51,9 @@ import GuestHome from '../pages/Guest/Home/GuestHome';
 import { selectIsGuest } from '../app/guestSlice';
 import GuestSearch from '../pages/Guest/Search/GuestSearch';
 import WHDeliveries from '../pages/WarehouseHead/Deliveries/WHDeliveries';
+import TEAllPrint from '../pages/TradingEmp/Print/All/TEAllPrint';
+import TEPrint from '../pages/TradingEmp/Print/Detail/TEPrint';
+import WHModifyAccount from '../pages/WarehouseHead/ModifyAcc/WHModifyAccount';
 
 const Page = () => {
 
@@ -106,6 +109,8 @@ const Page = () => {
                         <Route path='/management/te-shipping' element={<PostEmp><TEShipping /></PostEmp>}></Route>
                         <Route path='/management/te-confirm-shipping' element={<PostEmp><TEConfirmShipping /></PostEmp>}></Route>
                         <Route path='/management/te-after' element={<PostEmp><TEAfter /></PostEmp>}></Route>
+                        <Route path='/management/te-all-print' element={<PostEmp><TEAllPrint /></PostEmp>}></Route>
+                        <Route path='/management/te-print' element={<PostEmp><TEPrint /></PostEmp>}></Route>
 
                         <Route path='/management/te-receive' element={<TradingEmp><TEReceive /></TradingEmp>}></Route>
                         <Route path='/management/te-next' element={<TradingEmp><TENext /></TradingEmp>}></Route>
@@ -129,6 +134,7 @@ const Page = () => {
                         <Route path='/management/wh-detail-account' element={<WarehouseHead><WHDetailAccount /></WarehouseHead>}></Route>
                         <Route path='/management/wh-detail-office' element={<WarehouseHead><WHDetailOffice /></WarehouseHead>}></Route>
                         <Route path='/management/wh-deliveries' element={<WarehouseHead><WHDeliveries /></WarehouseHead>}></Route>
+                        <Route path='/management/wh-modify-account' element={<WarehouseHead><WHModifyAccount /></WarehouseHead>}></Route>
                     </>}
                 </Routes>
                 <Toaster toastOptions={{
