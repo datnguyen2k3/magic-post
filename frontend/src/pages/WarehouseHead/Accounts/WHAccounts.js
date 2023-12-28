@@ -29,9 +29,10 @@ const WHAccounts = () => {
     const [direction, setDirection] = useState('');
 
     const [name, setName] = useState();
-    const [address, setAddress] = useState();
+    const [username, setUsername] = useState();
     const [phone, setPhone] = useState();
     const [email, setEmail] = useState();
+    const [address, setAddress] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -94,9 +95,9 @@ const WHAccounts = () => {
                 value = value.toLowerCase();
                 setName(value);
                 break;
-            case 'address':
+            case 'username':
                 value = value.toLowerCase();
-                setAddress(value);
+                setUsername(value);
                 break;
             case 'phone':
                 setPhone(value);
@@ -113,11 +114,12 @@ const WHAccounts = () => {
         setFilteredData({
             ...filteredData,
             nameContains: name,
-            addressContains: address,
+            usernameContains: username,
             phoneContains: phone,
             emailContains: email,
+            addressContains: address
         })
-    }, [name, address, phone, email])
+    }, [name, username, phone, email, address])
 
     return <>
         <div className='accounts'>
@@ -126,26 +128,17 @@ const WHAccounts = () => {
                 <thead>
                     <tr>
                         <th className='accounts-sort' onClick={() => handleSort('NAME')}>Tên</th>
-                        <th className='accounts-sort' onClick={() => handleSort('ADDRESS')}>Địa chỉ</th>
-                        <th className='accounts-sort' onClick={() => handleSort('ROLE')}>Vai trò</th>
+                        <th className='accounts-sort' onClick={() => handleSort('USERNAME')}>Username</th>
                         <th className='accounts-sort' onClick={() => handleSort('PHONE')}>Số điện thoại</th>
-                        <th className='accounts-sort' onClick={() => handleSort('PHONE')}>Email</th>
-                        <th className='accounts-sort' onClick={() => handleSort('SHOP_ID')}>Id Văn phòng</th>
-                        <th className='accounts-sort' onClick={() => handleSort('COMMUNE_ID')}>Id Địa chỉ Văn phòng</th>
-                        <th className='accounts-sort' onClick={() => handleSort('COMMUNE_NAME')}>Địa chỉ Văn phòng </th>
-                        <th className='accounts-sort' onClick={() => handleSort('EMPLOYEE_NUMBER')}>Số nhân viên</th>
-                        <th className='accounts-sort' onClick={() => handleSort('CURRENT_DELIVERY_NUMBER')}>Số đơn đang tồn</th>
+                        <th className='accounts-sort' onClick={() => handleSort('EMAIL')}>Email</th>
+                        <th className='accounts-sort' onClick={() => handleSort('ADDRESS')}>Địa chỉ</th>
                     </tr>
                     <tr>
                         <th><input type='text' name='name' onChange={handleInputChange}></input></th>
-                        <th><input type='text' name='address' onChange={handleInputChange}></input></th>
-                        <th></th>
+                        <th><input type='text' name='username' onChange={handleInputChange}></input></th>
                         <th><input type='number' name='phone' onChange={handleInputChange}></input></th>
                         <th><input type='text' name='email' onChange={handleInputChange}></input></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th><input type='text' name='address' onChange={handleInputChange}></input></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -153,15 +146,10 @@ const WHAccounts = () => {
                     {accounts ? accounts.map(acc => <>
                         <tr onClick={() => handleViewDetail(acc.username, acc.role)}>
                             <td>{acc.name}</td>
-                            <td>{acc.address}</td>
-                            <td>{convertText(acc.role)}</td>
+                            <td>{acc.username}</td>
                             <td>{acc.phone}</td>
                             <td>{acc.email}</td>
-                            <td>{acc.workAt.shopId}</td>
-                            <td>{acc.workAt.commune.communeId}</td>
-                            <td>{acc.workAt.commune.name}</td>
-                            <td>{acc.workAt.employeeNumber}</td>
-                            <td>{acc.workAt.currentDeliveryNumber}</td>
+                            <td>{acc.address}</td>
                         </tr>
                     </>) : <>Loading ...</>}
                 </tbody>

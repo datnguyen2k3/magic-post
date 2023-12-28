@@ -214,7 +214,7 @@ const PHModifyAccount = () => {
 
     const handleCancel = (e) => {
         e.preventDefault()
-        navigate(`/ph-detail-account?username=${username}&role=${role}`)
+        navigate(`/management/ph-detail-account?username=${username}&role=${role}`)
     }
 
     return <>

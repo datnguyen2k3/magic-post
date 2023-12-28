@@ -63,9 +63,7 @@ const TEAfter = () => {
                     try {
                         const response1 = await axios.get(`${backendUrl}/deliveries`, config1)
                         const response2 = await axios.get(`${backendUrl}/deliveries`, config2)
-                        setDeliveries(response1.data.deliveryStatuses.concat(response2.data.deliveryStatuses))
-                        console.log(response1.data.deliveryStatuses)
-                        console.log(response2.data.deliveryStatuses)
+                        setDeliveries(response1.data.deliveries.concat(response2.data.deliveries))
                     } catch (error) {
                         console.log(error)
                     }
@@ -87,7 +85,7 @@ const TEAfter = () => {
 
                     try {
                         const response3 = await axios.get(`${backendUrl}/deliveries`, config3)
-                        setDeliveries(response3.data.deliveryStatuses)
+                        setDeliveries(response3.data.deliveries)
                     } catch (error) {
                         console.log(error)
                     }
@@ -108,8 +106,8 @@ const TEAfter = () => {
                     }
 
                     try {
-                        const response4 = await axios.get(`${backendUrl}/deliveryStatus`, config4)
-                        setDeliveries(response4.data.deliveryStatuses)
+                        const response4 = await axios.get(`${backendUrl}/deliveries`, config4)
+                        setDeliveries(response4.data.deliveries)
                     } catch (error) {
                         console.log(error)
                     }
@@ -161,7 +159,7 @@ const TEAfter = () => {
     useEffect(() => {
         setFilterData({
             ...filterData,
-            productType,
+            currentStatus: productType,
             fromAddressContains: fromAddress,
             toAddressContains: toAddress,
             fromNameContains: fromName,
@@ -230,15 +228,15 @@ const TEAfter = () => {
                     {deliveries ? deliveries.map(del => (
                         <tr>
                             <td>{del.createdAt}</td>
-                            <td>{convertText(del.statusType)}</td>
-                            <td>{convertText(del.delivery.productType)}</td>
-                            <td>{del.delivery.fromName}</td>
-                            <td>{del.delivery.fromAddress}</td>
-                            <td>{del.delivery.fromShop.commune.name} ({del.delivery.fromShop.commune.communeId})</td>
-                            <td>{del.delivery.toName}</td>
-                            <td>{del.delivery.toAddress}</td>
-                            <td>{del.delivery.toShop.commune.name} ({del.delivery.toShop.commune.communeId})</td>
-                            <td><Link to={`/management/te-next?deliveryId=${del.delivery.deliveryId}`}>Chọn</Link></td>
+                            <td>{convertText(del.currentStatus)}</td>
+                            <td>{convertText(del.productType)}</td>
+                            <td>{del.fromName}</td>
+                            <td>{del.fromAddress}</td>
+                            <td>{del.fromShop.commune.name} ({del.fromShop.commune.communeId})</td>
+                            <td>{del.toName}</td>
+                            <td>{del.toAddress}</td>
+                            <td>{del.toShop.commune.name} ({del.toShop.commune.communeId})</td>
+                            <td><Link to={`/management/te-next?deliveryId=${del.deliveryId}`}>Chọn</Link></td>
                         </tr>
                     )) : <></>}
                 </tbody>
