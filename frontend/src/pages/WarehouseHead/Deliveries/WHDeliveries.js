@@ -43,7 +43,6 @@ const WHDeliveries = () => {
                 const response = await axios.get(`${backendUrl}/deliveries`, config)
                 setDeliveries(response.data.deliveries)
                 setMaxPage(response.data.totalPages)
-                console.log(response.data.deliveries)
             } catch (error) {
                 console.log(error)
             }

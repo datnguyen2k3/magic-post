@@ -1,21 +1,29 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './GuestHome.scss'
 import { useDispatch } from 'react-redux'
 import { falseGuest } from '../../../app/guestSlice'
+import Page from './page/Page'
 
 const GuestHome = () => {
 
     const dispatch = useDispatch();
 
+    const navigate = useNavigate()
+
     const handleManagement = (e) => {
         e.preventDefault();
-        dispatch(falseGuest())
+        dispatch(falseGuest());
+        navigate('/management')
+    }
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        navigate('/search')
     }
 
     return <>
         <div className='guess-home'>
-            <span>Tới trang của <button onClick={handleManagement}><Link to={'/management'}>các nhân viên quản lý</Link></button></span><br></br>
-            <Link to={'/search'}>Chuyển sang trang tìm kiếm đơn vận</Link>
+            <Page handleManagement={handleManagement} handleSearch={handleSearch} />
         </div>
     </>
 
