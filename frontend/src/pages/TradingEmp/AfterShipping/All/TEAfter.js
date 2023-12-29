@@ -7,8 +7,10 @@ import { selectAccount, selectToken } from '../../../../app/authSlice'
 import { Link } from 'react-router-dom'
 import { convertText } from '../../../../service/service'
 import { updateDeliveryId } from '../../../../app/urlSlice'
+import { useNavigate } from 'react-router-dom'
 
 const TEAfter = () => {
+    const navigate = useNavigate()
 
     const [deliveries, setDeliveries] = useState();
     const [filterData, setFilterData] = useState();
@@ -20,6 +22,7 @@ const TEAfter = () => {
     const [toAddress, setToAddress] = useState();
     const [toShop, setToShop] = useState();
     const [type, setType] = useState('');
+    const [maxPage, setMaxPage] = useState();
 
     const [sort, setSort] = useState('');
     const [direction, setDirection] = useState('')
@@ -65,6 +68,7 @@ const TEAfter = () => {
                         const response1 = await axios.get(`${backendUrl}/deliveries`, config1)
                         const response2 = await axios.get(`${backendUrl}/deliveries`, config2)
                         setDeliveries(response1.data.deliveries.concat(response2.data.deliveries))
+                        setMaxPage(Math.ceil((response1.data.totalElements + response2.data.totalElements) / 10))
                     } catch (error) {
                         console.log(error)
                     }
@@ -87,6 +91,7 @@ const TEAfter = () => {
                     try {
                         const response3 = await axios.get(`${backendUrl}/deliveries`, config3)
                         setDeliveries(response3.data.deliveries)
+                        setMaxPage(response3.data.totalPages)
                     } catch (error) {
                         console.log(error)
                     }
@@ -109,6 +114,7 @@ const TEAfter = () => {
                     try {
                         const response4 = await axios.get(`${backendUrl}/deliveries`, config4)
                         setDeliveries(response4.data.deliveries)
+                        setMaxPage(response4.data.totalPages)
                     } catch (error) {
                         console.log(error)
                     }
@@ -193,6 +199,7 @@ const TEAfter = () => {
 
     const handleViewDetail = (deliveryId) => {
         dispatch(updateDeliveryId({ deliveryId }))
+        navigate('/management/detail')
     }
 
     return <>
@@ -209,7 +216,7 @@ const TEAfter = () => {
                         <th>Người nhận</th>
                         <th>Địa chỉ người nhận</th>
                         <th>Văn phòng nhận</th>
-                        <th>Xác nhận văn phòng đã nhận được</th>
+                        <th>Xem thông tin đơn</th>
                     </tr>
                     <tr>
                         <th></th>
@@ -243,14 +250,14 @@ const TEAfter = () => {
                             <td>{del.toName}</td>
                             <td>{del.toAddress}</td>
                             <td>{del.toShop.commune.name} ({del.toShop.commune.communeId})</td>
-                            <td><button onClick={() => handleViewDetail(del.deliveryId)}><Link to={`/management/te-next`}>Chọn</Link></button></td>
+                            <td><button onClick={() => handleViewDetail(del.deliveryId)}><Link to={`/management/te-next`}>Xem</Link></button></td>
                         </tr>
                     )) : <></>}
                 </tbody>
             </Table>
             <div className='te-coming-pagination'>
                 <button onClick={prev}>Trang trước</button>
-                <span>{page}</span>
+                <span>{page}/{maxPage}</span>
                 <button onClick={next}>Trang sau</button>
             </div>
         </div>

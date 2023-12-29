@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { selectIsGuest, trueGuest } from '../app/guestSlice';
 import { updateDeliveryId, updateShopId } from '../app/urlSlice';
+import { convertText } from '../service/service';
 
 const Sidebar = () => {
 
@@ -179,7 +180,7 @@ const Sidebar = () => {
                         {isLoggedIn ? <div>
                             <button className='sidebar-account sidebar-view-account'>{account !== undefined ? account.name : 'Tài khoản'} &nbsp;<FontAwesomeIcon icon={faChevronRight} />
                                 <div className='sidebar-account-dropdown'>
-                                    <button className='sidebar-account sidebar-account-dropdown-item' style={{ fontSize: '20px' }}><b>{account.role}</b></button>
+                                    <button className='sidebar-account sidebar-account-dropdown-item' style={{ fontSize: '20px' }}><b>{convertText(account.role)}</b></button>
                                     <button className='sidebar-account sidebar-account-dropdown-item'><Link to={'/management/account'}>Tài khoản</Link></button>
                                     {isWHead && <button className='sidebar-account sidebar-account-dropdown-item' onClick={handleViewOffice}><Link to={`/management/wh-detail-office`}>Xem thông tin văn phòng</Link></button>}
                                     {isPHead && <button className='sidebar-account sidebar-account-dropdown-item' onClick={handleViewOffice}><Link to={`/management/ph-detail-office`}>Xem thông tin văn phòng</Link></button>}

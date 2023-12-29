@@ -20,6 +20,7 @@ const TEReceive = () => {
     const [toName, setToName] = useState();
     const [toAddress, setToAddress] = useState();
     const [toShop, setToShop] = useState();
+    const [maxPage, setMaxPage] = useState();
 
     const token = useSelector(selectToken);
     const shopId = useSelector(selectAccount).workAt.shopId
@@ -43,6 +44,7 @@ const TEReceive = () => {
             try {
                 const response = await axios.get(`${backendUrl}/deliveries`, config)
                 setDeliveries(response.data.deliveries)
+                setMaxPage(response.data.totalPages)
                 console.log(response.data)
             } catch (error) {
                 console.log(error)
@@ -166,7 +168,7 @@ const TEReceive = () => {
             </Table>
             <div className='te-coming-pagination'>
                 <button onClick={prev}>Trang trước</button>
-                <span>{page}</span>
+                <span>{page}/{maxPage}</span>
                 <button onClick={next}>Trang sau</button>
             </div>
         </div>

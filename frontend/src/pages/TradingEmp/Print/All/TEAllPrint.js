@@ -128,7 +128,7 @@ const TEAllPrint = () => {
                         <th>Người nhận</th>
                         <th>Địa chỉ người nhận</th>
                         <th>Văn phòng nhận</th>
-                        <th>Xác nhận văn phòng đã nhận được</th>
+                        <th>Xem và in đơn</th>
                     </tr>
                     <tr>
                         <th></th>
@@ -158,7 +158,7 @@ const TEAllPrint = () => {
                             <td>{del.delivery.toName}</td>
                             <td>{del.delivery.toAddress}</td>
                             <td>{del.delivery.toShop.commune.name} ({del.delivery.toShop.commune.communeId})</td>
-                            <td><button onClick={() => handleViewDetail(del.delivery.deliveryId)}><Link to={`/management/te-print`}>Chọn</Link></button></td>
+                            <td><button onClick={() => handleViewDetail(del.delivery.deliveryId)}><Link to={`/management/te-print`}>Xem</Link></button></td>
                         </tr>
                     )) : <></>}
                 </tbody>

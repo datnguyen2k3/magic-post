@@ -22,6 +22,7 @@ const TEShipping = () => {
     const [toName, setToName] = useState();
     const [toAddress, setToAddress] = useState();
     const [toShop, setToShop] = useState();
+    const [maxPage, setMaxPage] = useState();
 
     const token = useSelector(selectToken);
     const shopId = useSelector(selectAccount).workAt.shopId
@@ -46,10 +47,10 @@ const TEShipping = () => {
             }
 
             try {
-                const response = await axios.get(`${backendUrl}/deliveryStatuses`, config)
+                const response = await axios.get(`${backendUrl}/deliveries`, config)
                 console.log(config.params)
                 setDeliveries(response.data.deliveryStatuses)
-                console.log(response.data.deliveryStatuses)
+                setMaxPage(response.data.totalPages)
             } catch (error) {
                 console.log(error)
             }

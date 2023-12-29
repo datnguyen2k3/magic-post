@@ -19,6 +19,7 @@ const TEInShop = () => {
     const [toName, setToName] = useState();
     const [toAddress, setToAddress] = useState();
     const [toShop, setToShop] = useState();
+    const [maxPage, setMaxPage] = useState();
 
     const token = useSelector(selectToken);
     const shopId = useSelector(selectAccount).workAt.shopId
@@ -43,6 +44,7 @@ const TEInShop = () => {
             try {
                 const response = await axios.get(`${backendUrl}/deliveries`, config)
                 setDeliveries(response.data.deliveries)
+                setMaxPage(response.data.totalPages)
             } catch (error) {
                 console.log(error)
             }
@@ -150,23 +152,23 @@ const TEInShop = () => {
                     {deliveries ? deliveries.map(del => (
                         <tr>
                             <td>{del.createdAt}</td>
-                            <td>{del.delivery.name}</td>
-                            <td>{convertText(del.delivery.productType)}</td>
-                            <td>{del.delivery.fromName}</td>
-                            <td>{del.delivery.fromAddress}</td>
-                            <td>{del.delivery.fromShop.commune.name} ({del.delivery.fromShop.commune.communeId})</td>
-                            <td>{del.delivery.toName}</td>
-                            <td>{del.delivery.toAddress}</td>
-                            <td>{del.delivery.toShop.commune.name} ({del.delivery.toShop.commune.communeId})</td>
-                            <td>{role === 'POST' ? <button onClick={() => handleViewDetail(del.delivery.deliveryId)}><Link to={`/management/te-shiptocus`}>Chọn</Link></button> :
-                                <button onClick={() => handleViewDetail(del.delivery.deliveryId)}><Link to={`/management/te-w-next`}>Chọn</Link></button>} </td>
+                            <td>{del.name}</td>
+                            <td>{convertText(del.productType)}</td>
+                            <td>{del.fromName}</td>
+                            <td>{del.fromAddress}</td>
+                            <td>{del.fromShop.commune.name} ({del.fromShop.commune.communeId})</td>
+                            <td>{del.toName}</td>
+                            <td>{del.toAddress}</td>
+                            <td>{del.toShop.commune.name} ({del.toShop.commune.communeId})</td>
+                            <td>{role === 'POST' ? <button onClick={() => handleViewDetail(del.deliveryId)}><Link to={`/management/te-shiptocus`}>Chọn</Link></button> :
+                                <button onClick={() => handleViewDetail(del.deliveryId)}><Link to={`/management/te-w-next`}>Chọn</Link></button>} </td>
                         </tr>
                     )) : <></>}
                 </tbody>
             </Table>
             <div className='te-coming-pagination'>
                 <button onClick={prev}>Trang trước</button>
-                <span>{page}</span>
+                <span>{page}/{maxPage}</span>
                 <button onClick={next}>Trang sau</button>
             </div>
         </div>

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { beautifyId } from '../../../../service/service'
 import { Link } from 'react-router-dom'
+import { selectDeliveryId } from '../../../../app/urlSlice'
 
 const TENext = () => {
 
@@ -14,9 +15,7 @@ const TENext = () => {
 
     const token = useSelector(selectToken)
 
-    const params = new URLSearchParams(window.location.search);
-
-    const deliveryId = params.get('deliveryId')
+    const deliveryId = useSelector(selectDeliveryId)
 
     const shopId = useSelector(selectAccount).workAt.shopId;
 
@@ -216,74 +215,78 @@ const TENext = () => {
     }
 
     return <>
-        <button><Link to={'/management/te-receive'}>Trở về bảng thống kê đơn đã nhận</Link></button>
-        {delivery ? <div className='te-next'>
-            <label>Thứ tự trạng thái:</label>
-            <select onChange={handleDirectionChange}>
-                <option value={'ASC'}>Tăng dần</option>
-                <option value={'DESC'}>Giảm dần</option>
-            </select>
-            <div className=''>
-                <h3><b>Thông tin đơn hàng</b></h3>
-                <span><b>Id: </b>{beautifyId(delivery.deliveryId)}</span><br></br>
-                <span><b>Được gửi từ cửa hàng: </b>{delivery.fromCommune.name} <b>đến cửa hàng</b> {delivery.toCommune.name}</span><br></br>
-                <span><b>Người gửi: </b>{delivery.fromName} <b>gửi từ</b> {delivery.fromAddress}</span><br></br>
-                <span><b>Người nhận: </b>{delivery.toName} <b>nhận ở</b> {delivery.toAddress}</span><br></br>
-            </div>
-            <div className=''>
-                <h3><b>Lịch sử chuyển hàng</b></h3>
-                {history !== null ? history.map(his => <>
-                    <span><b>Thời gian: </b>{his.createdAt}</span><br></br>
-                    <span><b>Địa điểm: </b>{his.shop.commune.name}</span><br></br>
-                    <span><b>Loại văn phòng: </b>{his.shop.type === 'POST' ? 'Điểm giao dịch' : 'Điểm tập kết'}</span><br></br>
-                </>) : <></>}
-            </div>
-        </div> : <></>}
-        {(history && history.length === 1 && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
-            <div className='te-next-place'>
-                <label>Miền</label>
-                <select onChange={(e) => handleShopRegionChange(e)}>
-                    <option value=''>Chọn miền</option>
-                    <option value={1}>Miền Bắc</option>
-                    <option value={2}>Miền Trung</option>
-                    <option value={3}>Miền Nam</option>
+        <button className='back-button'><Link to={'/management/te-receive'}>Trở về bảng thống kê đơn đã nhận</Link></button>
+        <div className='te-next-box'>
+            {delivery ? <div className='te-next'>
+                <label>Thứ tự trạng thái:</label>
+                <select onChange={handleDirectionChange}>
+                    <option value={'ASC'}>Tăng dần</option>
+                    <option value={'DESC'}>Giảm dần</option>
                 </select>
-                <label>Loại văn phòng tiếp theo</label>
-                <select onChange={(e) => handleTypeChange(e)}>
-                    <option value={''}>Chọn loại văn phòng</option>
-                    <option value={'WAREHOUSE'}>Văn phòng tập kết</option>
-                </select>
-                <label>Tỉnh/thành</label>
-                <select onChange={(e) => handleShopProvinceChange(e)}>
-                    <option value=''>Chọn Tỉnh/thành</option>
-                    {
-                        (shopProvinceData && shopRCode) ? shopProvinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
-                    }
-                </select>
-                <label>Quận/Huyện</label>
-                <select onChange={(e) => handleShopDistrictChange(e)}>
-                    <option value=''>Chọn Quận/Huyện</option>
-                    {
-                        (shopDistrictData && shopPCode && shopRCode) ? shopDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
-                    }
-                </select>
-                <label>Phường/Xã</label>
-                <select onChange={(e) => handleShopCommuneChange(e)}>
-                    <option value=''>Chọn Phường/Xã</option>
-                    {
-                        (shopCommuneData && shopPCode && shopRCode && shopDCode) ? shopCommuneData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
-                    }
-                </select>
-                <label>Chọn văn phòng</label>
-                <select onChange={(e) => handleShopIdChange(e)}>
-                    <option value=''>Chọn Phường/Xã</option>
-                    {
-                        (shopData && shopCommuneId && shopPCode && shopRCode && shopDCode) ? shopData.map(shop => <option value={shop.shopId}>{shop.shopId}</option>) : <></>
-                    }
-                </select>
-            </div>
-            <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận</button>
-        </> : <></>}
+                <div className=''>
+                    <h3><b>Thông tin đơn hàng</b></h3>
+                    <span><b>Id: </b>{beautifyId(delivery.deliveryId)}</span><br></br>
+                    <span><b>Được gửi từ cửa hàng: </b>{delivery.fromCommune.name} <b>đến cửa hàng</b> {delivery.toCommune.name}</span><br></br>
+                    <span><b>Người gửi: </b>{delivery.fromName} <b>gửi từ</b> {delivery.fromAddress}</span><br></br>
+                    <span><b>Người nhận: </b>{delivery.toName} <b>nhận ở</b> {delivery.toAddress}</span><br></br>
+                </div>
+                <div className=''>
+                    <h3><b>Lịch sử chuyển hàng</b></h3>
+                    {history !== null ? history.map(his => <>
+                        <div className='te-detail-box'>
+                            <span><b>Thời gian: </b>{his.createdAt}</span><br></br>
+                            <span><b>Địa điểm: </b>{his.shop.commune.name}</span><br></br>
+                            <span><b>Loại văn phòng: </b>{his.shop.type === 'POST' ? 'Điểm giao dịch' : 'Điểm tập kết'}</span><br></br>
+                        </div>
+                    </>) : <></>}
+                </div>
+            </div> : <></>}
+            {(history && history.length === 1 && history[history.length - 1].shop.shopId === Number(shopId)) ? <>
+                <div className='te-next-place'>
+                    <label>Miền</label>
+                    <select onChange={(e) => handleShopRegionChange(e)}>
+                        <option value=''>Chọn miền</option>
+                        <option value={1}>Miền Bắc</option>
+                        <option value={2}>Miền Trung</option>
+                        <option value={3}>Miền Nam</option>
+                    </select>
+                    <label>Loại văn phòng tiếp theo</label>
+                    <select onChange={(e) => handleTypeChange(e)}>
+                        <option value={''}>Chọn loại văn phòng</option>
+                        <option value={'WAREHOUSE'}>Văn phòng tập kết</option>
+                    </select>
+                    <label>Tỉnh/thành</label>
+                    <select onChange={(e) => handleShopProvinceChange(e)}>
+                        <option value=''>Chọn Tỉnh/thành</option>
+                        {
+                            (shopProvinceData && shopRCode) ? shopProvinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
+                        }
+                    </select>
+                    <label>Quận/Huyện</label>
+                    <select onChange={(e) => handleShopDistrictChange(e)}>
+                        <option value=''>Chọn Quận/Huyện</option>
+                        {
+                            (shopDistrictData && shopPCode && shopRCode) ? shopDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
+                        }
+                    </select>
+                    <label>Phường/Xã</label>
+                    <select onChange={(e) => handleShopCommuneChange(e)}>
+                        <option value=''>Chọn Phường/Xã</option>
+                        {
+                            (shopCommuneData && shopPCode && shopRCode && shopDCode) ? shopCommuneData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
+                        }
+                    </select>
+                    <label>Chọn văn phòng</label>
+                    <select onChange={(e) => handleShopIdChange(e)}>
+                        <option value=''>Chọn Phường/Xã</option>
+                        {
+                            (shopData && shopCommuneId && shopPCode && shopRCode && shopDCode) ? shopData.map(shop => <option value={shop.shopId}>{shop.shopId}</option>) : <></>
+                        }
+                    </select>
+                    <button className='te-next-confirm' onClick={handleSubmit}>Xác nhận</button>
+                </div>
+            </> : <></>}
+        </div>
     </>
 }
 
