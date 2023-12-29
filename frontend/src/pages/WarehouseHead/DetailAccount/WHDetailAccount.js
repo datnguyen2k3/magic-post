@@ -1,13 +1,16 @@
 import './WHDetailAccount.scss'
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectToken, selectAccount } from '../../../app/authSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { convertText } from '../../../service/service';
 import { selectRole, selectUsername } from '../../../app/urlSlice';
+import { updateUsername, updateRole } from '../../../app/urlSlice';
 
 const WHDetailAccount = () => {
+
+    const dispatch = useDispatch()
 
     const username = useSelector(selectUsername);
     const role = useSelector(selectRole);
@@ -45,6 +48,12 @@ const WHDetailAccount = () => {
         fetchData()
     }, [])
 
+    const handleModifyAccount = (username, role) => {
+        navigate(`/management/wh-modify-account`)
+        dispatch(updateUsername({ username }))
+        dispatch(updateRole({ role }))
+    }
+
     return <>
         <div className='detail-account'>
             {detail ? <>
@@ -55,7 +64,7 @@ const WHDetailAccount = () => {
                 <span><b>Địa chỉ: </b>{detail.address}</span><br />
                 <span><b>Id Văn phòng: </b>{detail.workAt.shopId}</span><br />
                 <span><b>Địa chỉ Văn phòng: </b>{detail.workAt.commune.name} - ({detail.workAt.commune.communeId})</span><br />
-                <span><b>Số nhân viên đang quản lý: </b>{detail.employeeNumber}</span><br />
+                <button onClick={() => handleModifyAccount(detail.username, detail.role)}>Sửa thông tin của nhân viên này</button>
             </> : <>Loading...</>}
         </div>
     </>

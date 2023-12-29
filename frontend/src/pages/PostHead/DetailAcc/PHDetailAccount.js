@@ -68,7 +68,6 @@ const PHDetailAccount = () => {
                 <span><b>Địa chỉ: </b>{detail.address}</span><br />
                 <span><b>Id Văn phòng: </b>{detail.workAt.shopId}</span><br />
                 <span><b>Địa chỉ Văn phòng: </b>{detail.workAt.commune.name} - ({detail.workAt.commune.communeId})</span><br />
-                <span><b>Số nhân viên đang quản lý: </b>{detail.employeeNumber}</span><br />
                 <button onClick={() => handleModifyAccount(detail.username, detail.role)}>Sửa thông tin của nhân viên này</button>
             </> : <>Loading...</>}
         </div>

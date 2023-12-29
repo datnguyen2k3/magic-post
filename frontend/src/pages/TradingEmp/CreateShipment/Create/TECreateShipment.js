@@ -426,41 +426,41 @@ const TECreateShipment = () => {
                         <div className='te-form-box'>
                             <div className='te-form-sender-info'>
                                 <h3>Thông tin cá nhân</h3>
-                                <label>Họ và tên</label>
-                                <input name='senderName' type='text' onChange={(e) => handleInputChange(e)}></input>
-                                <label>Số điện thoại người nhận</label>
-                                <input name='senderPhone' type='text' onChange={(e) => handleInputChange(e)}></input>
+                                <label>Họ và tên</label><br></br>
+                                <input name='senderName' type='text' onChange={(e) => handleInputChange(e)}></input><br></br>
+                                <label>Số điện thoại người nhận</label><br></br>
+                                <input name='senderPhone' type='text' onChange={(e) => handleInputChange(e)}></input><br></br>
                             </div>
                             <div className='te-form-sender-address'>
                                 <h3>Điểm gửi</h3>
-                                <label>Miền</label>
+                                <label>Miền</label><br></br>
                                 <select onChange={(e) => handleSRegionChange(e)}>
                                     <option value=''>Chọn miền</option>
                                     <option value={1}>Miền Bắc</option>
                                     <option value={2}>Miền Trung</option>
                                     <option value={3}>Miền Nam</option>
-                                </select>
-                                <label>Tỉnh/thành</label>
+                                </select><br></br>
+                                <label>Tỉnh/thành</label><br></br>
                                 <select onChange={(e) => handleSProvinceChange(e)}>
                                     <option value=''>Chọn Tỉnh/thành</option>
                                     {
                                         (sProvinceData && sRCode) ? sProvinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
                                     }
-                                </select>
-                                <label>Quận/Huyện</label>
+                                </select><br></br>
+                                <label>Quận/Huyện</label><br></br>
                                 <select onChange={(e) => handleSDistrictChange(e)}>
                                     <option value=''>Chọn Quận/Huyện</option>
                                     {
                                         (sDistrictData && sPCode && sRCode) ? sDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
                                     }
-                                </select>
-                                <label>Phường/Xã</label>
+                                </select><br></br>
+                                <label>Phường/Xã</label><br></br>
                                 <select onChange={(e) => handleSWardChange(e)}>
                                     <option value=''>Chọn Phường/Xã</option>
                                     {
                                         (sWardData && sPCode && sRCode && sDCode) ? sWardData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
                                     }
-                                </select>
+                                </select><br></br>
                             </div>
                         </div>
                     </div>
@@ -469,41 +469,41 @@ const TECreateShipment = () => {
                         <div className='te-form-box'>
                             <div className='te-form-receiver-info'>
                                 <h3>Thông tin cá nhân</h3>
-                                <label>Họ và tên</label>
-                                <input name='receiverName' type='text' onChange={(e) => handleInputChange(e)}></input>
-                                <label>Số điện thoại người nhận</label>
-                                <input name='receiverPhone' type='text' onChange={(e) => handleInputChange(e)}></input>
+                                <label>Họ và tên</label><br></br>
+                                <input name='receiverName' type='text' onChange={(e) => handleInputChange(e)}></input><br></br>
+                                <label>Số điện thoại người nhận</label><br></br>
+                                <input name='receiverPhone' type='text' onChange={(e) => handleInputChange(e)}></input><br></br>
                             </div>
                             <div className='te-form-receiver-address'>
-                                <h3>Điểm gửi</h3>
-                                <label>Miền</label>
+                                <h3>Điểm nhận</h3>
+                                <label>Miền</label><br></br>
                                 <select onChange={(e) => handleRRegionChange(e)}>
                                     <option value=''>Chọn miền</option>
                                     <option value={1}>Miền Bắc</option>
                                     <option value={2}>Miền Trung</option>
                                     <option value={3}>Miền Nam</option>
-                                </select>
-                                <label>Tỉnh/thành</label>
+                                </select><br></br>
+                                <label>Tỉnh/thành</label><br></br>
                                 <select onChange={(e) => handleRProvinceChange(e)}>
                                     <option value=''>Chọn Tỉnh/thành</option>
                                     {
                                         (rProvinceData && rRCode) ? rProvinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
                                     }
-                                </select>
-                                <label>Quận/Huyện</label>
+                                </select><br></br>
+                                <label>Quận/Huyện</label><br></br>
                                 <select onChange={(e) => handleRDistrictChange(e)}>
                                     <option value=''>Chọn Quận/Huyện</option>
                                     {
                                         (rDistrictData && rPCode && rRCode) ? rDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
                                     }
-                                </select>
-                                <label>Phường/Xã</label>
+                                </select><br></br>
+                                <label>Phường/Xã</label><br></br>
                                 <select onChange={(e) => handleRWardChange(e)}>
                                     <option value=''>Chọn Phường/Xã</option>
                                     {
                                         (rWardData && sPCode && sRCode && sDCode) ? rWardData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
                                     }
-                                </select>
+                                </select><br></br>
                             </div>
                         </div>
                     </div>
@@ -518,56 +518,56 @@ const TECreateShipment = () => {
                                     <option value={''}>-- Chọn loại --</option>
                                     <option value={'DOCUMENT'}>Tài liệu</option>
                                     <option value={'PRODUCT'}>Hàng hóa</option>
-                                </select>
-                                <label>Tên đơn vận: </label>
-                                <input type='text' name='name' onChange={handleInputChange}></input>
-                                <label>Mô tả ở điểm đi: </label>
-                                <input type='textarea' name='fromDescription' onChange={handleInputChange}></input>
-                                <label>Mô tả khi nhận: </label>
-                                <input type='textarea' name='toDescription' onChange={handleInputChange}></input>
-                                <label>Phí: </label>
-                                <input type='number' name='shippingFee' onChange={handleInputChange}></input>
-                                <label>Cân nặng (kg): </label>
-                                <input type='number' name='weight' onChange={handleInputChange}></input>
+                                </select><br></br>
+                                <label>Tên đơn vận: </label><br></br>
+                                <input type='text' name='name' onChange={handleInputChange}></input><br></br>
+                                <label>Mô tả ở điểm đi: </label><br></br>
+                                <input type='textarea' name='fromDescription' onChange={handleInputChange}></input><br></br>
+                                <label>Mô tả khi nhận: </label><br></br>
+                                <input type='textarea' name='toDescription' onChange={handleInputChange}></input><br></br>
+                                <label>Phí: </label><br></br>
+                                <input type='number' name='shippingFee' onChange={handleInputChange}></input><br></br>
+                                <label>Cân nặng (kg): </label><br></br>
+                                <input type='number' name='weight' onChange={handleInputChange}></input><br></br>
                             </div>
                         </div>
                     </div>
                     <div className='te-form-shipment-info-2'>
                         <h2>Xác nhận điểm giao dịch đầu và cuối</h2>
                         <div className='te-confirm-offices-box'>
-                            <label>Điểm giao dịch cuối</label><br></br>
-                            <label>Miền</label>
+                            <label>Điểm giao dịch cuối</label><br></br><br></br>
+                            <label>Miền</label><br></br>
                             <select onChange={(e) => handleShopRegionChange(e)}>
                                 <option value=''>Chọn miền</option>
                                 <option value={1}>Miền Bắc</option>
                                 <option value={2}>Miền Trung</option>
                                 <option value={3}>Miền Nam</option>
-                            </select>
-                            <label>Tỉnh/thành</label>
+                            </select><br></br>
+                            <label>Tỉnh/thành</label><br></br>
                             <select onChange={(e) => handleShopProvinceChange(e)}>
                                 <option value=''>Chọn Tỉnh/thành</option>
                                 {
                                     (shopProvinceData && shopRCode) ? shopProvinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
                                 }
-                            </select>
-                            <label>Quận/Huyện</label>
+                            </select><br></br>
+                            <label>Quận/Huyện</label><br></br>
                             <select onChange={(e) => handleShopDistrictChange(e)}>
                                 <option value=''>Chọn Quận/Huyện</option>
                                 {
                                     (shopDistrictData && shopPCode && shopRCode) ? shopDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
                                 }
-                            </select>
-                            <label>Phường/Xã</label>
+                            </select><br></br>
+                            <label>Phường/Xã</label><br></br>
                             <select onChange={(e) => handleShopCommuneChange(e)}>
                                 <option value=''>Chọn Phường/Xã</option>
                                 {
                                     (shopCommuneData && shopPCode && shopRCode && shopDCode) ? shopCommuneData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
                                 }
-                            </select>
+                            </select><br></br>
                         </div>
                     </div>
                 </div>
-                <input className='te-form-submit' type='submit' value={'Xác nhận thông tin đơn vận'} onClick={handleSubmit}></input>
+                <input className='te-form-submit' type='submit' value={'Xác nhận thông tin đơn vận'} onClick={handleSubmit}></input><br></br>
             </form></div>
         </div>
     </>

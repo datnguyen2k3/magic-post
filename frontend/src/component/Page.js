@@ -15,7 +15,7 @@ import TEDetail from '../pages/TradingEmp/CreateShipment/Detail/TEDetail';
 import TENext from '../pages/TradingEmp/InShopDeliveries/Detail/TENext'
 import TEReceive from '../pages/TradingEmp/InShopDeliveries/All/TEReceive';
 import TEComing from '../pages/TradingEmp/ComingDeliveries/All/TEComing';
-import WHCreateAccount from '../pages/WarehouseHead/WHCreateAcc/WHCreateAccount';
+import WHCreateAccount from '../pages/WarehouseHead/CreateAcc/WHCreateAccount';
 import WarehouseHead from './auth-component/WarehouseHead';
 import TEConfirmReceive from '../pages/TradingEmp/ComingDeliveries/Detail/TEConfirmReceive';
 import TEInShop from '../pages/TradingEmp/GoingToShipping/All/TEInShop';

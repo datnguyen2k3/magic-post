@@ -90,7 +90,7 @@ const WHAccounts = () => {
     const handleViewDetail = (username, role) => {
         navigate(`/management/wh-detail-account`)
         dispatch(updateUsername({ username }))
-        dispatch(updateRole(role))
+        dispatch(updateRole({ role }))
     }
 
     const handleInputChange = (e) => {
@@ -127,7 +127,7 @@ const WHAccounts = () => {
     }, [name, username, phone, email, address])
 
     return <>
-        <div className='accounts'>
+        <div className='wh-accounts'>
             <h1>Các tài khoản trưởng điểm</h1>
             <Table>
                 <thead>
@@ -158,10 +158,10 @@ const WHAccounts = () => {
                         </tr>
                     </>) : <>Loading ...</>}
                 </tbody>
-                <button onClick={prev}>Trang trước</button>
-                <span>{page}</span>
-                <button onClick={next}>Trang sau</button>
             </Table>
+            <div className='pagination'><button onClick={prev}>Trang trước</button>
+                <span>{page}/{maxPage}</span>
+                <button onClick={next}>Trang sau</button></div>
         </div>
     </>
 }

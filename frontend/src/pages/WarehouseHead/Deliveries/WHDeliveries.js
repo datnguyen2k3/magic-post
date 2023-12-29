@@ -217,9 +217,11 @@ const WHDeliveries = () => {
                     )) : <></>}
                 </tbody>
             </Table>
-            <button onClick={prev}>Trang trước</button>
-            <span>{page}</span>
-            <button onClick={next}>Trang sau</button>
+            <div className='pagination'>
+                <button onClick={prev}>Trang trước</button>
+                <span>{page}/{maxPage}</span>
+                <button onClick={next}>Trang sau</button>
+            </div>
         </div>
     </>
 }
