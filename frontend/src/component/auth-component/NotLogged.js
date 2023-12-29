@@ -8,7 +8,7 @@ const NotLogged = ({ children }) => {
     const navigate = useNavigate();
     const isLoggedIn = (useSelector(selectRole) !== '');
 
-    return !isLoggedIn ? children : <div>Bạn đăng nhập rồi, hãy trở về <Link to={'/'}>Trang chủ</Link></div>;
+    return !isLoggedIn ? children : <div>Bạn đăng nhập rồi, hãy trở về <Link to={'/management'}>Trang chủ</Link></div>;
 }
 
 export default NotLogged

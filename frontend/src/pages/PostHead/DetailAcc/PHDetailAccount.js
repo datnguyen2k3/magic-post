@@ -55,7 +55,7 @@ const PHDetailAccount = () => {
     const handleModifyAccount = (username, role) => {
         navigate(`/management/ph-modify-account`)
         dispatch(updateUsername({ username }))
-        dispatch(updateRole(role))
+        dispatch(updateRole({ role }))
     }
 
     return <>

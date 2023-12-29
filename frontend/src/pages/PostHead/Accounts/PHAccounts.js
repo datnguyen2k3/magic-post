@@ -125,7 +125,7 @@ const PHAccounts = () => {
     }, [name, address, phone, email])
 
     return <>
-        <div className='accounts'>
+        <div className='ph-accounts'>
             <h1>Các tài khoản trưởng điểm</h1>
             <Table>
                 <thead>
@@ -171,9 +171,11 @@ const PHAccounts = () => {
                     </>) : <>Loading ...</>}
                 </tbody>
             </Table>
-            <button onClick={prev}>Prev</button>
-            <span>{page}</span>
-            <button onClick={next}>Next</button>
+            <div className='pagination'>
+                <button onClick={prev}>Prev</button>
+                <span>{page}/{maxPage}</span>
+                <button onClick={next}>Next</button>
+            </div>
         </div>
     </>
 }

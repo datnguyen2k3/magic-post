@@ -207,48 +207,52 @@ const PHCreateAccount = () => {
             <h2><b>Tạo tài khoản cho nhân viên điểm giao dịch</b></h2>
             <form onSubmit={handleSubmit}>
                 <div className='ph-create-account-box'>
-                    <div className='ph-create-account-box-1'>
-                        <label>Tên nhân viên</label>
-                        <input type='text' name='name' value={user.name} onChange={handleInputChange}></input>
-                        <label>Username</label>
-                        <input type='text' name='username' value={user.username} onChange={handleInputChange}></input>
-                        <label>Password</label>
-                        <input type='password' name='password' value={user.password} onChange={handleInputChange}></input>
-                        <label>Email</label>
-                        <input type='email' name='email' value={user.email} onChange={handleInputChange}></input>
-                        <label>Số điện thoại</label>
-                        <input type='text' name='phone' value={user.phone} onChange={handleInputChange}></input>
-                        <label>CCCD</label>
-                        <input type='text' name='cccd' value={user.idNumber} onChange={handleInputChange}></input>
-                        <label>Miền</label>
-                        <select onChange={(e) => handleRegionChange(e)}>
-                            <option value=''>Chọn miền</option>
-                            <option value={1}>Miền Bắc</option>
-                            <option value={2}>Miền Trung</option>
-                            <option value={3}>Miền Nam</option>
-                        </select>
-                        <label>Tỉnh/thành</label>
-                        <select onChange={(e) => handleProvinceChange(e)}>
-                            <option value=''>Chọn Tỉnh/thành</option>
-                            {
-                                (provinceData && rCode) ? provinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
-                            }
-                        </select>
-                        <label>Quận/Huyện</label>
-                        <select onChange={(e) => handleDistrictChange(e)}>
-                            <option value=''>Chọn Quận/Huyện</option>
-                            {
-                                (districtData && pCode && rCode) ? districtData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
-                            }
-                        </select>
-                        <label>Xã/Phường</label>
-                        <select onChange={(e) => handleCommuneChange(e)}>
-                            <option value=''>Chọn điểm</option>
-                            {
-                                (pCode && rCode && dCode && communeData) ? communeData.map(commune => <option value={commune.communeId}>{commune.name}</option>) : <></>
-                            }
-                        </select>
+                    <div className='box-11'>
+                        <div className='ph-create-account-box-1'>
+                            <label>Tên nhân viên</label>
+                            <input type='text' name='name' value={user.name} onChange={handleInputChange}></input>
+                            <label>Username</label>
+                            <input type='text' name='username' value={user.username} onChange={handleInputChange}></input>
+                            <label>Password</label>
+                            <input type='password' name='password' value={user.password} onChange={handleInputChange}></input>
+                        </div>
+                        <div className='ph-create-account-box-2'>
+                            <label>Email</label>
+                            <input type='email' name='email' value={user.email} onChange={handleInputChange}></input>
+                            <label>Số điện thoại</label>
+                            <input type='text' name='phone' value={user.phone} onChange={handleInputChange}></input>
+                            <label>CCCD</label>
+                            <input type='text' name='cccd' value={user.idNumber} onChange={handleInputChange}></input>
+                        </div>
                     </div>
+                    <label>Miền</label>
+                    <select onChange={(e) => handleRegionChange(e)}>
+                        <option value=''>Chọn miền</option>
+                        <option value={1}>Miền Bắc</option>
+                        <option value={2}>Miền Trung</option>
+                        <option value={3}>Miền Nam</option>
+                    </select>
+                    <label>Tỉnh/thành</label>
+                    <select onChange={(e) => handleProvinceChange(e)}>
+                        <option value=''>Chọn Tỉnh/thành</option>
+                        {
+                            (provinceData && rCode) ? provinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
+                        }
+                    </select>
+                    <label>Quận/Huyện</label>
+                    <select onChange={(e) => handleDistrictChange(e)}>
+                        <option value=''>Chọn Quận/Huyện</option>
+                        {
+                            (districtData && pCode && rCode) ? districtData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
+                        }
+                    </select>
+                    <label>Xã/Phường</label>
+                    <select onChange={(e) => handleCommuneChange(e)}>
+                        <option value=''>Chọn điểm</option>
+                        {
+                            (pCode && rCode && dCode && communeData) ? communeData.map(commune => <option value={commune.communeId}>{commune.name}</option>) : <></>
+                        }
+                    </select>
                 </div>
                 <input type='submit' value={'Hoàn thành tạo tài khoản'} className='ph-create-account-submit'></input>
             </form>

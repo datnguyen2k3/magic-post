@@ -1,4 +1,4 @@
-.ph-create-account {
+.wh-create-account {
     h2 {
         margin-bottom: 40px;
     }
@@ -23,20 +23,20 @@
             border-radius: 8px;
         }
 
-        .ph-create-account-box {
+        .wh-create-account-box {
             display: flex;
             gap: 40px;
             width: 100%;
             justify-content: center;
 
-            .ph-create-account-box-1 {
+            .wh-create-account-box-1 {
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
             }
         }
 
-        .ph-create-account-submit {
+        .wh-create-account-submit {
             padding: 5px 15px;
 
             &:hover {

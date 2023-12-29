@@ -198,11 +198,11 @@ const WHCreateAccount = () => {
     };
 
     return <>
-        <div className='ph-create-account'>
+        <div className='wh-create-account'>
             <h2><b>Tạo tài khoản cho nhân viên điểm giao dịch</b></h2>
             <form onSubmit={handleSubmit}>
-                <div className='ph-create-account-box'>
-                    <div className='ph-create-account-box-1'>
+                <div className='wh-create-account-box'>
+                    <div className='wh-create-account-box-1'>
                         <label>Tên nhân viên</label>
                         <input type='text' name='name' value={user.name} onChange={handleInputChange}></input>
                         <label>Username</label>
@@ -245,7 +245,7 @@ const WHCreateAccount = () => {
                         </select>
                     </div>
                 </div>
-                <input type='submit' value={'Hoàn thành tạo tài khoản'} className='ph-create-account-submit'></input>
+                <input type='submit' value={'Hoàn thành tạo tài khoản'} className='wh-create-account-submit'></input>
             </form>
         </div>
     </>

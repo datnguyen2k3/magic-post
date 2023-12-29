@@ -10,7 +10,7 @@ import CreateAccount from '../pages/CEO/CreateAcc/CreateAccount';
 import TradingEmp from './auth-component/TradingEmp';
 import TECreateShipment from '../pages/TradingEmp/CreateShipment/Create/TECreateShipment';
 import PostHead from './auth-component/PostHead';
-import PHCreateAccount from '../pages/PostHead/PHCreateAcc/PHCreateAccount';
+import PHCreateAccount from '../pages/PostHead/CreateAcc/PHCreateAccount';
 import TEDetail from '../pages/TradingEmp/CreateShipment/Detail/TEDetail';
 import TENext from '../pages/TradingEmp/InShopDeliveries/Detail/TENext'
 import TEReceive from '../pages/TradingEmp/InShopDeliveries/All/TEReceive';

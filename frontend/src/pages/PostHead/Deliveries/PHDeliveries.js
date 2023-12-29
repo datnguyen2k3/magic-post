@@ -219,9 +219,11 @@ const PHDeliveries = () => {
                     )) : <></>}
                 </tbody>
             </Table>
-            <button onClick={prev}>Prev</button>
-            <span>{page}</span>
-            <button onClick={next}>Next</button>
+            <div className='pagination'>
+                <button onClick={prev}>Prev</button>
+                <span>{page}</span>
+                <button onClick={next}>Next</button>
+            </div>
         </div>
     </>
 }
