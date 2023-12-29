@@ -235,9 +235,11 @@ const Deliveries = () => {
                         </tr>
                     )) : <></>}
                 </tbody>
-                <button onClick={prev}>Trang truớc</button>
-                <span>{page}</span>
-                <button onClick={next}>Trang sau</button>
+                <div className='pagination'>
+                    <button onClick={prev}>Trang truớc</button>
+                    <span>{page}/{maxPage}</span>
+                    <button onClick={next}>Trang sau</button>
+                </div>
             </Table>
         </div>
     </>

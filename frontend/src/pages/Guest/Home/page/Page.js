@@ -306,7 +306,7 @@ const Page = (props) => {
                                         Giá trị của chúng tôi là bản sắc riêng. Văn hóa của chúng tôi
                                         là điểm đặc biệt. Chiến lược của chúng tôi là động lực thúc
                                         đẩy. Tại công ty chúng tôi, khách hàng luôn được ưu tiên, con
-                                        người là trọng tâm và sự sáng tạo là động lực dẫn dắt chúng tô
+                                        người là trọng tâm và sự sáng tạo là động lực dẫn dắt chúng tôi.
                                     </p>
                                     <h3 className="u-custom-font u-text u-text-2">
                                         Mr. Tran Manh Dung

@@ -198,9 +198,11 @@ const Accounts = () => {
                         </tr>
                     </>) : <>Loading ...</>}
                 </tbody>
-                <button onClick={prev}>Trang trước</button>
-                <span>{page}/{maxPage}</span>
-                <button onClick={next}>Trang sau</button>
+                <div className='accounts-pagination'>
+                    <button onClick={prev}>Trang trước</button>
+                    <span>{page}/{maxPage}</span>
+                    <button onClick={next}>Trang sau</button>
+                </div>
             </Table>
         </div>
     </>

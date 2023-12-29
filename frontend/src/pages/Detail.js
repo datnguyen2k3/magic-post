@@ -34,81 +34,77 @@ const Detail = () => {
         fetchData()
     }, [])
 
-    return <>
-        <div className='detail'>
-            {delivery ? <>
-                <h1>Thông tin đơn hàng</h1>
-                <Table>
-                    <b>Thông tin cơ bản:</b>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tên đơn hàng</th>
-                            <th>Mô tả</th>
-                            <th>Cân nặng - Chi phí</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{beautifyId(delivery.deliveryId)}</td>
-                            <td>{delivery.name}</td>
-                            <td>{delivery.description}</td>
-                            <td>{delivery.weight}kg/{delivery.shippingFee}VND</td>
-                        </tr>
-                    </tbody>
-                    <b>Thông tin phía gửi:</b>
-                    <thead>
-                        <tr>
-                            <th>Nguời gửi</th>
-                            <th>Số điện thoại người gửi</th>
-                            <th>Địa chỉ người gửi</th>
-                            <th>Văn phòng gửi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{delivery.fromName}</td>
-                            <td>{delivery.fromPhone}</td>
-                            <td>{delivery.fromAddress}</td>
-                            <td>{delivery.fromShop.commune.name}({delivery.fromShop.shopId})</td>
-                        </tr>
-                    </tbody>
-                    <b>Thông tin phía nhận:</b>
-                    <thead>
-                        <tr>
-                            <th>Nguời nhận</th>
-                            <th>Số điện thoại người nhận</th>
-                            <th>Địa chỉ người nhận</th>
-                            <th>Văn phòng nhận</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{delivery.toName}</td>
-                            <td>{delivery.toPhone}</td>
-                            <td>{delivery.toAddress}</td>
-                            <td>{delivery.toShop.commune.name}({convertText(delivery.toShop.shopId)})</td>
-                        </tr>
-                    </tbody>
-                    <b>Trạng thái đơn hàng</b>
-                    <thead>
-                        <th>Trạng thái hiện tại</th>
-                        <th>Văn phòng hiện tại</th>
-                        <th>Thời gian tạo đơn</th>
-                        <th>Thời gian cập nhật trạng thái cuối cùng</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{delivery.currentStatus}</td>
-                            <td>{delivery.currentShop.commune.name} - {convertText(delivery.currentShop.type)}({delivery.currentShop.shopId})</td>
-                            <td>{delivery.createdAt}</td>
-                            <td>{delivery.updatedAt}</td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </> : <>Đơn hàng không tồn tại hoặc chưa được tải thông tin xong</>}
+    const renderBasicInfo = () => (
+        <Table>
+            <thead>
+                <tr>
+                    <th colSpan='4'>Thông tin cơ bản</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên đơn hàng</th>
+                    <th>Mô tả khi gửi</th>
+                    <th>Mô tả khi nhận</th>
+                    <th>Cân nặng - Chi phí</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{beautifyId(delivery.deliveryId)}</td>
+                    <td>{delivery.name}</td>
+                    <td>{delivery.fromDescription}</td>
+                    <td>{delivery.toDescription}</td>
+                    <td>{delivery.weight}kg/{delivery.shippingFee}VND</td>
+                </tr>
+            </tbody>
+        </Table>
+    );
+
+    const renderSenderInfo = () => (
+        <div className='sender-info'>
+            <h2>Thông tin người gửi</h2>
+            <p><strong>Nguời gửi:</strong> {delivery.fromName}</p>
+            <p><strong>Số điện thoại người gửi:</strong> {delivery.fromPhone}</p>
+            <p><strong>Địa chỉ người gửi:</strong> {delivery.fromAddress}</p>
+            <p><strong>Văn phòng gửi:</strong> {delivery.fromShop.commune.name} ({delivery.fromShop.shopId})</p>
         </div>
-    </>
+    );
+
+    const renderRecipientInfo = () => (
+        <div className='recipient-info'>
+            <h2>Thông tin người nhận</h2>
+            <p><strong>Nguời nhận:</strong> {delivery.toName}</p>
+            <p><strong>Số điện thoại người nhận:</strong> {delivery.toPhone}</p>
+            <p><strong>Địa chỉ người nhận:</strong> {delivery.toAddress}</p>
+            <p><strong>Văn phòng nhận:</strong> {delivery.toShop.commune.name} ({delivery.toShop.shopId})</p>
+        </div>
+    );
+
+    const renderStatusInfo = () => (
+        <div className='status-info'>
+            <h2>Trạng thái đơn hàng</h2>
+            <p><strong>Trạng thái hiện tại:</strong> {convertText(delivery.currentStatus)}</p>
+            <p><strong>Văn phòng hiện tại:</strong> {delivery.currentShop.commune.name} - {convertText(delivery.currentShop.type)} ({delivery.currentShop.shopId})</p>
+            <p><strong>Thời gian tạo đơn:</strong> {delivery.createdAt}</p>
+            <p><strong>Thời gian cập nhật trạng thái cuối cùng:</strong> {delivery.updatedAt}</p>
+        </div>
+    );
+
+    return (
+        <div className='detail'>
+            {delivery ? (
+                <>
+                    <h1>Thông tin đơn hàng</h1>
+                    {renderBasicInfo()}
+                    {renderSenderInfo()}
+                    {renderRecipientInfo()}
+                    {renderStatusInfo()}
+                </>
+            ) : (
+                <p>Đơn hàng không tồn tại hoặc chưa được tải thông tin xong</p>
+            )}
+        </div>
+    );
 }
 
 export default Detail

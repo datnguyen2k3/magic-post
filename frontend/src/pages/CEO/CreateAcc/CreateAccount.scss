@@ -1,48 +1,70 @@
+// Đặt màu chủ đạo
+$primary-color: #f19a0e;
+
 .create-account {
+    text-align: center;
+
     h2 {
-        margin-bottom: 40px;
+        font-weight: bold;
     }
 
     form {
         display: flex;
         flex-direction: column;
-        gap: 20px;
-        width: 100%;
         align-items: center;
 
-        input {
-            padding: 5px 10px 5px 20px;
-        }
-
-        select {
-            padding: 6px 10px;
-        }
-
-        input,
-        select {
-            border-radius: 8px;
-        }
-
-        .create-account-box {
+        .ph-create-account-box {
             display: flex;
-            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: space-between;
             width: 100%;
-            justify-content: center;
+            flex-direction: column;
 
-            .create-account-box-1,
-            .create-account-box-2 {
+            .ph-create-account-box-1,
+            .ph-create-account-box-2 {
+                width: calc(100% - 40px); // Chia đôi khối với khoảng cách 10px giữa chúng
+                margin-bottom: 20px;
+                box-sizing: border-box;
+                display: flex;
+                gap: 40px;
+            }
+
+            .box-1,
+            .box-2,
+            .box-3,
+            .box-4 {
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
+                align-items: flex-start;
+                width: 100%;
+
+                label {
+                    margin-bottom: 5px;
+                }
+
+                input,
+                select {
+                    margin-bottom: 10px;
+                    padding: 8px;
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+            }
+
+            .box-3,
+            .box-4 {
+                margin-top: 20px;
             }
         }
 
-        .create-account-submit {
-            padding: 5px 15px;
-
-            &:hover {
-                background: #d7d7d7;
-            }
+        .ph-create-account-submit {
+            padding: 10px;
+            background-color: $primary-color; // Sử dụng màu chủ đạo
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
         }
     }
 }

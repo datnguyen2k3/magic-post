@@ -214,9 +214,9 @@ const ModifyAccount = () => {
 
     const handleCancel = (e) => {
         e.preventDefault()
+        dispatch(updateUsername({ username }))
+        dispatch(updateRole({ role }))
         navigate(`/management/detail-account`)
-        dispatch(updateUsername(username))
-        dispatch(updateRole(role))
     }
 
     return <>

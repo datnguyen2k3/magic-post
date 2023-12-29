@@ -340,89 +340,100 @@ const CreateAccount = () => {
             <form onSubmit={handleSubmit}>
                 <div className='ph-create-account-box'>
                     <div className='ph-create-account-box-1'>
-                        <label>Tên nhân viên</label>
-                        <input type='text' name='name' value={user.name} onChange={handleInputChange}></input>
-                        <label>Username</label>
-                        <input type='text' name='username' value={user.username} onChange={handleInputChange}></input>
-                        <label>Password</label>
-                        <input type='password' name='password' value={user.password} onChange={handleInputChange}></input>
-                        <label>Email</label>
-                        <input type='email' name='email' value={user.email} onChange={handleInputChange}></input>
-                        <label>Số điện thoại</label>
-                        <input type='text' name='phone' value={user.phone} onChange={handleInputChange}></input>
-                        <label>CCCD</label>
-                        <input type='text' name='cccd' value={user.idNumber} onChange={handleInputChange}></input>
-                        <label>Miền</label>
-                        <select onChange={(e) => handleRegionChange(e)}>
-                            <option value=''>Chọn miền</option>
-                            <option value={1}>Miền Bắc</option>
-                            <option value={2}>Miền Trung</option>
-                            <option value={3}>Miền Nam</option>
-                        </select>
-                        <label>Tỉnh/thành</label>
-                        <select onChange={(e) => handleProvinceChange(e)}>
-                            <option value=''>Chọn Tỉnh/thành</option>
-                            {
-                                (provinceData && rCode) ? provinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
-                            }
-                        </select>
-                        <label>Quận/Huyện</label>
-                        <select onChange={(e) => handleDistrictChange(e)}>
-                            <option value=''>Chọn Quận/Huyện</option>
-                            {
-                                (districtData && pCode && rCode) ? districtData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
-                            }
-                        </select>
-                        <label>Xã/Phường</label>
-                        <select onChange={(e) => handleCommuneChange(e)}>
-                            <option value=''>Chọn Xã/Phường</option>
-                            {
-                                (pCode && rCode && dCode && wardData) ? wardData.map(commune => <option value={commune.communeId}>{commune.name}</option>) : <></>
-                            }
-                        </select>
+                        <div className='box-1'>
+                            <label>Tên nhân viên</label>
+                            <input type='text' name='name' value={user.name} onChange={handleInputChange}></input>
+                            <label>Username</label>
+                            <input type='text' name='username' value={user.username} onChange={handleInputChange}></input>
+                            <label>Password</label>
+                            <input type='password' name='password' value={user.password} onChange={handleInputChange}></input>
+                        </div>
+                        <div className='box-2'>
+                            <label>Email</label>
+                            <input type='email' name='email' value={user.email} onChange={handleInputChange}></input>
+                            <label>Số điện thoại</label>
+                            <input type='text' name='phone' value={user.phone} onChange={handleInputChange}></input>
+                            <label>CCCD</label>
+                            <input type='text' name='cccd' value={user.idNumber} onChange={handleInputChange}></input>
+                        </div>
+                    </div>
+                    <div className='ph-create-account-box-2'>
+                        <div className='box-3'>
+                            <h4>Chọn địa chỉ</h4>
+                            <label>Miền</label>
+                            <select onChange={(e) => handleRegionChange(e)}>
+                                <option value=''>Chọn miền</option>
+                                <option value={1}>Miền Bắc</option>
+                                <option value={2}>Miền Trung</option>
+                                <option value={3}>Miền Nam</option>
+                            </select>
+                            <label>Tỉnh/thành</label>
+                            <select onChange={(e) => handleProvinceChange(e)}>
+                                <option value=''>Chọn Tỉnh/thành</option>
+                                {
+                                    (provinceData && rCode) ? provinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
+                                }
+                            </select>
+                            <label>Quận/Huyện</label>
+                            <select onChange={(e) => handleDistrictChange(e)}>
+                                <option value=''>Chọn Quận/Huyện</option>
+                                {
+                                    (districtData && pCode && rCode) ? districtData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
+                                }
+                            </select>
+                            <label>Xã/Phường</label>
+                            <select onChange={(e) => handleCommuneChange(e)}>
+                                <option value=''>Chọn Xã/Phường</option>
+                                {
+                                    (pCode && rCode && dCode && wardData) ? wardData.map(commune => <option value={commune.communeId}>{commune.name}</option>) : <></>
+                                }
+                            </select>
+                        </div>
                         <br></br>
-                        <h4>Chọn địa điểm làm việc/vai trò</h4>
-                        <label>Chọn vai trò</label>
-                        <select onChange={handleRoleChange}>
-                            <option value=''>Vai trò</option>
-                            <option value='POST_HEAD'>Trưởng điểm giao dịch</option>
-                            <option value='WAREHOUSE_HEAD'>Trưởng điểm tập kết</option>
-                        </select>
-                        <label>Miền</label>
-                        <select onChange={(e) => handleShopRegionChange(e)}>
-                            <option value=''>Chọn miền</option>
-                            <option value={1}>Miền Bắc</option>
-                            <option value={2}>Miền Trung</option>
-                            <option value={3}>Miền Nam</option>
-                        </select>
-                        <label>Tỉnh/thành</label>
-                        <select onChange={(e) => handleShopProvinceChange(e)}>
-                            <option value=''>Chọn Tỉnh/thành</option>
-                            {
-                                (shopProvinceData && shopRCode) ? shopProvinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
-                            }
-                        </select>
-                        <label>Quận/Huyện</label>
-                        <select onChange={(e) => handleShopDistrictChange(e)}>
-                            <option value=''>Chọn Quận/Huyện</option>
-                            {
-                                (shopDistrictData && shopPCode && shopRCode) ? shopDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
-                            }
-                        </select>
-                        <label>Xã/Phường</label>
-                        <select onChange={(e) => handleShopWardChange(e)}>
-                            <option value=''>Chọn Xã/Phường văn phòng</option>
-                            {
-                                (shopPCode && shopRCode && shopDCode && shopWardData) ? shopWardData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
-                            }
-                        </select>
-                        <label>Id Văn phòng</label>
-                        <select onChange={(e) => handleShopCommuneChange(e)}>
-                            <option value=''>Chọn Id văn phòng</option>
-                            {
-                                (shopPCode && shopRCode && shopDCode && shopWCode && shopData) ? shopData.map(shop => <option value={shop.shopId}>{shop.shopId}</option>) : <></>
-                            }
-                        </select>
+                        <div className='box-4'>
+                            <h4>Chọn địa điểm làm việc/vai trò</h4>
+                            <label>Chọn vai trò</label>
+                            <select onChange={handleRoleChange}>
+                                <option value=''>Vai trò</option>
+                                <option value='POST_HEAD'>Trưởng điểm giao dịch</option>
+                                <option value='WAREHOUSE_HEAD'>Trưởng điểm tập kết</option>
+                            </select>
+                            <label>Miền</label>
+                            <select onChange={(e) => handleShopRegionChange(e)}>
+                                <option value=''>Chọn miền</option>
+                                <option value={1}>Miền Bắc</option>
+                                <option value={2}>Miền Trung</option>
+                                <option value={3}>Miền Nam</option>
+                            </select>
+                            <label>Tỉnh/thành</label>
+                            <select onChange={(e) => handleShopProvinceChange(e)}>
+                                <option value=''>Chọn Tỉnh/thành</option>
+                                {
+                                    (shopProvinceData && shopRCode) ? shopProvinceData.map(province => <option value={province.provinceId}>{province.name}</option>) : <></>
+                                }
+                            </select>
+                            <label>Quận/Huyện</label>
+                            <select onChange={(e) => handleShopDistrictChange(e)}>
+                                <option value=''>Chọn Quận/Huyện</option>
+                                {
+                                    (shopDistrictData && shopPCode && shopRCode) ? shopDistrictData.map(district => <option value={district.districtId}>{district.name}</option>) : <></>
+                                }
+                            </select>
+                            <label>Xã/Phường</label>
+                            <select onChange={(e) => handleShopWardChange(e)}>
+                                <option value=''>Chọn Xã/Phường văn phòng</option>
+                                {
+                                    (shopPCode && shopRCode && shopDCode && shopWardData) ? shopWardData.map(ward => <option value={ward.communeId}>{ward.name}</option>) : <></>
+                                }
+                            </select>
+                            <label>Id Văn phòng</label>
+                            <select onChange={(e) => handleShopCommuneChange(e)}>
+                                <option value=''>Chọn Id văn phòng</option>
+                                {
+                                    (shopPCode && shopRCode && shopDCode && shopWCode && shopData) ? shopData.map(shop => <option value={shop.shopId}>{shop.shopId}</option>) : <></>
+                                }
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <input type='submit' value={'Hoàn thành tạo tài khoản'} className='ph-create-account-submit'></input>

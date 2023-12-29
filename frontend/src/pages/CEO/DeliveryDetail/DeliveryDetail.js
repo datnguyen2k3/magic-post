@@ -39,77 +39,103 @@ const DeliveryDetail = () => {
 
     return <>
         <div className='delivery-detail'>
-            {delivery ? <>
-                <h1>Thông tin đơn hàng</h1>
-                <Table>
-                    <b>Thông tin cơ bản:</b>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tên đơn hàng</th>
-                            <th>Mô tả</th>
-                            <th>Cân nặng - Chi phí</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{beautifyId(delivery.deliveryId)}</td>
-                            <td>{delivery.name}</td>
-                            <td>{delivery.description}</td>
-                            <td>{delivery.weight}kg/{delivery.shippingFee}VND</td>
-                        </tr>
-                    </tbody>
-                    <b>Thông tin phía gửi:</b>
-                    <thead>
-                        <tr>
-                            <th>Nguời gửi</th>
-                            <th>Số điện thoại người gửi</th>
-                            <th>Địa chỉ người gửi</th>
-                            <th>Văn phòng gửi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{delivery.fromName}</td>
-                            <td>{delivery.fromPhone}</td>
-                            <td>{delivery.fromAddress}</td>
-                            <td><button onClick={() => handleViewShop(delivery.fromShop.shopId)}><Link to={`/management/detail-office`}>{delivery.fromShop.commune.name}({delivery.fromShop.shopId})</Link></button></td>
-                        </tr>
-                    </tbody>
-                    <b>Thông tin phía nhận:</b>
-                    <thead>
-                        <tr>
-                            <th>Nguời nhận</th>
-                            <th>Số điện thoại người nhận</th>
-                            <th>Địa chỉ người nhận</th>
-                            <th>Văn phòng nhận</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{delivery.toName}</td>
-                            <td>{delivery.toPhone}</td>
-                            <td>{delivery.toAddress}</td>
-                            <td><button onClick={() => handleViewShop(delivery.toShop.shopId)}><Link to={`/management/detail-office`}>{delivery.toShop.commune.name}({delivery.toShop.shopId})</Link></button></td>
-                        </tr>
-                    </tbody>
-                    <b>Trạng thái đơn hàng</b>
-                    <thead>
-                        <th>Trạng thái hiện tại</th>
-                        <th>Văn phòng hiện tại</th>
-                        <th>Thời gian tạo đơn</th>
-                        <th>Thời gian cập nhật trạng thái cuối cùng</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{convertText(delivery.currentStatus)}</td>
-                            <td><button onClick={() => handleViewShop(delivery.currentShop.shopId)}><Link to={`/management/detail-office`}>{delivery.currentShop.commune.name}({delivery.currentShop.shopId})</Link></button></td>
-                            <td>{delivery.createdAt}</td>
-                            <td>{delivery.updatedAt}</td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </> : <></>}
+            {delivery ? (
+                <>
+                    <h1>Thông tin đơn hàng</h1>
+
+                    <div className='basic-info'>
+                        <b className='info-title'>Thông tin cơ bản:</b>
+                        <div className='info-row'>
+                            <div className='info-label'>ID</div>
+                            <div className='info-value'>{beautifyId(delivery.deliveryId)}</div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Tên đơn hàng</div>
+                            <div className='info-value'>{delivery.name}</div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Mô tả</div>
+                            <div className='info-value'>{delivery.description}</div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Cân nặng - Chi phí</div>
+                            <div className='info-value'>{delivery.weight}kg/{delivery.shippingFee}VND</div>
+                        </div>
+                    </div>
+
+                    <div className='sender-info'>
+                        <b className='info-title'>Thông tin phía gửi:</b>
+                        <div className='info-row'>
+                            <div className='info-label'>Người gửi</div>
+                            <div className='info-value'>{delivery.fromName}</div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Số điện thoại người gửi</div>
+                            <div className='info-value'>{delivery.fromPhone}</div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Địa chỉ người gửi</div>
+                            <div className='info-value'>{delivery.fromAddress}</div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Văn phòng gửi</div>
+                            <div className='info-value'>
+                                <button onClick={() => handleViewShop(delivery.fromShop.shopId)}>
+                                    <Link to={`/management/detail-office`}>{delivery.fromShop.commune.name}({delivery.fromShop.shopId})</Link>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='receiver-info'>
+                        <b className='info-title'>Thông tin phía nhận:</b>
+                        <div className='info-row'>
+                            <div className='info-label'>Người nhận</div>
+                            <div className='info-value'>{delivery.toName}</div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Số điện thoại người nhận</div>
+                            <div className='info-value'>{delivery.toPhone}</div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Địa chỉ người nhận</div>
+                            <div className='info-value'>{delivery.toAddress}</div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Văn phòng nhận</div>
+                            <div className='info-value'>
+                                <button onClick={() => handleViewShop(delivery.toShop.shopId)}>
+                                    <Link to={`/management/detail-office`}>{delivery.toShop.commune.name}({delivery.toShop.shopId})</Link>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='order-status'>
+                        <b className='info-title'>Trạng thái đơn hàng:</b>
+                        <div className='info-row'>
+                            <div className='info-label'>Trạng thái hiện tại</div>
+                            <div className='info-value'>{convertText(delivery.currentStatus)}</div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Văn phòng hiện tại</div>
+                            <div className='info-value'>
+                                <button onClick={() => handleViewShop(delivery.currentShop.shopId)}>
+                                    <Link to={`/management/detail-office`}>{delivery.currentShop.commune.name}({delivery.currentShop.shopId})</Link>
+                                </button>
+                            </div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Thời gian tạo đơn</div>
+                            <div className='info-value'>{delivery.createdAt}</div>
+                        </div>
+                        <div className='info-row'>
+                            <div className='info-label'>Thời gian cập nhật trạng thái cuối cùng</div>
+                            <div className='info-value'>{delivery.updatedAt}</div>
+                        </div>
+                    </div>
+                </>
+            ) : <></>}
         </div>
     </>
 }

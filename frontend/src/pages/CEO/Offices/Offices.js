@@ -81,9 +81,9 @@ const Offices = () => {
 
     const dispatch = useDispatch()
 
-    const handleViewDetail = (deliveryId) => {
+    const handleViewDetail = (shopId) => {
         navigate(`/management/detail-office`)
-        dispatch(updateShopId({ deliveryId }))
+        dispatch(updateShopId({ shopId }))
     }
 
     const handleInputChange = (e) => {
@@ -121,8 +121,8 @@ const Offices = () => {
             <Table>
                 <thead>
                     <tr>
-                        <th className='accounts-sort' onClick={() => handleSort('EMPLOYEE_NUMBER')}>ID Văn phòng {renderSortIcon('EMPLOYEE_NUMBER')}</th>
-                        <th className='accounts-sort' onClick={() => handleSort('COMING_DELIVERY_NUMBER')}>Địa chỉ (ID) {renderSortIcon('COMING_DELIVERY_NUMBER')}</th>
+                        <th className='accounts-sort'>ID Văn phòng</th>
+                        <th className='accounts-sort'>Địa chỉ (ID)</th>
                         <th>Loại văn phòng</th>
                         <th className='accounts-sort' onClick={() => handleSort('EMPLOYEE_NUMBER')}>Số nhân viên {renderSortIcon('CURRENT_DELIVERY_NUMBER')}</th>
                         <th className='accounts-sort' onClick={() => handleSort('COMING_DELIVERY_NUMBER')}>Số đơn đang đến {renderSortIcon('COMING_DELIVERY_NUMBER')}</th>
@@ -160,9 +160,11 @@ const Offices = () => {
                     )) : <></>}
                 </tbody>
             </Table>
-            <button onClick={prev}>Trang trước</button>
-            <span>{page}/{maxPage}</span>
-            <button onClick={next}>Trang sau</button>
+            <div className='pagination'>
+                <button onClick={prev}>Trang trước</button>
+                <span>{page}/{maxPage}</span>
+                <button onClick={next}>Trang sau</button>
+            </div>
         </div>
     </>
 }
