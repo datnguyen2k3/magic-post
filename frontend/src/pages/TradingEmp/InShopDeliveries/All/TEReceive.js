@@ -131,7 +131,7 @@ const TEReceive = () => {
                         <th>Người nhận</th>
                         <th>Địa chỉ người nhận</th>
                         <th>Văn phòng nhận</th>
-                        <th>Xác nhận văn phòng đã nhận được</th>
+                        <th>Chọn điểm đến tiếp theo</th>
                     </tr>
                     <tr>
                         <th></th>

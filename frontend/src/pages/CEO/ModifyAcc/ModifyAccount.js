@@ -71,6 +71,7 @@ const ModifyAccount = () => {
                 setEmail(response.data.accounts[0].email);
                 setPhone(response.data.accounts[0].phone);
                 setAddress(response.data.accounts[0].address);
+                setCccd(response.data.accounts[0].cccd)
             } catch (error) {
                 console.log(error)
             }
@@ -261,7 +262,7 @@ const ModifyAccount = () => {
                         }
                     </select><br></br>
                     <label><b>Căn cước công dân: </b></label>
-                    <input type="text" onChange={e => setCccd(e.target.value)} /><br />
+                    <input value={cccd} type="text" onChange={e => setCccd(e.target.value)} /><br />
                     <span><b>Id Văn phòng: </b>{detail.workAt.shopId}</span><br />
                     <span><b>Địa chỉ Văn phòng: </b>{detail.workAt.commune.name} - ({detail.workAt.commune.communeId})</span><br />
                     <span><b>Số nhân viên đang quản lý: </b>{detail.workAt.employeeNumber}</span><br />

@@ -408,7 +408,7 @@ const TECreateShipment = () => {
                 const response = await axios.post(`${backendUrl}/deliveries`, info, config);
 
                 const deliveryId = response.data.deliveryId;
-                navigate(`/management/te-detail`)
+                navigate(`/management/te-print`)
                 dispatch(updateDeliveryId({ deliveryId }))
             } catch (error) {
                 console.error('Lỗi khi gửi thông tin đơn hàng:', error);

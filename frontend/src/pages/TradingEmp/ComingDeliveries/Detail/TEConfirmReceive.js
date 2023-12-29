@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import { beautifyId } from '../../../../service/service'
 import { Link } from 'react-router-dom'
 import { selectDeliveryId } from '../../../../app/urlSlice'
+import { convertText } from '../../../../service/service'
 
 const TEConfirmReceive = () => {
 
@@ -116,6 +117,7 @@ const TEConfirmReceive = () => {
                         <div className='te-detail-box'>
                             <span><b>Thời gian: </b>{his.createdAt}</span><br></br>
                             <span><b>Địa điểm: </b>{his.shop.commune.name}</span><br></br>
+                            <span><b>Trạng thái: </b>{convertText(his.statusType)}</span><br></br>
                             <span><b>Loại văn phòng: </b>{his.shop.type === 'POST' ? 'Điểm giao dịch' : 'Điểm tập kết'}</span><br></br>
                         </div>
                     </>) : <></>}
