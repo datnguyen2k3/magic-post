@@ -40,6 +40,9 @@ public class AccountDocument {
   @Field(type = FieldType.Keyword)
   private Role role;
 
+  @Field(type = FieldType.Text, fielddata = true)
+  private String cccd;
+
 //  @Field(fielddata = true)
   private Date createdAt;
 

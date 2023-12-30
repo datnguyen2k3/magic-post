@@ -40,6 +40,7 @@ import web.uet.backend.service.auth.AuthenticationService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -79,7 +80,7 @@ public class DeliveryService {
     Shop toShop = shopRepository.findById(deliveryCreateRequest.getToShop())
         .orElseThrow(() -> new NotFoundException("To shop not found"));
 
-    if (AuthenticationService.getCurrentAccount().getWorkAt().getShopId() != fromShop.getShopId()) {
+    if (!Objects.equals(AuthenticationService.getCurrentAccount().getWorkAt().getShopId(), fromShop.getShopId())) {
       throw new InvalidAuthorizationException("Permission denied");
     }
 

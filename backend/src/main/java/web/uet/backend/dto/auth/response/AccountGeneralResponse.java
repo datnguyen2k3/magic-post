@@ -27,6 +27,7 @@ public class AccountGeneralResponse {
   private String address;
   private String role;
   private ShopDetailResponse workAt;
+  private String cccd;
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date createdAt;
